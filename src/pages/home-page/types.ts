@@ -1,8 +1,8 @@
 import {StackScreenProps} from '@react-navigation/stack';
-import {RootParamList} from '../../navigation/StackNavigator';
+import {BottomTabBarNavigatorParamList} from '../../navigation/TabNavigator';
 
 export type HomePageProps = StackScreenProps<
-  RootParamList,
-  'Home',
+  BottomTabBarNavigatorParamList,
+  'HomePage',
   'rootStack'
 >;

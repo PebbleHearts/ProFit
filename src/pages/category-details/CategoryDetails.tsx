@@ -1,6 +1,7 @@
 import React, {FC, useRef} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
+import uuid from 'react-native-uuid';
 
 import PageLayout from '../../Layout/PageLayout';
 import {WORKOUTS} from '../../constants/workouts';
@@ -17,6 +18,15 @@ const CategoryDetails: FC<CategoryDetailsProps> = ({route}) => {
   const workouts = WORKOUTS.filter(item => item.categoryId === categoryId);
 
   const bottomSheetRef = useRef<RBSheet>(null);
+
+  const handleCreateExerciseBottomSheetClose = () =>
+    bottomSheetRef?.current?.close();
+  const handleExerciseCreation = ({name}: {name: string}) => {
+    console.log({name});
+    const newId = uuid.v4() as string;
+    WORKOUTS.push({id: newId, categoryId: categoryId, name});
+    handleCreateExerciseBottomSheetClose();
+  };
   return (
     <PageLayout title="ProFit">
       <View style={styles.container}>
@@ -31,8 +41,9 @@ const CategoryDetails: FC<CategoryDetailsProps> = ({route}) => {
         </TouchableOpacity>
         <CreateExerciseBottomSheet
           bottomSheetRef={bottomSheetRef}
-          onClose={() => bottomSheetRef?.current?.close()}
+          onClose={handleCreateExerciseBottomSheetClose}
           categoryName={category?.name}
+          handleExerciseCreation={handleExerciseCreation}
         />
       </View>
     </PageLayout>

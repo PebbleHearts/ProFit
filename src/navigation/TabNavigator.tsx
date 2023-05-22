@@ -18,6 +18,7 @@ const Tab = createBottomTabNavigator<BottomTabBarNavigatorParamList>();
 const TabNavigator = () => {
   return (
     <Tab.Navigator
+      id="tabNavigator"
       screenOptions={{
         headerShown: false,
       }}

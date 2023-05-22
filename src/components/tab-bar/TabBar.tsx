@@ -96,6 +96,7 @@ const styles = ScaledSheet.create({
     flexDirection: 'row',
     backgroundColor: Colors.secondaryBlue,
     borderRadius: 25,
+    marginBottom: '5@ms',
   },
   mainItemContainer: {
     flex: 1,

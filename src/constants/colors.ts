@@ -4,4 +4,5 @@ export default {
   thirdBlue: '#c1f7f4',
   primaryRed: '#FF6D60',
   cardBackground: '#e3e6e4',
+  buttonText: '#1f1e1e',
 };

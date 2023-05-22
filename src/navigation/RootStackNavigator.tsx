@@ -10,6 +10,9 @@ import TabNavigator from './TabNavigator';
 export type RootStackParamList = {
   LoginPage: undefined;
   TabNavigator: undefined;
+  CategoryDetails: {
+    categoryId: number;
+  };
 };
 
 const Stack = createStackNavigator<RootStackParamList>();

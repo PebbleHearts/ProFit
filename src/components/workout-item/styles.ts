@@ -12,6 +12,7 @@ const styles = ScaledSheet.create({
   workoutName: {
     fontSize: '15@ms',
     fontWeight: '600',
+    color: Colors.buttonText,
   },
 });
 

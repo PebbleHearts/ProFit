@@ -7,7 +7,8 @@ import styles from './styles';
 type CustomButtonProps = {
   label: string;
   disabled?: boolean;
-  containerStyle: any;
+  containerStyle?: any;
+  labelStyle?: any;
   onPress?: () => void;
 };
 
@@ -16,6 +17,7 @@ const CustomButton: FC<CustomButtonProps> = ({
   disabled,
   onPress,
   containerStyle,
+  labelStyle,
 }) => {
   return (
     <TouchableOpacity
@@ -23,7 +25,7 @@ const CustomButton: FC<CustomButtonProps> = ({
       activeOpacity={0.8}
       disabled={disabled}
       onPress={onPress}>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={[styles.label, labelStyle]}>{label}</Text>
     </TouchableOpacity>
   );
 };

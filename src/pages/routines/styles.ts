@@ -13,6 +13,14 @@ const styles = ScaledSheet.create({
     marginBottom: '10@vs',
     color: colors.buttonText,
   },
+  contentContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  comingSoonText: {
+    color: colors.buttonText,
+  },
 });
 
 export default styles;

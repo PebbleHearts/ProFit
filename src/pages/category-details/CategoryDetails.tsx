@@ -22,7 +22,6 @@ const CategoryDetails: FC<CategoryDetailsProps> = ({route}) => {
   const handleCreateExerciseBottomSheetClose = () =>
     bottomSheetRef?.current?.close();
   const handleExerciseCreation = ({name}: {name: string}) => {
-    console.log({name});
     const newId = uuid.v4() as string;
     WORKOUTS.push({id: newId, categoryId: categoryId, name});
     handleCreateExerciseBottomSheetClose();

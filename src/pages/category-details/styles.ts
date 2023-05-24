@@ -1,4 +1,5 @@
 import {ScaledSheet} from 'react-native-size-matters';
+import colors from '../../constants/colors';
 
 const styles = ScaledSheet.create({
   container: {
@@ -10,6 +11,7 @@ const styles = ScaledSheet.create({
     fontSize: '19@ms',
     fontWeight: 'bold',
     marginBottom: '10@vs',
+    color: colors.buttonText,
   },
 });
 

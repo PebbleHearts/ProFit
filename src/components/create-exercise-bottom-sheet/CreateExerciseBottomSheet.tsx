@@ -17,7 +17,7 @@ const CreateExerciseBottomSheet: FC<CreateExerciseBottomSheet> = ({
   bottomSheetRef,
   onClose,
   categoryName,
-  handleExerciseCreation
+  handleExerciseCreation,
 }) => {
   const [exerciseName, setExerciseName] = useState('');
   return (

@@ -9,7 +9,7 @@ const styles = ScaledSheet.create({
     borderRadius: '7@ms',
     backgroundColor: Colors.cardBackground,
   },
-  categoryName: {
+  dayWorkoutName: {
     fontSize: '15@ms',
     fontWeight: '600',
     color: Colors.buttonText,

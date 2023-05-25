@@ -8,9 +8,10 @@ import {emitter} from '../../constants/emitter';
 
 import CalenderStrip from '../../components/calender-strip/calenderStrip';
 
-import styles from './styles';
 import DAY_WORKOUTS from '../../constants/dayWorkouts';
 import DayWorkoutItem from '../../components/day-workout-item/DayWorkoutItem';
+
+import styles from './styles';
 
 const HomePage: FC<HomePageProps> = () => {
   const [selectedDate, setSelectedDate] = useState<string>(

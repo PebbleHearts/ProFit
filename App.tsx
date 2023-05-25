@@ -13,12 +13,15 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import 'react-native-gesture-handler';
 
 import StackNavigator from './src/navigation/RootStackNavigator';
+import {UserContextProvider} from './src/hooks/UserContext';
 
 const App = () => {
   return (
     <NavigationContainer>
       <SafeAreaProvider>
-        <StackNavigator />
+        <UserContextProvider>
+          <StackNavigator />
+        </UserContextProvider>
       </SafeAreaProvider>
     </NavigationContainer>
   );

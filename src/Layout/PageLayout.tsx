@@ -7,7 +7,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 type PageLayoutProps = {
   children: JSX.Element;
-  title: string;
+  title?: string;
 };
 
 const PageLayout = ({children, title}: PageLayoutProps) => {
@@ -22,9 +22,11 @@ const PageLayout = ({children, title}: PageLayoutProps) => {
           paddingRight: insets.right,
         },
       ]}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>{title}</Text>
-      </View>
+      {title && (
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>{title}</Text>
+        </View>
+      )}
       {children}
     </View>
   );

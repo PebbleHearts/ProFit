@@ -32,14 +32,12 @@ const HomePage: FC<HomePageProps> = () => {
     setSelectedDate(value);
   }, []);
 
-  console.log(selectedDate);
-
   return (
     <PageLayout title="ProFit">
       <View style={styles.container}>
         <Text style={styles.title}>Workouts</Text>
         <View style={styles.workoutsListContainer}>
-          {DAY_WORKOUTS[selectedDate]?.map((item) => (
+          {DAY_WORKOUTS[selectedDate]?.map(item => (
             <DayWorkoutItem key={item.name} name={item.name} />
           ))}
         </View>

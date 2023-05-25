@@ -1,4 +1,4 @@
-const DAY_WORKOUTS = {
+const DAY_WORKOUTS: Record<string, {name: string}[]> = {
   '2023-05-23T18:30:00.000Z': [{name: 'Chest'}, {name: 'Cardio'}],
   '2023-05-22T18:30:00.000Z': [{name: 'Chest'}, {name: 'Tries'}],
   '2023-05-21T18:30:00.000Z': [{name: 'Back'}, {name: 'Biceps'}],

@@ -2,7 +2,6 @@ import React, {FC, useCallback, useEffect, useState} from 'react';
 import {View, Text} from 'react-native';
 
 import PageLayout from '../../Layout/PageLayout';
-import {CATEGORIES} from '../../constants/categories';
 import CategoryItem from '../../components/category-item/CategoryItem';
 import {useUserContext} from '../../hooks/UserContext';
 
@@ -32,9 +31,10 @@ const Categories: FC<CategoriesProps> = ({navigation}) => {
     }
   }, [handleCategoriesFetch, user?.id]);
 
-  const handleCategoryClick = (categoryId: number) => () => {
-    navigation.navigate('CategoryDetails', {categoryId});
-  };
+  const handleCategoryClick =
+    (categoryId: string, categoryName: string) => () => {
+      navigation.navigate('CategoryDetails', {categoryId, categoryName});
+    };
 
   // TODO: use this function to create a category when needed
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -45,23 +45,17 @@ const Categories: FC<CategoriesProps> = ({navigation}) => {
       .insert({user_id: user?.id, name: 'Chest'});
   };
 
+  // TODO: show an alert while deleting saying, deleting the category will delete the exercises related to it.
+
   return (
     <PageLayout title="ProFit">
       <View style={styles.container}>
         <Text style={styles.title}>Categories</Text>
-        {CATEGORIES.map(({id, name}) => (
+        {categoriesList?.map(({id, name}: {id: string; name: string}) => (
           <CategoryItem
             key={id}
             name={name}
-            onPress={handleCategoryClick(id)}
-          />
-        ))}
-        <Text>dddd</Text>
-        {categoriesList?.map(({id, name}) => (
-          <CategoryItem
-            key={id}
-            name={name}
-            onPress={handleCategoryClick(id)}
+            onPress={handleCategoryClick(id, name)}
           />
         ))}
       </View>

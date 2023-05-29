@@ -1,38 +1,63 @@
-import React, {FC, useRef} from 'react';
+import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import uuid from 'react-native-uuid';
 
 import PageLayout from '../../Layout/PageLayout';
-import {WORKOUTS} from '../../constants/workouts';
-import {CATEGORIES} from '../../constants/categories';
+import WorkoutItem from '../../components/workout-item/WorkoutItem';
+import CreateExerciseBottomSheet from '../../components/create-exercise-bottom-sheet/CreateExerciseBottomSheet';
+import {supabase} from '../../lib/initSupabase';
+import {useUserContext} from '../../hooks/UserContext';
 
 import styles from './styles';
 import {CategoryDetailsProps} from './types';
-import WorkoutItem from '../../components/workout-item/WorkoutItem';
-import CreateExerciseBottomSheet from '../../components/create-exercise-bottom-sheet/CreateExerciseBottomSheet';
 
 const CategoryDetails: FC<CategoryDetailsProps> = ({route}) => {
-  const {categoryId} = route.params ?? {};
-  const category = CATEGORIES.find(item => item.id === categoryId);
-  const workouts = WORKOUTS.filter(item => item.categoryId === categoryId);
+  const {categoryId, categoryName} = route.params ?? {};
 
+  const {user} = useUserContext();
+
+  console.log({categoryId});
+
+  const [exercisesList, setExercisesList] = useState<any>([]);
   const bottomSheetRef = useRef<RBSheet>(null);
 
   const handleCreateExerciseBottomSheetClose = () =>
     bottomSheetRef?.current?.close();
-  const handleExerciseCreation = ({name}: {name: string}) => {
-    const newId = uuid.v4() as string;
-    WORKOUTS.push({id: newId, categoryId: categoryId, name});
+  const handleExerciseCreation = async ({name}: {name: string}) => {
+    const {error} = await supabase.from('exercises').insert({
+      user_id: user?.id,
+      name,
+      category: categoryId,
+    });
     handleCreateExerciseBottomSheetClose();
   };
+
+  const handleCategoriesFetch = useCallback(async () => {
+    if (categoryId) {
+      const {data, error} = await supabase
+        .from('exercises')
+        .select('id,name,created_at')
+        .eq('user_id', user?.id)
+        .eq('category', categoryId);
+
+      if (!error && data) {
+        setExercisesList(data);
+      }
+    }
+  }, [user?.id, categoryId]);
+
+  useEffect(() => {
+    if (user?.id) {
+      handleCategoriesFetch();
+    }
+  }, [handleCategoriesFetch, user?.id]);
   return (
     <PageLayout title="ProFit">
       <View style={styles.container}>
-        <Text style={styles.title}>{category?.name}</Text>
+        <Text style={styles.title}>{categoryName}</Text>
         <View>
-          {workouts.map(item => (
-            <WorkoutItem key={item.id} name={item.name} />
+          {exercisesList?.map(({id, name}: {id: string; name: string}) => (
+            <WorkoutItem key={id} name={name} />
           ))}
         </View>
         <TouchableOpacity onPress={() => bottomSheetRef?.current?.open()}>
@@ -41,7 +66,7 @@ const CategoryDetails: FC<CategoryDetailsProps> = ({route}) => {
         <CreateExerciseBottomSheet
           bottomSheetRef={bottomSheetRef}
           onClose={handleCreateExerciseBottomSheetClose}
-          categoryName={category?.name}
+          categoryName={categoryName}
           handleExerciseCreation={handleExerciseCreation}
         />
       </View>

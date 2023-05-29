@@ -10,7 +10,8 @@ import CategoryDetails from '../pages/category-details/CategoryDetails';
 export type CategoriesStackParamList = {
   Categories: undefined;
   CategoryDetails: {
-    categoryId: number;
+    categoryId: string;
+    categoryName: string;
   };
 };
 

@@ -9,6 +9,7 @@ import {
   DumbbellOutline,
   CategoriesIcon,
   WorkoutRoutines,
+  AddPlusSquare,
 } from '../../assets/svg';
 
 const TabDetailsMap = {
@@ -58,27 +59,25 @@ const TabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
             <View key={label} style={styles.mainItemContainer}>
               <Pressable
                 onPress={onPress}
-                style={{
-                  backgroundColor: isFocused
-                    ? Colors.thirdBlue
-                    : Colors.secondaryBlue,
-                  borderRadius: 20,
-                  width: 40,
-                  height: 40
-                }}>
-                <View
-                  style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    flex: 1,
-                    padding: 10,
-                  }}>
+                style={[styles.item, isFocused && styles.focusedItem]}>
+                <View style={styles.itemIconContainerStyle}>
                   {TabDetailsMap[label].icon}
                 </View>
               </Pressable>
             </View>
           );
         })}
+        {/* TODO: Make this section animated */}
+        <Pressable
+          style={[
+            styles.addButton,
+            state.index !== 0 && styles.hiddenAddButton,
+          ]}
+          onPress={() => {
+            console.log('on Add');
+          }}>
+          <AddPlusSquare width={27} height={27} />
+        </Pressable>
       </View>
     </View>
   );
@@ -105,5 +104,29 @@ const styles = ScaledSheet.create({
     marginVertical: 5,
     borderRadius: 1,
     borderColor: 'grey',
+  },
+  item: {
+    borderRadius: 20,
+    width: 40,
+    height: 40,
+    backgroundColor: Colors.secondaryBlue,
+  },
+  focusedItem: {
+    backgroundColor: Colors.thirdBlue,
+  },
+  itemIconContainerStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+    padding: 10,
+  },
+  addButton: {
+    width: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  hiddenAddButton: {
+    width: 0,
+    overflow: 'hidden',
   },
 });

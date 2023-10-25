@@ -29,7 +29,6 @@ const DailyExerciseSelectionBottomSheet: FC<
 }) => {
   const [showWorkouts, setShowWorkouts] = useState(false);
   const [selectedExercises, setSelectedExercises] = useState<string[]>([]);
-  console.log(selectedExercises);
   const resetState = () => {
     setShowWorkouts(false);
     setSelectedExercises([]);

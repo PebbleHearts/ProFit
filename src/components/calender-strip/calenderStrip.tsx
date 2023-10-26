@@ -10,8 +10,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import colors from '../../constants/colors';
 
 type CalenderStripProps = {
-  selectedDate: string;
-  onDateSelection: (date: string) => void;
+  selectedDate: Date;
+  onDateSelection: (date: Date) => void;
 };
 
 const getLabelString = ({
@@ -64,7 +64,7 @@ const CalenderStrip: FC<CalenderStripProps> = ({
   );
   const [range, setRange] = useState<string>(getInitialRangeString());
 
-  const renderDate = ({item}: {item: string}) => {
+  const renderDate = ({item}: {item: Date}) => {
     return (
       <DateItem
         item={item}

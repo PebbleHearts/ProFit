@@ -16,8 +16,6 @@ const CategoryDetails: FC<CategoryDetailsProps> = ({route}) => {
 
   const {user} = useUserContext();
 
-  console.log({categoryId});
-
   const [exercisesList, setExercisesList] = useState<any>([]);
   const bottomSheetRef = useRef<RBSheet>(null);
 

@@ -6,7 +6,8 @@ export const getSubtractedDate = (date: Date, offset: number) => {
     .set('hour', 0)
     .set('minute', 0)
     .set('second', 0)
-    .set('millisecond', 0);
+    .set('millisecond', 0)
+    .toDate();
 };
 
 export const getPreviousDays = ({
@@ -21,7 +22,7 @@ export const getPreviousDays = ({
   const previousDays = [];
   for (let i = includeStartDay ? 0 : 1; i <= offset; i++) {
     const previousDay = getSubtractedDate(startDate, i);
-    previousDays.push(previousDay.toISOString());
+    previousDays.push(previousDay);
   }
   return previousDays;
 };

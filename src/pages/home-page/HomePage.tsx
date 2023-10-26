@@ -1,6 +1,5 @@
 import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
-import moment from 'moment';
 import RBSheet from 'react-native-raw-bottom-sheet';
 
 import PageLayout from '../../Layout/PageLayout';
@@ -22,14 +21,7 @@ const HomePage: FC<HomePageProps> = () => {
   const [workouts, setWorkouts] = useState<any>([]);
   const [exercisesList, setExercisesList] = useState<any>([]);
   const bottomSheetRef = useRef<RBSheet>(null);
-  const [selectedDate, setSelectedDate] = useState<string>(
-    moment(new Date())
-      .set('hour', 0)
-      .set('minute', 0)
-      .set('second', 0)
-      .set('millisecond', 0)
-      .toISOString(),
-  );
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
   const handleCategoriesFetch = useCallback(async () => {
     const {data, error} = await supabase
@@ -43,7 +35,9 @@ const HomePage: FC<HomePageProps> = () => {
   }, [user?.id]);
 
   const handleWorkoutFetch = useCallback(async () => {
-    const date = selectedDate.substring(0, 10);
+    const date = `${selectedDate.getFullYear()}-${
+      selectedDate.getMonth() + 1
+    }-${selectedDate.getDate()}`;
     const {data, error} = await supabase
       .from('workouts')
       .select('id,exercise (id,name, category(name)),info')
@@ -51,8 +45,6 @@ const HomePage: FC<HomePageProps> = () => {
       .eq('date', date);
 
     if (!error && data) {
-      console.log('inside workout fetch');
-      console.log(JSON.stringify(data));
       setWorkouts(data);
     }
   }, [selectedDate, user?.id]);
@@ -94,13 +86,12 @@ const HomePage: FC<HomePageProps> = () => {
     });
   }, []);
 
-  const handleDateSelection = useCallback((value: string) => {
+  const handleDateSelection = useCallback((value: Date) => {
     setSelectedDate(value);
   }, []);
 
   const onDailyExerciseAddition = async (exerciseIds: string[]) => {
-    console.log(exerciseIds);
-    const date = selectedDate.substring(0, 10);
+    const date = selectedDate;
     await supabase.from('workouts').insert({
       user_id: user?.id,
       date,
@@ -117,7 +108,11 @@ const HomePage: FC<HomePageProps> = () => {
           <Text style={styles.title}>Workouts</Text>
           <View style={styles.workoutsListContainer}>
             {workouts?.map((item: any) => (
-              <DayWorkoutItem key={item.id} name={item.exercise.name} />
+              <DayWorkoutItem
+                key={item.id}
+                exercise={item.exercise}
+                info={item.info}
+              />
             ))}
             <TouchableOpacity
               key="add button"

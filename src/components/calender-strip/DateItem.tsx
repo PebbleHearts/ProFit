@@ -6,8 +6,8 @@ import moment from 'moment';
 import styles from './styles';
 
 type DateItemProps = {
-  item: string;
-  onDateSelection: (date: string) => void;
+  item: Date;
+  onDateSelection: (date: Date) => void;
   isSelected: boolean;
 };
 const DateItem: FC<DateItemProps> = ({item, onDateSelection, isSelected}) => {

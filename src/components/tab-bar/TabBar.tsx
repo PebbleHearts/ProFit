@@ -9,7 +9,6 @@ import {
   DumbbellOutline,
   CategoriesIcon,
   WorkoutRoutines,
-  AddPlusSquare,
 } from '../../assets/svg';
 
 const TabDetailsMap = {
@@ -67,17 +66,6 @@ const TabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
             </View>
           );
         })}
-        {/* TODO: Make this section animated */}
-        <Pressable
-          style={[
-            styles.addButton,
-            state.index !== 0 && styles.hiddenAddButton,
-          ]}
-          onPress={() => {
-            console.log('on Add');
-          }}>
-          <AddPlusSquare width={27} height={27} />
-        </Pressable>
       </View>
     </View>
   );

@@ -14,6 +14,7 @@ import {supabase} from '../../lib/initSupabase';
 import {useUserContext} from '../../hooks/UserContext';
 
 import styles from './styles';
+import {getDateStringFromDateObject} from '../../utils/calender';
 
 const HomePage: FC<HomePageProps> = () => {
   const {user} = useUserContext();
@@ -35,9 +36,7 @@ const HomePage: FC<HomePageProps> = () => {
   }, [user?.id]);
 
   const handleWorkoutFetch = useCallback(async () => {
-    const date = `${selectedDate.getFullYear()}-${
-      selectedDate.getMonth() + 1
-    }-${selectedDate.getDate()}`;
+    const date = getDateStringFromDateObject(selectedDate);
     const {data, error} = await supabase
       .from('workouts')
       .select('id,exercise (id,name, category(name)),info')

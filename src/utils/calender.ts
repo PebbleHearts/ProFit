@@ -26,3 +26,7 @@ export const getPreviousDays = ({
   }
   return previousDays;
 };
+
+export const getDateStringFromDateObject = (date: Date) => {
+  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+};

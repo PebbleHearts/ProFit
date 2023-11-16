@@ -1,7 +1,10 @@
 import React, {FC, useRef, useState} from 'react';
 import {FlatList, ViewToken, View, Text} from 'react-native';
 
-import {getPreviousDays} from '../../utils/calender';
+import {
+  getDateStringFromDateObject,
+  getPreviousDays,
+} from '../../utils/calender';
 import DateItem from './DateItem';
 
 import styles from './styles';
@@ -68,7 +71,10 @@ const CalenderStrip: FC<CalenderStripProps> = ({
     return (
       <DateItem
         item={item}
-        isSelected={selectedDate === item}
+        isSelected={
+          getDateStringFromDateObject(selectedDate) ===
+          getDateStringFromDateObject(item)
+        }
         onDateSelection={onDateSelection}
       />
     );

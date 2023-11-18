@@ -21,15 +21,15 @@ type DayWorkoutItemProps = {
 const DayWorkoutItem: FC<DayWorkoutItemProps> = ({exercise, info}) => {
   return (
     <View style={styles.card}>
-      <Text style={styles.dayWorkoutName}>{exercise.name}</Text>
+      <Text style={styles.dayWorkoutName}>{exercise?.name}</Text>
 
-      {info?.map((item, index) => {
+      {/* {info?.map((item, index) => {
         return (
           <Text key={`item${index}`}>
             Weight: {item.weight}, Count{item.count}
           </Text>
         );
-      })}
+      })} */}
     </View>
   );
 };

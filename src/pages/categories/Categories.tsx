@@ -1,29 +1,32 @@
-import React, {FC, useCallback, useEffect, useState} from 'react';
-import {View, Text} from 'react-native';
+import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
+import RBSheet from 'react-native-raw-bottom-sheet';
+import {View, Text, TouchableOpacity} from 'react-native';
 
 import PageLayout from '../../Layout/PageLayout';
 import CategoryItem from '../../components/category-item/CategoryItem';
 import {useUserContext} from '../../hooks/UserContext';
+import {database} from '../../database/init';
 
 import {CategoriesProps} from './types';
 import styles from './styles';
 import {supabase} from '../../lib/initSupabase';
+import CreateCategoryBottomSheet from '../../components/create-category-bottom-sheet/CreateCategoryBottomSheet';
+import {CategoryRecord} from '../../database/model/Category';
 
 const Categories: FC<CategoriesProps> = ({navigation}) => {
+  const bottomSheetRef = useRef<RBSheet>(null);
   const {user} = useUserContext();
 
   const [categoriesList, setCategoriesList] = useState<any>([]);
 
-  const handleCategoriesFetch = useCallback(async () => {
-    const {data, error} = await supabase
-      .from('categories')
-      .select('id,name,created_at')
-      .eq('user_id', user?.id);
+  const handleCreateCategoryBottomSheetClose = () =>
+    bottomSheetRef?.current?.close();
 
-    if (!error && data) {
-      setCategoriesList(data);
-    }
-  }, [user?.id]);
+  const handleCategoriesFetch = useCallback(async () => {
+    const exerciseCollection = database.get<CategoryRecord>('categories');
+    const categories = await exerciseCollection.query().fetch();
+    setCategoriesList(categories);
+  }, []);
 
   useEffect(() => {
     if (user?.id) {
@@ -45,6 +48,21 @@ const Categories: FC<CategoriesProps> = ({navigation}) => {
       .insert({user_id: user?.id, name: 'Chest'});
   };
 
+  const handleCategoryCreation = async ({name}: {name: string}) => {
+    const categoriesCollection = database.get<CategoryRecord>('categories');
+    try {
+      await database.write(async () => {
+        categoriesCollection.create(category => {
+          category.name = name;
+        });
+      });
+      handleCategoriesFetch();
+    } catch (e) {
+      console.log(e);
+    }
+    handleCreateCategoryBottomSheetClose();
+  };
+
   // TODO: show an alert while deleting saying, deleting the category will delete the exercises related to it.
 
   return (
@@ -58,6 +76,14 @@ const Categories: FC<CategoriesProps> = ({navigation}) => {
             onPress={handleCategoryClick(id, name)}
           />
         ))}
+        <TouchableOpacity onPress={() => bottomSheetRef?.current?.open()}>
+          <Text>Add new</Text>
+        </TouchableOpacity>
+        <CreateCategoryBottomSheet
+          bottomSheetRef={bottomSheetRef}
+          onClose={handleCreateCategoryBottomSheetClose}
+          handleExerciseCreation={handleCategoryCreation}
+        />
       </View>
     </PageLayout>
   );

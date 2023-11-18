@@ -2,22 +2,23 @@ import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 
+import {Q} from '@nozbe/watermelondb';
 import PageLayout from '../../Layout/PageLayout';
 import {HomePageProps} from './types';
-import {emitter} from '../../constants/emitter';
+import {database} from '../../database/init';
 
 import CalenderStrip from '../../components/calender-strip/calenderStrip';
 
 import DayWorkoutItem from '../../components/day-workout-item/DayWorkoutItem';
 import DailyExerciseSelectionBottomSheet from '../../components/daily-exercise-selection-bottom-sheet/DailyExerciseSelectionBottomSheet';
-import {supabase} from '../../lib/initSupabase';
-import {useUserContext} from '../../hooks/UserContext';
 
 import styles from './styles';
+import {WorkoutRecord} from '../../database/model/Workout';
+import {CategoryRecord} from '../../database/model/Category';
+import {ExerciseRecord} from '../../database/model/Exercise';
 import {getDateStringFromDateObject} from '../../utils/calender';
 
 const HomePage: FC<HomePageProps> = () => {
-  const {user} = useUserContext();
   const [categoriesList, setCategoriesList] = useState<any>([]);
   const [workouts, setWorkouts] = useState<any>([]);
   const [exercisesList, setExercisesList] = useState<any>([]);
@@ -25,52 +26,53 @@ const HomePage: FC<HomePageProps> = () => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
   const handleCategoriesFetch = useCallback(async () => {
-    const {data, error} = await supabase
-      .from('categories')
-      .select('id,name,created_at')
-      .eq('user_id', user?.id);
-
-    if (!error && data) {
-      setCategoriesList(data);
-    }
-  }, [user?.id]);
+    const exerciseCollection = database.get<CategoryRecord>('categories');
+    const categories = await exerciseCollection.query().fetch();
+    setCategoriesList(categories);
+  }, []);
 
   const handleWorkoutFetch = useCallback(async () => {
     const date = getDateStringFromDateObject(selectedDate);
-    const {data, error} = await supabase
-      .from('workouts')
-      .select('id,exercise (id,name, category(name)),info')
-      .eq('user_id', user?.id)
-      .eq('date', date);
+    const exerciseCollection = database.get<WorkoutRecord>('workouts');
+    const workoutsList = await exerciseCollection
+      .query(Q.where('date', date))
+      .fetch();
 
-    if (!error && data) {
-      setWorkouts(data);
+    const formattedCurrentWorkout = [];
+    for (let i = 0; i < workoutsList.length; i++) {
+      const currentExercise = workoutsList[i];
+      const exercise = await currentExercise.exercise;
+      const workout = {
+        id: currentExercise.id,
+        info: currentExercise.info,
+        records: currentExercise.records,
+        exercise: {
+          id: exercise.id,
+          name: exercise.name,
+        },
+      };
+      formattedCurrentWorkout.push(workout);
     }
-  }, [selectedDate, user?.id]);
+    setWorkouts(formattedCurrentWorkout);
+  }, [selectedDate]);
+
+  console.log(workouts);
 
   useEffect(() => {
-    if (user?.id) {
-      handleCategoriesFetch();
-    }
-  }, [handleCategoriesFetch, user?.id]);
+    handleCategoriesFetch();
+  }, [handleCategoriesFetch]);
 
   useEffect(() => {
-    if (user?.id) {
-      handleWorkoutFetch();
-    }
-  }, [handleWorkoutFetch, user?.id]);
+    handleWorkoutFetch();
+  }, [handleWorkoutFetch]);
 
   const handleCategorySelection = async (categoryId: string) => {
     if (categoryId) {
-      const {data, error} = await supabase
-        .from('exercises')
-        .select('id,name,created_at')
-        .eq('user_id', user?.id)
-        .eq('category', categoryId);
-
-      if (!error && data) {
-        setExercisesList(data);
-      }
+      const exerciseCollection = database.get<ExerciseRecord>('exercises');
+      const exercises = await exerciseCollection
+        .query(Q.where('category_id', categoryId))
+        .fetch();
+      setExercisesList(exercises);
     }
   };
 
@@ -79,24 +81,29 @@ const HomePage: FC<HomePageProps> = () => {
     bottomSheetRef?.current?.close();
   };
 
-  useEffect(() => {
-    emitter.addListener('AddNewItem', () => {
-      console.log('Trying to add new: homepage');
-    });
-  }, []);
-
   const handleDateSelection = useCallback((value: Date) => {
     setSelectedDate(value);
   }, []);
 
   const onDailyExerciseAddition = async (exerciseIds: string[]) => {
-    const date = selectedDate;
-    await supabase.from('workouts').insert({
-      user_id: user?.id,
-      date,
-      exercise: exerciseIds[0],
-      info: [],
-    });
+    const date = getDateStringFromDateObject(selectedDate);
+    try {
+      for (let i = 0; i < exerciseIds.length; i++) {
+        const exerciseId = exerciseIds[i];
+        const exerciseItem = await database.get('exercises').find(exerciseId);
+        await database.write(async () => {
+          database.get('workouts').create((workout: any) => {
+            workout.date = date;
+            workout.exercise.set(exerciseItem);
+            workout.records = 'record';
+            workout.info = 'info';
+          });
+        });
+      }
+      handleWorkoutFetch();
+    } catch (e) {
+      console.log(e);
+    }
     bottomSheetRef.current?.close();
   };
 

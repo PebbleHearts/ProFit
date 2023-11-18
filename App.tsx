@@ -11,6 +11,8 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import 'react-native-gesture-handler';
+import './src/database/init';
+import './src/lib/initOAuth';
 
 import StackNavigator from './src/navigation/RootStackNavigator';
 import {UserContextProvider} from './src/hooks/UserContext';

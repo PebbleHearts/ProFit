@@ -1,5 +1,6 @@
 import React, {FC, useState} from 'react';
 import {View, Text} from 'react-native';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 import {LoginPageProps} from './types';
 
@@ -13,6 +14,15 @@ export const LoginPage: FC<LoginPageProps> = ({navigation}) => {
   const [email, setEmail] = useState('nirmalmichelp@gmail.com');
   const [password, setPassword] = useState('abcdefg');
   const [authError, setAuthError] = useState('');
+
+  const googleLogin = async () => {
+    await GoogleSignin.hasPlayServices();
+    const userInfo = await GoogleSignin.signIn();
+    console.log(userInfo);
+    return userInfo;
+    // const res = await GoogleSignin.isSignedIn();
+    // console.log(res);
+  };
 
   const handleLogin = async () => {
     const {data, error} = await supabase.auth.signInWithPassword({

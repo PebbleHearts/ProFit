@@ -1,20 +1,19 @@
 import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
+import {Q} from '@nozbe/watermelondb';
 
 import PageLayout from '../../Layout/PageLayout';
 import WorkoutItem from '../../components/workout-item/WorkoutItem';
 import CreateExerciseBottomSheet from '../../components/create-exercise-bottom-sheet/CreateExerciseBottomSheet';
-import {supabase} from '../../lib/initSupabase';
-import {useUserContext} from '../../hooks/UserContext';
+import {database} from '../../database/init';
 
 import styles from './styles';
 import {CategoryDetailsProps} from './types';
+import {ExerciseRecord} from '../../database/model/Exercise';
 
 const CategoryDetails: FC<CategoryDetailsProps> = ({route}) => {
   const {categoryId, categoryName} = route.params ?? {};
-
-  const {user} = useUserContext();
 
   const [exercisesList, setExercisesList] = useState<any>([]);
   const bottomSheetRef = useRef<RBSheet>(null);
@@ -22,33 +21,32 @@ const CategoryDetails: FC<CategoryDetailsProps> = ({route}) => {
   const handleCreateExerciseBottomSheetClose = () =>
     bottomSheetRef?.current?.close();
   const handleExerciseCreation = async ({name}: {name: string}) => {
-    const {error} = await supabase.from('exercises').insert({
-      user_id: user?.id,
-      name,
-      category: categoryId,
-    });
+    try {
+      const categoryItem = await database.get('categories').find(categoryId);
+      await database.write(async () => {
+        database.get('exercises').create((exercise: any) => {
+          exercise.name = name;
+          exercise.category.set(categoryItem);
+        });
+      });
+      handleExercisesListFetch();
+    } catch (e) {
+      console.log(e);
+    }
     handleCreateExerciseBottomSheetClose();
   };
 
-  const handleCategoriesFetch = useCallback(async () => {
-    if (categoryId) {
-      const {data, error} = await supabase
-        .from('exercises')
-        .select('id,name,created_at')
-        .eq('user_id', user?.id)
-        .eq('category', categoryId);
-
-      if (!error && data) {
-        setExercisesList(data);
-      }
-    }
-  }, [user?.id, categoryId]);
+  const handleExercisesListFetch = useCallback(async () => {
+    const exerciseCollection = database.get<ExerciseRecord>('exercises');
+    const exercises = await exerciseCollection
+      .query(Q.where('category_id', categoryId))
+      .fetch();
+    setExercisesList(exercises);
+  }, [categoryId]);
 
   useEffect(() => {
-    if (user?.id) {
-      handleCategoriesFetch();
-    }
-  }, [handleCategoriesFetch, user?.id]);
+    handleExercisesListFetch();
+  }, [handleExercisesListFetch]);
   return (
     <PageLayout title="ProFit">
       <View style={styles.container}>

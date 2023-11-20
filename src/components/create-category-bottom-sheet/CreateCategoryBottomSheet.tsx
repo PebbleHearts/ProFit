@@ -5,6 +5,7 @@ import {ScaledSheet} from 'react-native-size-matters';
 import CustomBottomSheet from '../bottom-sheet/BottomSheet';
 import CustomButton from '../custom-button/CustomButton';
 import CustomTextInput from '../custom-text-input/CustomTextInput';
+import colors from '../../constants/colors';
 
 type CreateCategoryBottomSheet = {
   bottomSheetRef: any;
@@ -29,6 +30,7 @@ const CreateCategoryBottomSheet: FC<CreateCategoryBottomSheet> = ({
           <CustomTextInput
             value={categoryName}
             onChangeText={val => setCategoryName(val)}
+            inputStyle={styles.inputTextStyle}
           />
         </ScrollView>
         <CustomButton
@@ -56,6 +58,9 @@ const styles = ScaledSheet.create({
   },
   submitButtonContainer: {
     marginBottom: '10@ms',
+  },
+  inputTextStyle: {
+    color: colors.buttonText,
   },
 });
 

@@ -13,6 +13,9 @@ const styles = ScaledSheet.create({
     marginBottom: '10@vs',
     color: colors.buttonText,
   },
+  addText: {
+    color: colors.buttonText,
+  },
 });
 
 export default styles;

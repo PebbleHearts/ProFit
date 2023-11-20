@@ -123,7 +123,7 @@ const HomePage: FC<HomePageProps> = () => {
             <TouchableOpacity
               key="add button"
               onPress={() => bottomSheetRef?.current?.open()}>
-              <Text>Add</Text>
+              <Text style={styles.addText}>Add</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.dateSelectionContainer}>

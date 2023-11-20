@@ -4,8 +4,6 @@ import {
   CardStyleInterpolators,
 } from '@react-navigation/stack';
 
-import LoginPage from '../pages/LoginPage/LoginPage';
-import AuthPreCheck from '../pages/auth-pre-check/AuthPreCheck';
 import TabNavigator from './TabNavigator';
 
 export type RootStackParamList = {
@@ -22,13 +20,11 @@ const RootStackNavigator = () => {
   return (
     <Stack.Navigator
       id="rootStack"
-      initialRouteName="AuthPreCheck"
+      initialRouteName="TabNavigator"
       screenOptions={{
         headerShown: false,
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}>
-      <Stack.Screen name="AuthPreCheck" component={AuthPreCheck} />
-      <Stack.Screen name="LoginPage" component={LoginPage} />
       <Stack.Screen name="TabNavigator" component={TabNavigator} />
     </Stack.Navigator>
   );

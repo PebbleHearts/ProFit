@@ -57,7 +57,7 @@ const CategoryDetails: FC<CategoryDetailsProps> = ({route}) => {
           ))}
         </View>
         <TouchableOpacity onPress={() => bottomSheetRef?.current?.open()}>
-          <Text>Add new</Text>
+          <Text style={styles.addText}>Add new</Text>
         </TouchableOpacity>
         <CreateExerciseBottomSheet
           bottomSheetRef={bottomSheetRef}

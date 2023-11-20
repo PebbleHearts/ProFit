@@ -20,6 +20,7 @@ const CustomBottomSheet: FC<CustomBottomSheetProps> = ({
   onClose,
 }) => {
   const insets = useSafeAreaInsets();
+  const styles = stylesFunc(insets);
   return (
     <RBSheet
       ref={ref => {
@@ -29,7 +30,7 @@ const CustomBottomSheet: FC<CustomBottomSheetProps> = ({
       closeDuration={300}
       openDuration={300}
       customStyles={{
-        container: [styles.containerStyle, {paddingBottom: insets.bottom}],
+        container: styles.containerStyle,
       }}>
       <>
         <TouchableOpacity
@@ -44,27 +45,29 @@ const CustomBottomSheet: FC<CustomBottomSheetProps> = ({
   );
 };
 
-const styles = ScaledSheet.create({
-  closeIconView: {
-    width: '30@ms',
-    height: '30@ms',
-    borderRadius: '30@ms',
-    position: 'absolute',
-    top: '-40@ms',
-    right: '5@ms',
-    backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  closeIconViewText: {
-    color: colors.buttonText,
-  },
-  containerStyle: {
-    padding: '20@ms',
-    borderTopRightRadius: '20@ms',
-    borderTopLeftRadius: '20@ms',
-    overflow: 'visible',
-  },
-});
+const stylesFunc = (insets: any) =>
+  ScaledSheet.create({
+    closeIconView: {
+      width: '30@ms',
+      height: '30@ms',
+      borderRadius: '30@ms',
+      position: 'absolute',
+      top: '-40@ms',
+      right: '5@ms',
+      backgroundColor: 'white',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    closeIconViewText: {
+      color: colors.buttonText,
+    },
+    containerStyle: {
+      padding: '20@ms',
+      borderTopRightRadius: '20@ms',
+      borderTopLeftRadius: '20@ms',
+      overflow: 'visible',
+      paddingBottom: insets.bottom,
+    },
+  });
 
 export default CustomBottomSheet;

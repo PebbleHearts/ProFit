@@ -77,7 +77,7 @@ const Categories: FC<CategoriesProps> = ({navigation}) => {
           />
         ))}
         <TouchableOpacity onPress={() => bottomSheetRef?.current?.open()}>
-          <Text>Add new</Text>
+          <Text style={styles.addText}>Add new</Text>
         </TouchableOpacity>
         <CreateCategoryBottomSheet
           bottomSheetRef={bottomSheetRef}

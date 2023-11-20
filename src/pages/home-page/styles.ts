@@ -24,6 +24,9 @@ const styles = ScaledSheet.create({
     backgroundColor: 'white',
     overflow: 'hidden',
   },
+  addText: {
+    color: colors.buttonText,
+  },
 });
 
 export default styles;

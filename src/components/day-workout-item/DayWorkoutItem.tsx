@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 
 import styles from './styles';
 
@@ -11,25 +11,50 @@ type DayWorkoutItemProps = {
       name: string;
     };
   };
-  info: {
-    info: string;
-    count: number;
-    weight: number;
-  }[];
+  info: string;
+  records: any[];
+  onEdit: () => void;
+  onDelete: () => void;
 };
 
-const DayWorkoutItem: FC<DayWorkoutItemProps> = ({exercise, info}) => {
+const DayWorkoutItem: FC<DayWorkoutItemProps> = ({
+  exercise,
+  info,
+  records,
+  onEdit,
+  onDelete,
+}) => {
   return (
     <View style={styles.card}>
-      <Text style={styles.dayWorkoutName}>{exercise?.name}</Text>
-
-      {/* {info?.map((item, index) => {
-        return (
-          <Text key={`item${index}`}>
-            Weight: {item.weight}, Count{item.count}
-          </Text>
-        );
-      })} */}
+      <View style={styles.cardNameAndCtaRow}>
+        <Text style={styles.dayWorkoutName}>{exercise?.name}</Text>
+        <View>
+          <View style={styles.ctaContainer}>
+            <TouchableOpacity
+              onPress={onEdit}
+              style={styles.deleteButton}
+              activeOpacity={0.8}>
+              <Text style={styles.ctaText}>Edit</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={onDelete}
+              style={styles.deleteButton}
+              activeOpacity={0.8}>
+              <Text style={styles.ctaText}>Delete</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+      <View>
+        {records?.map((item, index) => {
+          return (
+            <Text key={`item${index}`}>
+              Set {index + 1} :- Weight: {item.weight}, Count: {item.reps}
+            </Text>
+          );
+        })}
+        {info && <Text>{info}</Text>}
+      </View>
     </View>
   );
 };

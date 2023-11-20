@@ -17,13 +17,18 @@ import {WorkoutRecord} from '../../database/model/Workout';
 import {CategoryRecord} from '../../database/model/Category';
 import {ExerciseRecord} from '../../database/model/Exercise';
 import {getDateStringFromDateObject} from '../../utils/calender';
+import EditWorkoutBottomSheet from '../../components/edit-workout-bottom-sheet/EditWorkoutBottomSheet';
 
 const HomePage: FC<HomePageProps> = () => {
   const [categoriesList, setCategoriesList] = useState<any>([]);
   const [workouts, setWorkouts] = useState<any>([]);
   const [exercisesList, setExercisesList] = useState<any>([]);
   const bottomSheetRef = useRef<RBSheet>(null);
+  const editBottomSheetRef = useRef<RBSheet>(null);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [selectedWorkout, setSelectedWorkout] = useState<WorkoutRecord | null>(
+    null,
+  );
 
   const handleCategoriesFetch = useCallback(async () => {
     const exerciseCollection = database.get<CategoryRecord>('categories');
@@ -95,7 +100,7 @@ const HomePage: FC<HomePageProps> = () => {
           database.get('workouts').create((workout: any) => {
             workout.date = date;
             workout.exercise.set(exerciseItem);
-            workout.records = 'record';
+            workout.records = [];
             workout.info = 'info';
           });
         });
@@ -105,6 +110,50 @@ const HomePage: FC<HomePageProps> = () => {
       console.log(e);
     }
     bottomSheetRef.current?.close();
+  };
+
+  const handleDelete = (workoutId: string) => async () => {
+    const workoutItem = await database
+      .get<WorkoutRecord>('workouts')
+      .find(workoutId);
+    await database.write(async () => {
+      await workoutItem.destroyPermanently();
+    });
+    handleWorkoutFetch();
+  };
+
+  const handleEdit = (workoutId: string) => async () => {
+    const workoutItem = await database
+      .get<WorkoutRecord>('workouts')
+      .find(workoutId);
+    setSelectedWorkout(workoutItem);
+    editBottomSheetRef?.current?.open();
+  };
+
+  const handleEditExerciseBottomSheetClose = () => {
+    setExercisesList([]);
+    editBottomSheetRef?.current?.close();
+  };
+
+  const completeWorkoutEdit = async ({
+    info,
+    records,
+  }: {
+    info: string;
+    records: any[];
+  }) => {
+    const workoutItem = await database
+      .get<WorkoutRecord>('workouts')
+      .find(selectedWorkout?.id || '');
+    await database.write(async () => {
+      await workoutItem.update((workout: any) => {
+        workout.records = records;
+        workout.info = info;
+      });
+    });
+    setSelectedWorkout(null);
+    handleEditExerciseBottomSheetClose();
+    handleWorkoutFetch();
   };
 
   return (
@@ -117,7 +166,10 @@ const HomePage: FC<HomePageProps> = () => {
               <DayWorkoutItem
                 key={item.id}
                 exercise={item.exercise}
+                records={item.records}
                 info={item.info}
+                onEdit={handleEdit(item.id)}
+                onDelete={handleDelete(item.id)}
               />
             ))}
             <TouchableOpacity
@@ -141,6 +193,14 @@ const HomePage: FC<HomePageProps> = () => {
           exercisesList={exercisesList}
           handleDailyExerciseAddition={onDailyExerciseAddition}
         />
+        {selectedWorkout && (
+          <EditWorkoutBottomSheet
+            bottomSheetRef={editBottomSheetRef}
+            selectedWorkout={selectedWorkout}
+            onClose={handleEditExerciseBottomSheetClose}
+            onEditSubmit={completeWorkoutEdit}
+          />
+        )}
       </>
     </PageLayout>
   );

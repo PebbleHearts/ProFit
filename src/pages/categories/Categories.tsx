@@ -4,18 +4,15 @@ import {View, Text, TouchableOpacity} from 'react-native';
 
 import PageLayout from '../../Layout/PageLayout';
 import CategoryItem from '../../components/category-item/CategoryItem';
-import {useUserContext} from '../../hooks/UserContext';
 import {database} from '../../database/init';
 
 import {CategoriesProps} from './types';
 import styles from './styles';
-import {supabase} from '../../lib/initSupabase';
 import CreateCategoryBottomSheet from '../../components/create-category-bottom-sheet/CreateCategoryBottomSheet';
 import {CategoryRecord} from '../../database/model/Category';
 
 const Categories: FC<CategoriesProps> = ({navigation}) => {
   const bottomSheetRef = useRef<RBSheet>(null);
-  const {user} = useUserContext();
 
   const [categoriesList, setCategoriesList] = useState<any>([]);
 
@@ -23,30 +20,21 @@ const Categories: FC<CategoriesProps> = ({navigation}) => {
     bottomSheetRef?.current?.close();
 
   const handleCategoriesFetch = useCallback(async () => {
-    const exerciseCollection = database.get<CategoryRecord>('categories');
-    const categories = await exerciseCollection.query().fetch();
+    const categoriesCollection = database.get<CategoryRecord>('categories');
+    const categories = await categoriesCollection.query().fetch();
+    console.log(categories);
     setCategoriesList(categories);
   }, []);
+  console.log(categoriesList);
 
   useEffect(() => {
-    if (user?.id) {
-      handleCategoriesFetch();
-    }
-  }, [handleCategoriesFetch, user?.id]);
+    handleCategoriesFetch();
+  }, [handleCategoriesFetch]);
 
   const handleCategoryClick =
     (categoryId: string, categoryName: string) => () => {
       navigation.navigate('CategoryDetails', {categoryId, categoryName});
     };
-
-  // TODO: use this function to create a category when needed
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const onAddCategory = async () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const {error} = await supabase
-      .from('categories')
-      .insert({user_id: user?.id, name: 'Chest'});
-  };
 
   const handleCategoryCreation = async ({name}: {name: string}) => {
     const categoriesCollection = database.get<CategoryRecord>('categories');

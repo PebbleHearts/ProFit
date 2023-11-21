@@ -26,35 +26,37 @@ const DayWorkoutItem: FC<DayWorkoutItemProps> = ({
 }) => {
   return (
     <View style={styles.card}>
-      <View style={styles.cardNameAndCtaRow}>
-        <Text style={styles.dayWorkoutName}>{exercise?.name}</Text>
-        <View>
-          <View style={styles.ctaContainer}>
-            <TouchableOpacity
-              onPress={onEdit}
-              style={styles.deleteButton}
-              activeOpacity={0.8}>
-              <Text style={styles.ctaText}>Edit</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={onDelete}
-              style={styles.deleteButton}
-              activeOpacity={0.8}>
-              <Text style={styles.ctaText}>Delete</Text>
-            </TouchableOpacity>
-          </View>
+      <View style={styles.cardHeader}>
+        <Text style={styles.cardHeaderText}>{exercise?.name}</Text>
+        <View style={styles.ctaContainer}>
+          <TouchableOpacity onPress={onEdit} activeOpacity={0.8} hitSlop={5}>
+            <Text style={styles.ctaText}>Edit</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onDelete} activeOpacity={0.8} hitSlop={5}>
+            <Text style={styles.ctaText}>Delete</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View>
         {records?.map((item, index) => {
           return (
-            <Text key={`item${index}`}>
-              Set {index + 1} :- Weight: {item.weight}, Count: {item.reps}
-            </Text>
+            <View style={styles.setCard}>
+              <Text style={styles.setHeader}>Set {index + 1}</Text>
+              <View style={styles.setDetail}>
+                <Text style={styles.setDetailText}>
+                  Weight:{' '}
+                  <Text style={styles.setDetailTextBold}>{item.weight}Kg</Text>
+                </Text>
+                <Text style={styles.setDetailText}>
+                  Reps:{' '}
+                  <Text style={styles.setDetailTextBold}>{item.reps}</Text>
+                </Text>
+              </View>
+            </View>
           );
         })}
-        {info && <Text>{info}</Text>}
       </View>
+      {info && <Text style={styles.infoText}>{info}</Text>}
     </View>
   );
 };

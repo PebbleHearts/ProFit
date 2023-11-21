@@ -1,4 +1,5 @@
 import {ScaledSheet} from 'react-native-size-matters';
+import colors from '../../constants/colors';
 
 const styles = ScaledSheet.create({
   container: {
@@ -14,14 +15,22 @@ const styles = ScaledSheet.create({
     flexDirection: 'row',
     gap: 10,
   },
+  setItemInput: {
+    flex: 1,
+    color: 'black',
+  },
   setItemInputField: {
     flex: 1,
+    color: 'black',
   },
   scrollViewContentContainerStyle: {
     paddingRight: 1,
   },
   fieldHeadingAndItemsContainer: {
     gap: 5,
+  },
+  addSetText: {
+    color: colors.buttonText,
   },
   submitButtonContainer: {
     marginBottom: '10@ms',

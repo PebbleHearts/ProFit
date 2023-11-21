@@ -1,5 +1,5 @@
 import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 
 import {Q} from '@nozbe/watermelondb';
@@ -101,7 +101,7 @@ const HomePage: FC<HomePageProps> = () => {
             workout.date = date;
             workout.exercise.set(exerciseItem);
             workout.records = [];
-            workout.info = 'info';
+            workout.info = '';
           });
         });
       }
@@ -161,23 +161,25 @@ const HomePage: FC<HomePageProps> = () => {
       <>
         <View style={styles.container}>
           <Text style={styles.title}>Workouts</Text>
-          <View style={styles.workoutsListContainer}>
-            {workouts?.map((item: any) => (
-              <DayWorkoutItem
-                key={item.id}
-                exercise={item.exercise}
-                records={item.records}
-                info={item.info}
-                onEdit={handleEdit(item.id)}
-                onDelete={handleDelete(item.id)}
-              />
-            ))}
-            <TouchableOpacity
-              key="add button"
-              onPress={() => bottomSheetRef?.current?.open()}>
-              <Text style={styles.addText}>Add</Text>
-            </TouchableOpacity>
-          </View>
+          <ScrollView>
+            <View style={styles.workoutsListContainer}>
+              {workouts?.map((item: any) => (
+                <DayWorkoutItem
+                  key={item.id}
+                  exercise={item.exercise}
+                  records={item.records}
+                  info={item.info}
+                  onEdit={handleEdit(item.id)}
+                  onDelete={handleDelete(item.id)}
+                />
+              ))}
+              <TouchableOpacity
+                key="add button"
+                onPress={() => bottomSheetRef?.current?.open()}>
+                <Text style={styles.addText}>Add</Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
           <View style={styles.dateSelectionContainer}>
             <CalenderStrip
               selectedDate={selectedDate}

@@ -80,16 +80,18 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
               </View>
               {workout?.records?.map((recordItem, index) => {
                 return (
-                  <View style={styles.setItemRow}>
+                  <View style={styles.setItemRow} key={`${index}`}>
                     <CustomTextInput
                       value={recordItem.weight}
                       onChangeText={handleEditWeight('weight', index)}
-                      containerStyle={styles.setItemInputField}
+                      containerStyle={styles.setItemInput}
+                      inputStyle={styles.setItemInputField}
                     />
                     <CustomTextInput
                       value={recordItem.reps}
                       onChangeText={handleEditWeight('reps', index)}
-                      containerStyle={styles.setItemInputField}
+                      containerStyle={styles.setItemInput}
+                      inputStyle={styles.setItemInputField}
                     />
                   </View>
                 );
@@ -97,7 +99,7 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
             </View>
             <View>
               <TouchableOpacity onPress={handleAddNewSet}>
-                <Text>Add +</Text>
+                <Text style={styles.addSetText}>Add +</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>

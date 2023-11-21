@@ -61,8 +61,6 @@ const HomePage: FC<HomePageProps> = () => {
     setWorkouts(formattedCurrentWorkout);
   }, [selectedDate]);
 
-  console.log(workouts);
-
   useEffect(() => {
     handleCategoriesFetch();
   }, [handleCategoriesFetch]);

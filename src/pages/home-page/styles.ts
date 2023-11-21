@@ -7,12 +7,17 @@ const styles = ScaledSheet.create({
     flex: 1,
     flexDirection: 'column',
   },
+  titleSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingBottom: '10@vs',
+    paddingHorizontal: '10@s',
+  },
   title: {
     fontSize: '19@ms',
     fontWeight: 'bold',
-    marginBottom: '10@vs',
     color: colors.buttonText,
-    marginLeft: '5@s',
   },
   workoutsListContainer: {
     flex: 1,

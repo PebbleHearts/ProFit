@@ -34,7 +34,7 @@ const styles = ScaledSheet.create({
     flexDirection: 'column',
     borderBottomWidth: '1@mvs',
     borderBottomColor: Colors.cardBackground,
-    paddingVertical: '4@mvs',
+    paddingVertical: '6@mvs',
     paddingHorizontal: '15@ms',
   },
   setHeader: {

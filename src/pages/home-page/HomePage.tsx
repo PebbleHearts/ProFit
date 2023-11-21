@@ -158,7 +158,14 @@ const HomePage: FC<HomePageProps> = () => {
     <PageLayout title="ProFit">
       <>
         <View style={styles.container}>
-          <Text style={styles.title}>Workouts</Text>
+          <View style={styles.titleSection}>
+            <Text style={styles.title}>Workouts</Text>
+            <TouchableOpacity
+              key="add button"
+              onPress={() => bottomSheetRef?.current?.open()}>
+              <Text style={styles.addText}>Add</Text>
+            </TouchableOpacity>
+          </View>
           <ScrollView>
             <View style={styles.workoutsListContainer}>
               {workouts?.map((item: any) => (
@@ -171,11 +178,6 @@ const HomePage: FC<HomePageProps> = () => {
                   onDelete={handleDelete(item.id)}
                 />
               ))}
-              <TouchableOpacity
-                key="add button"
-                onPress={() => bottomSheetRef?.current?.open()}>
-                <Text style={styles.addText}>Add</Text>
-              </TouchableOpacity>
             </View>
           </ScrollView>
           <View style={styles.dateSelectionContainer}>

@@ -40,7 +40,7 @@ const DayWorkoutItem: FC<DayWorkoutItemProps> = ({
       <View>
         {records?.map((item, index) => {
           return (
-            <View style={styles.setCard}>
+            <View style={styles.setCard} key={`${index}`}>
               <Text style={styles.setHeader}>Set {index + 1}</Text>
               <View style={styles.setDetail}>
                 <Text style={styles.setDetailText}>

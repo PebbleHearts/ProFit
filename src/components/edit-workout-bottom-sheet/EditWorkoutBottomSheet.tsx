@@ -43,7 +43,6 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
       };
       if (prevWorkout) {
         prevWorkout.records[index][fieldType] = val;
-        console.log(prevWorkout?.records[0]);
       }
       return prevWorkout;
     });

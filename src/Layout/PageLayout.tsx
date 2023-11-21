@@ -20,7 +20,6 @@ const PageLayout = ({children, title}: PageLayoutProps) => {
   const googleLogin = async () => {
     await GoogleSignin.hasPlayServices();
     const userInfo = await GoogleSignin.signIn();
-    console.log(userInfo);
     handleGetAuthStatus();
     return userInfo;
   };
@@ -52,7 +51,6 @@ const PageLayout = ({children, title}: PageLayoutProps) => {
         },
       },
     );
-    console.log(res.data);
     const uploadRes = await axios.patch(
       `https://www.googleapis.com/upload/drive/v3/files/${res.data.id}`,
       fileContent,
@@ -63,7 +61,6 @@ const PageLayout = ({children, title}: PageLayoutProps) => {
         },
       },
     );
-    console.log(uploadRes.data);
   };
 
   const createFolder = async () => {
@@ -83,7 +80,6 @@ const PageLayout = ({children, title}: PageLayoutProps) => {
         },
       },
     );
-    console.log(res);
   };
 
   const listFiles = async () => {
@@ -109,7 +105,6 @@ const PageLayout = ({children, title}: PageLayoutProps) => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    console.log(res.data);
   };
 
   const handleGetAuthStatus = async () => {

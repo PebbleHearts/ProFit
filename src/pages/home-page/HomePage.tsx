@@ -100,7 +100,7 @@ const HomePage: FC<HomePageProps> = () => {
           database.get('workouts').create((workout: any) => {
             workout.date = date;
             workout.exercise.set(exerciseItem);
-            workout.records = [];
+            workout.records = [{weight: '0', reps: '0'}];
             workout.info = '';
           });
         });

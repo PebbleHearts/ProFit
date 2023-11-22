@@ -23,7 +23,7 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: '15@ms',
-    paddingVertical: '7@ms',
+    paddingTop: '7@ms',
     borderTopRightRadius: '10@ms',
     borderTopLeftRadius: '10@ms',
   },

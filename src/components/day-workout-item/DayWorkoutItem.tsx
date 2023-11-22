@@ -39,8 +39,14 @@ const DayWorkoutItem: FC<DayWorkoutItemProps> = ({
       </View>
       <View>
         {records?.map((item, index) => {
+          const isLastCard = index === records.length - 1;
           return (
-            <View style={styles.setCard} key={`${index}`}>
+            <View
+              style={[
+                styles.setCard,
+                !info && isLastCard && styles.lastSetCard,
+              ]}
+              key={`${index}`}>
               <Text style={styles.setHeader}>Set {index + 1}</Text>
               <View style={styles.setDetail}>
                 <Text style={styles.setDetailText}>

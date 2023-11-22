@@ -22,10 +22,8 @@ const Categories: FC<CategoriesProps> = ({navigation}) => {
   const handleCategoriesFetch = useCallback(async () => {
     const categoriesCollection = database.get<CategoryRecord>('categories');
     const categories = await categoriesCollection.query().fetch();
-    console.log(categories);
     setCategoriesList(categories);
   }, []);
-  console.log(categoriesList);
 
   useEffect(() => {
     handleCategoriesFetch();

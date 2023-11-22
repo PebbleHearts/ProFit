@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Pressable} from 'react-native';
+import {View, Pressable, Text, TouchableOpacity} from 'react-native';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import {ScaledSheet} from 'react-native-size-matters';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -76,27 +76,27 @@ export default TabBar;
 const styles = ScaledSheet.create({
   mainContainer: {
     paddingTop: '7@ms',
-    paddingHorizontal: '20@ms',
     backgroundColor: 'white',
   },
   innerContainer: {
     flexDirection: 'row',
     backgroundColor: Colors.secondaryBlue,
-    borderRadius: 25,
-    marginBottom: '5@ms',
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
   },
   mainItemContainer: {
     flex: 1,
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 5,
     borderRadius: 1,
     borderColor: 'grey',
   },
   item: {
-    borderRadius: 20,
-    width: 40,
-    height: 40,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    flex: 1,
+    height: 45,
     backgroundColor: Colors.secondaryBlue,
   },
   focusedItem: {
@@ -107,14 +107,5 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     flex: 1,
     padding: 10,
-  },
-  addButton: {
-    width: 60,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  hiddenAddButton: {
-    width: 0,
-    overflow: 'hidden',
   },
 });

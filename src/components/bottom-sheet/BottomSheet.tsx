@@ -27,8 +27,10 @@ const CustomBottomSheet: FC<CustomBottomSheetProps> = ({
         bottomSheetRef.current = ref;
       }}
       height={height}
+      closeOnPressMask={false}
       closeDuration={300}
       openDuration={300}
+      keyboardAvoidingViewEnabled
       customStyles={{
         container: styles.containerStyle,
       }}>

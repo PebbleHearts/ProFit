@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import {ScrollView, View} from 'react-native';
+import {ScrollView, Text, View} from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
 
 import CustomBottomSheet from '../bottom-sheet/BottomSheet';
@@ -19,12 +19,21 @@ const CreateCategoryBottomSheet: FC<CreateCategoryBottomSheet> = ({
   handleExerciseCreation,
 }) => {
   const [categoryName, setCategoryName] = useState('');
+
+  const resetState = () => {
+    setCategoryName('');
+  };
+  const handleClose = () => {
+    resetState();
+    onClose();
+  };
   return (
     <CustomBottomSheet
       bottomSheetRef={bottomSheetRef}
-      onClose={onClose}
+      onClose={handleClose}
       height={200}>
       <View style={styles.container}>
+        <Text style={styles.headerText}>Enter Category Name</Text>
         <ScrollView
           contentContainerStyle={styles.scrollViewContentContainerStyle}>
           <CustomTextInput
@@ -37,6 +46,7 @@ const CreateCategoryBottomSheet: FC<CreateCategoryBottomSheet> = ({
           label="Create"
           onPress={() => handleExerciseCreation({name: categoryName})}
           containerStyle={styles.submitButtonContainer}
+          labelStyle={styles.submitButtonText}
         />
       </View>
     </CustomBottomSheet>
@@ -48,7 +58,7 @@ const styles = ScaledSheet.create({
     flex: 1,
   },
   headerText: {
-    fontSize: '15@ms',
+    fontSize: '17@ms',
     fontWeight: 'bold',
     color: 'black',
     marginBottom: '10@vs',
@@ -58,9 +68,13 @@ const styles = ScaledSheet.create({
   },
   submitButtonContainer: {
     marginBottom: '10@ms',
+    backgroundColor: colors.primaryBlue,
   },
   inputTextStyle: {
     color: colors.buttonText,
+  },
+  submitButtonText: {
+    color: colors.white,
   },
 });
 

@@ -11,7 +11,7 @@ const styles = ScaledSheet.create({
     marginBottom: '10@mvs',
   },
   cardHeader: {
-    backgroundColor: Colors.sixthBlue,
+    backgroundColor: '#516987',
     paddingVertical: '10@mvs',
     flexDirection: 'row',
     alignItems: 'center',
@@ -33,9 +33,12 @@ const styles = ScaledSheet.create({
   setCard: {
     flexDirection: 'column',
     borderBottomWidth: '1@mvs',
-    borderBottomColor: Colors.cardBackground,
     paddingVertical: '6@mvs',
     paddingHorizontal: '15@ms',
+    borderBottomColor: Colors.cardBackground,
+  },
+  lastSetCard: {
+    borderBottomWidth: 0,
   },
   setHeader: {
     fontSize: '15@mvs',

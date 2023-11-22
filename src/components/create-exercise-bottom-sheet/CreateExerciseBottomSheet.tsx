@@ -21,10 +21,17 @@ const CreateExerciseBottomSheet: FC<CreateExerciseBottomSheet> = ({
   handleExerciseCreation,
 }) => {
   const [exerciseName, setExerciseName] = useState('');
+  const resetState = () => {
+    setExerciseName('');
+  };
+  const handleClose = () => {
+    resetState();
+    onClose();
+  };
   return (
     <CustomBottomSheet
       bottomSheetRef={bottomSheetRef}
-      onClose={onClose}
+      onClose={handleClose}
       height={200}>
       <View style={styles.container}>
         <Text style={styles.headerText}>Add {categoryName} Workout</Text>
@@ -40,6 +47,7 @@ const CreateExerciseBottomSheet: FC<CreateExerciseBottomSheet> = ({
           label="Create"
           onPress={() => handleExerciseCreation({name: exerciseName})}
           containerStyle={styles.submitButtonContainer}
+          labelStyle={styles.submitButtonText}
         />
       </View>
     </CustomBottomSheet>
@@ -51,7 +59,7 @@ const styles = ScaledSheet.create({
     flex: 1,
   },
   headerText: {
-    fontSize: '15@ms',
+    fontSize: '17@ms',
     fontWeight: 'bold',
     color: 'black',
     marginBottom: '10@vs',
@@ -61,9 +69,13 @@ const styles = ScaledSheet.create({
   },
   submitButtonContainer: {
     marginBottom: '10@ms',
+    backgroundColor: colors.primaryBlue,
   },
   inputTextStyle: {
     color: colors.buttonText,
+  },
+  submitButtonText: {
+    color: colors.white,
   },
 });
 

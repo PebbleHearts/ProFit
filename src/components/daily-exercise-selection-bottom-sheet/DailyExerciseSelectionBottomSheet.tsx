@@ -86,6 +86,7 @@ const DailyExerciseSelectionBottomSheet: FC<
           label="Add"
           onPress={() => handleDailyExerciseAddition(selectedExercises)}
           containerStyle={styles.submitButtonContainer}
+          labelStyle={styles.submitButtonText}
         />
       </View>
     </CustomBottomSheet>

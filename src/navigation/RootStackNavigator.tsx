@@ -7,9 +7,7 @@ import {
 import TabNavigator from './TabNavigator';
 
 export type RootStackParamList = {
-  LoginPage: undefined;
   TabNavigator: undefined;
-  AuthPreCheck: undefined;
 };
 
 // TODO: replace @react-navigation/stack with  @react-navigation/native-stack in order to remove the warning that show at the beginning

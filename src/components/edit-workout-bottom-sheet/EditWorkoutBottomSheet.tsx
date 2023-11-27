@@ -50,6 +50,20 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
     });
   };
 
+  const handleDeleteSet = (index: number) => () => {
+    setWorkouts(prev => {
+      const prevWorkout: WorkoutRecord = {
+        records: prev?.records || '',
+        info: prev?.info || '',
+        id: prev?.id || '',
+      };
+      if (prevWorkout) {
+        prevWorkout.records.splice(index, 1);
+      }
+      return prevWorkout;
+    });
+  };
+
   const handleEditWeight = (fieldType: string, index: number) => val => {
     setWorkouts(prev => {
       const prevWorkout: WorkoutRecord = {
@@ -72,7 +86,11 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
         id: prev?.id || '',
       };
       if (prevWorkout) {
-        prevWorkout.records.push({weight: '0', reps: '0'});
+        const lastSet = prev?.records[prev.records.length - 1 || 0];
+        prevWorkout.records.push({
+          weight: lastSet?.weight || '0',
+          reps: lastSet?.reps || '0',
+        });
       }
       return prevWorkout;
     });
@@ -80,7 +98,7 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
 
   // TODO: replace the 600 with the 60 or 70 percent of the height of the device
   const bottomSheetHeight = Math.min(
-    Math.max((selectedWorkout?.records.length || 1) * 58 + 250, 300),
+    Math.max((selectedWorkout?.records.length || 1) * 58 + 260, 300),
     600,
   );
   console.log({bottomSheetHeight});
@@ -101,7 +119,7 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
           <ScrollView
             contentContainerStyle={styles.scrollViewContentContainerStyle}>
             <View style={styles.fieldHeadingAndItemsContainer}>
-              <Text style={styles.setItemInputField}>Description</Text>
+              <Text style={styles.setItemInputFieldHeader}>Description</Text>
               <CustomTextInput
                 value={workout?.info || ''}
                 onChangeText={handleDescriptionEdit}
@@ -109,8 +127,8 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
                 inputStyle={styles.setItemInputField}
               />
               <View style={styles.setItemRow}>
-                <Text style={styles.setItemInputField}>Weight</Text>
-                <Text style={styles.setItemInputField}>Reps</Text>
+                <Text style={styles.setItemInputFieldHeader}>Weight</Text>
+                <Text style={styles.setItemInputFieldHeader}>Reps</Text>
               </View>
               {workout?.records?.map((recordItem, index) => {
                 return (
@@ -127,8 +145,11 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
                       containerStyle={styles.setItemInput}
                       inputStyle={styles.setItemInputField}
                     />
-                    <TouchableOpacity hitSlop={5}>
-                      <Text>X</Text>
+                    <TouchableOpacity
+                      hitSlop={5}
+                      style={styles.removeSetButton}
+                      onPress={handleDeleteSet(index)}>
+                      <Text style={styles.removeSetButtonText}>X</Text>
                     </TouchableOpacity>
                   </View>
                 );

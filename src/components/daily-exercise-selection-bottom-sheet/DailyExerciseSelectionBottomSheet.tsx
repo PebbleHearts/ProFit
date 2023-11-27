@@ -84,7 +84,12 @@ const DailyExerciseSelectionBottomSheet: FC<
         )}
         <CustomButton
           label="Add"
-          onPress={() => handleDailyExerciseAddition(selectedExercises)}
+          onPress={() => {
+            setTimeout(() => {
+              resetState();
+            }, 1000);
+            handleDailyExerciseAddition(selectedExercises);
+          }}
           containerStyle={styles.submitButtonContainer}
           labelStyle={styles.submitButtonText}
         />

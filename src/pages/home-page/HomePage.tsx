@@ -1,6 +1,7 @@
 import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
 import {View, Text, ScrollView} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
+import {DateData} from 'react-native-calendars';
 
 import {Q} from '@nozbe/watermelondb';
 import PageLayout from '../../Layout/PageLayout';
@@ -19,13 +20,16 @@ import {CategoryRecord} from '../../database/model/Category';
 import {ExerciseRecord} from '../../database/model/Exercise';
 import {getDateStringFromDateObject} from '../../utils/calender';
 import EditWorkoutBottomSheet from '../../components/edit-workout-bottom-sheet/EditWorkoutBottomSheet';
+import CalenderBottomSheet from '../../components/calender-bottom-sheet/CalenderBottomSheet';
 
 const HomePage: FC<HomePageProps> = () => {
   const [categoriesList, setCategoriesList] = useState<any>([]);
   const [workouts, setWorkouts] = useState<any>([]);
   const [exercisesList, setExercisesList] = useState<any>([]);
+  const calenderStripRef = useRef<any>(null);
   const bottomSheetRef = useRef<RBSheet>(null);
   const editBottomSheetRef = useRef<RBSheet>(null);
+  const calenderBottomSheetRef = useRef<RBSheet>(null);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedWorkout, setSelectedWorkout] = useState<WorkoutRecord | null>(
     null,
@@ -85,9 +89,19 @@ const HomePage: FC<HomePageProps> = () => {
     bottomSheetRef?.current?.close();
   };
 
+  const handleCalenderBottomSheetClose = () => {
+    calenderBottomSheetRef?.current?.close();
+  };
+
   const handleDateSelection = useCallback((value: Date) => {
     setSelectedDate(value);
   }, []);
+
+  const handleCalenderBottomSheetDateSelection = (date: DateData) => {
+    console.log('date selected: ', date);
+    calenderStripRef.current.resetInitialDate(date.dateString);
+    handleCalenderBottomSheetClose();
+  };
 
   const onDailyExerciseAddition = async (exerciseIds: string[]) => {
     const date = getDateStringFromDateObject(selectedDate);
@@ -182,8 +196,12 @@ const HomePage: FC<HomePageProps> = () => {
           />
           <View style={styles.dateSelectionContainer}>
             <CalenderStrip
+              ref={calenderStripRef}
               selectedDate={selectedDate}
               onDateSelection={handleDateSelection}
+              handleMonthYearLabelClick={() => {
+                calenderBottomSheetRef.current?.open();
+              }}
             />
           </View>
         </View>
@@ -194,6 +212,11 @@ const HomePage: FC<HomePageProps> = () => {
           onCategorySelection={handleCategorySelection}
           exercisesList={exercisesList}
           handleDailyExerciseAddition={onDailyExerciseAddition}
+        />
+        <CalenderBottomSheet
+          bottomSheetRef={calenderBottomSheetRef}
+          onClose={handleCalenderBottomSheetClose}
+          onDateSelection={handleCalenderBottomSheetDateSelection}
         />
         {selectedWorkout && (
           <EditWorkoutBottomSheet

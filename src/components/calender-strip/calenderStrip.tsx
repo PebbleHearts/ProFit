@@ -1,4 +1,4 @@
-import React, {FC, useRef, useState} from 'react';
+import React, {forwardRef, useImperativeHandle, useRef, useState} from 'react';
 import {FlatList, ViewToken, View, Text, TouchableOpacity} from 'react-native';
 
 import {
@@ -15,6 +15,7 @@ import colors from '../../constants/colors';
 type CalenderStripProps = {
   selectedDate: Date;
   onDateSelection: (date: Date) => void;
+  handleMonthYearLabelClick: () => void;
 };
 
 const getLabelString = ({
@@ -58,12 +59,32 @@ const getInitialRangeString = () => {
   });
   return labelString;
 };
-const CalenderStrip: FC<CalenderStripProps> = ({
-  selectedDate,
-  onDateSelection,
-}) => {
+
+// eslint-disable-next-line no-spaced-func
+const CalenderStrip = forwardRef<
+  {resetInitialDate: (dateString: string) => void},
+  CalenderStripProps
+>((props, ref) => {
+  const {selectedDate, onDateSelection, handleMonthYearLabelClick} = props;
+  const flatlistRef = useRef<FlatList>(null);
+
+  useImperativeHandle(ref, () => ({
+    resetInitialDate(dateString: string) {
+      let dateObject = new Date(dateString);
+      const nextList = getPreviousDays({
+        startDate: dateObject,
+        offset: 30,
+      });
+      setDateList(nextList);
+    },
+  }));
+
   const [dateList, setDateList] = useState(
-    getPreviousDays({startDate: new Date(), offset: 30, includeStartDay: true}),
+    getPreviousDays({
+      startDate: new Date(),
+      offset: 30,
+      includeStartDay: true,
+    }),
   );
   const [range, setRange] = useState<string>(getInitialRangeString());
 
@@ -114,11 +135,14 @@ const CalenderStrip: FC<CalenderStripProps> = ({
   return (
     <LinearGradient colors={[colors.thirdBlue, colors.fifthBlue, colors.white]}>
       <View style={styles.monthYearLabelContainer}>
-        <TouchableOpacity style={styles.monthYearLabelCta}>
+        <TouchableOpacity
+          style={styles.monthYearLabelCta}
+          onPress={handleMonthYearLabelClick}>
           <Text style={styles.monthYearLabel}>{range}</Text>
         </TouchableOpacity>
       </View>
       <FlatList
+        ref={flatlistRef}
         data={dateList}
         renderItem={renderDate}
         horizontal={true}
@@ -131,6 +155,6 @@ const CalenderStrip: FC<CalenderStripProps> = ({
       />
     </LinearGradient>
   );
-};
+});
 
 export default CalenderStrip;

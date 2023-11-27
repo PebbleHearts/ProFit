@@ -10,6 +10,7 @@ type CustomBottomSheetProps = {
   bottomSheetRef: any;
   children: JSX.Element;
   height: number;
+  onOpen?: () => void;
   onClose: () => void;
 };
 
@@ -17,6 +18,7 @@ const CustomBottomSheet: FC<CustomBottomSheetProps> = ({
   bottomSheetRef,
   children,
   height,
+  onOpen,
   onClose,
 }) => {
   const insets = useSafeAreaInsets();
@@ -30,6 +32,7 @@ const CustomBottomSheet: FC<CustomBottomSheetProps> = ({
       closeOnPressMask={false}
       closeDuration={300}
       openDuration={300}
+      onOpen={onOpen}
       keyboardAvoidingViewEnabled
       customStyles={{
         container: styles.containerStyle,

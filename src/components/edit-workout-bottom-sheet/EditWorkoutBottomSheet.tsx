@@ -30,9 +30,11 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
     onClose();
   };
 
-  useEffect(() => {
-    setWorkouts(selectedWorkout);
-  }, [selectedWorkout]);
+  const handleOpen = () => {
+    if (selectedWorkout && !workout) {
+      setWorkouts(selectedWorkout);
+    }
+  };
 
   const handleEditWeight = (fieldType: string, index: number) => val => {
     setWorkouts(prev => {
@@ -51,7 +53,7 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
   const handleAddNewSet = () => {
     setWorkouts(prev => {
       const prevWorkout: WorkoutRecord = {
-        records: prev?.records || '',
+        records: prev?.records || [],
         info: prev?.info || '',
         id: prev?.id || '',
       };
@@ -65,6 +67,7 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
   return (
     <CustomBottomSheet
       bottomSheetRef={bottomSheetRef}
+      onOpen={handleOpen}
       onClose={handleClose}
       height={400}>
       <View style={styles.container}>

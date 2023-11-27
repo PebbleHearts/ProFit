@@ -1,5 +1,5 @@
 import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
-import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 
 import {Q} from '@nozbe/watermelondb';
@@ -8,6 +8,7 @@ import {HomePageProps} from './types';
 import {database} from '../../database/init';
 
 import CalenderStrip from '../../components/calender-strip/calenderStrip';
+import FloatingButton from '../../components/floating-button/FloatingButton';
 
 import DayWorkoutItem from '../../components/day-workout-item/DayWorkoutItem';
 import DailyExerciseSelectionBottomSheet from '../../components/daily-exercise-selection-bottom-sheet/DailyExerciseSelectionBottomSheet';
@@ -160,11 +161,6 @@ const HomePage: FC<HomePageProps> = () => {
         <View style={styles.container}>
           <View style={styles.titleSection}>
             <Text style={styles.title}>Workouts</Text>
-            <TouchableOpacity
-              key="add button"
-              onPress={() => bottomSheetRef?.current?.open()}>
-              <Text style={styles.addText}>Add</Text>
-            </TouchableOpacity>
           </View>
           <ScrollView>
             <View style={styles.workoutsListContainer}>
@@ -180,6 +176,10 @@ const HomePage: FC<HomePageProps> = () => {
               ))}
             </View>
           </ScrollView>
+          <FloatingButton
+            onClick={() => bottomSheetRef?.current?.open()}
+            containerStyle={styles.floatingButtonStyle}
+          />
           <View style={styles.dateSelectionContainer}>
             <CalenderStrip
               selectedDate={selectedDate}

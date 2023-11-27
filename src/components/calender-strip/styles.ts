@@ -5,8 +5,11 @@ const styles = ScaledSheet.create({
   monthYearLabelContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: '2@vs',
-    paddingBottom: '2@vs',
+  },
+  monthYearLabelCta: {
+    paddingVertical: '2@vs',
+    paddingHorizontal: '10@mvs',
+    borderRadius: 10,
   },
   monthYearLabel: {
     fontSize: '13@ms',

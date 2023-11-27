@@ -9,8 +9,6 @@ const styles = ScaledSheet.create({
   },
   titleSection: {
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
     paddingBottom: '10@vs',
     paddingHorizontal: '10@s',
   },
@@ -31,6 +29,10 @@ const styles = ScaledSheet.create({
   },
   addText: {
     color: colors.buttonText,
+  },
+  floatingButtonStyle: {
+    right: '10@ms',
+    bottom: '40@ms',
   },
 });
 

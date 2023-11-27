@@ -1,5 +1,5 @@
 import React, {FC, useRef, useState} from 'react';
-import {FlatList, ViewToken, View, Text} from 'react-native';
+import {FlatList, ViewToken, View, Text, TouchableOpacity} from 'react-native';
 
 import {
   getDateStringFromDateObject,
@@ -114,7 +114,9 @@ const CalenderStrip: FC<CalenderStripProps> = ({
   return (
     <LinearGradient colors={[colors.thirdBlue, colors.fifthBlue, colors.white]}>
       <View style={styles.monthYearLabelContainer}>
-        <Text style={styles.monthYearLabel}>{range}</Text>
+        <TouchableOpacity style={styles.monthYearLabelCta}>
+          <Text style={styles.monthYearLabel}>{range}</Text>
+        </TouchableOpacity>
       </View>
       <FlatList
         data={dateList}

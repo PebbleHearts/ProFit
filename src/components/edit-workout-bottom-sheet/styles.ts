@@ -5,6 +5,10 @@ const styles = ScaledSheet.create({
   container: {
     flex: 1,
   },
+  headingRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   headerText: {
     fontSize: '15@ms',
     fontWeight: 'bold',

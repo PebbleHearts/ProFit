@@ -64,14 +64,25 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
     });
   };
 
+  // TODO: replace the 600 with the 60 or 70 percent of the height of the device
+  const bottomSheetHeight = Math.min(
+    Math.max((selectedWorkout?.records.length || 1) * 58 + 150, 300),
+    600,
+  );
+  console.log({bottomSheetHeight});
   return (
     <CustomBottomSheet
       bottomSheetRef={bottomSheetRef}
       onOpen={handleOpen}
       onClose={handleClose}
-      height={400}>
+      height={bottomSheetHeight}>
       <View style={styles.container}>
-        <Text style={styles.headerText}>Edit Workout Item</Text>
+        <View style={styles.headingRow}>
+          <Text style={styles.headerText}>Edit Workout Item</Text>
+          <TouchableOpacity onPress={handleAddNewSet}>
+            <Text style={styles.addSetText}>+ Add Set</Text>
+          </TouchableOpacity>
+        </View>
         {selectedWorkout && (
           <ScrollView
             contentContainerStyle={styles.scrollViewContentContainerStyle}>
@@ -98,11 +109,6 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
                   </View>
                 );
               })}
-            </View>
-            <View>
-              <TouchableOpacity onPress={handleAddNewSet}>
-                <Text style={styles.addSetText}>Add +</Text>
-              </TouchableOpacity>
             </View>
           </ScrollView>
         )}

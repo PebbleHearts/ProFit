@@ -16,6 +16,10 @@ const styles = ScaledSheet.create({
   addText: {
     color: colors.buttonText,
   },
+  floatingButtonStyle: {
+    right: '10@ms',
+    bottom: '10@ms',
+  },
 });
 
 export default styles;

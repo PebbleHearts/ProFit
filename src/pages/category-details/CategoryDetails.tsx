@@ -11,6 +11,7 @@ import {database} from '../../database/init';
 import styles from './styles';
 import {CategoryDetailsProps} from './types';
 import {ExerciseRecord} from '../../database/model/Exercise';
+import FloatingButton from '../../components/floating-button/FloatingButton';
 
 const CategoryDetails: FC<CategoryDetailsProps> = ({route}) => {
   const {categoryId, categoryName} = route.params ?? {};
@@ -56,9 +57,10 @@ const CategoryDetails: FC<CategoryDetailsProps> = ({route}) => {
             <WorkoutItem key={id} name={name} />
           ))}
         </View>
-        <TouchableOpacity onPress={() => bottomSheetRef?.current?.open()}>
-          <Text style={styles.addText}>Add new</Text>
-        </TouchableOpacity>
+        <FloatingButton
+          onClick={() => bottomSheetRef?.current?.open()}
+          containerStyle={styles.floatingButtonStyle}
+        />
         <CreateExerciseBottomSheet
           bottomSheetRef={bottomSheetRef}
           onClose={handleCreateExerciseBottomSheetClose}

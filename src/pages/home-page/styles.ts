@@ -20,6 +20,7 @@ const styles = ScaledSheet.create({
   workoutsListContainer: {
     flex: 1,
     paddingHorizontal: '5@s',
+    paddingBottom: '15@ms',
   },
   dateSelectionContainer: {
     flexDirection: 'row',
@@ -32,7 +33,7 @@ const styles = ScaledSheet.create({
   },
   floatingButtonStyle: {
     right: '10@ms',
-    bottom: '40@ms',
+    bottom: '50@ms',
   },
 });
 

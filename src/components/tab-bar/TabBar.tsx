@@ -75,7 +75,6 @@ export default TabBar;
 
 const styles = ScaledSheet.create({
   mainContainer: {
-    paddingTop: '7@ms',
     backgroundColor: 'white',
   },
   innerContainer: {

@@ -9,6 +9,7 @@ import {database} from '../../database/init';
 import {CategoriesProps} from './types';
 import styles from './styles';
 import CreateCategoryBottomSheet from '../../components/create-category-bottom-sheet/CreateCategoryBottomSheet';
+import FloatingButton from '../../components/floating-button/FloatingButton';
 import {CategoryRecord} from '../../database/model/Category';
 
 const Categories: FC<CategoriesProps> = ({navigation}) => {
@@ -62,9 +63,10 @@ const Categories: FC<CategoriesProps> = ({navigation}) => {
             onPress={handleCategoryClick(id, name)}
           />
         ))}
-        <TouchableOpacity onPress={() => bottomSheetRef?.current?.open()}>
-          <Text style={styles.addText}>Add new</Text>
-        </TouchableOpacity>
+        <FloatingButton
+          onClick={() => bottomSheetRef?.current?.open()}
+          containerStyle={styles.floatingButtonStyle}
+        />
         <CreateCategoryBottomSheet
           bottomSheetRef={bottomSheetRef}
           onClose={handleCreateCategoryBottomSheetClose}

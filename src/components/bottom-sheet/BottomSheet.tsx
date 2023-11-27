@@ -33,7 +33,6 @@ const CustomBottomSheet: FC<CustomBottomSheetProps> = ({
       closeDuration={300}
       openDuration={300}
       onOpen={onOpen}
-      keyboardAvoidingViewEnabled
       customStyles={{
         container: styles.containerStyle,
       }}>

@@ -7,6 +7,7 @@ const styles = ScaledSheet.create({
   },
   headingRow: {
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
   },
   headerText: {
@@ -17,15 +18,17 @@ const styles = ScaledSheet.create({
   },
   setItemRow: {
     flexDirection: 'row',
+    alignItems: 'center',
     gap: 10,
   },
   setItemInput: {
     flex: 1,
-    color: 'black',
+    color: colors.gray3,
   },
   setItemInputField: {
     flex: 1,
-    color: 'black',
+    color: colors.gray3,
+    borderColor: colors.gray3,
   },
   scrollViewContentContainerStyle: {
     paddingRight: 1,

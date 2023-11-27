@@ -9,6 +9,7 @@ export default {
   cardBackground: '#e3e6e4',
   gray1: '#b3b5b4',
   gray2: '#5c5b5b',
+  gray3: '#2e2d2d',
   buttonText: '#1f1e1e',
   white: '#ffffff',
 };

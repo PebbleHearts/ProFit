@@ -36,6 +36,20 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
     }
   };
 
+  const handleDescriptionEdit = (description: string) => {
+    setWorkouts(prev => {
+      const prevWorkout: WorkoutRecord = {
+        records: prev?.records || '',
+        info: prev?.info || '',
+        id: prev?.id || '',
+      };
+      if (prevWorkout) {
+        prevWorkout.info = description;
+      }
+      return prevWorkout;
+    });
+  };
+
   const handleEditWeight = (fieldType: string, index: number) => val => {
     setWorkouts(prev => {
       const prevWorkout: WorkoutRecord = {
@@ -66,7 +80,7 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
 
   // TODO: replace the 600 with the 60 or 70 percent of the height of the device
   const bottomSheetHeight = Math.min(
-    Math.max((selectedWorkout?.records.length || 1) * 58 + 150, 300),
+    Math.max((selectedWorkout?.records.length || 1) * 58 + 250, 300),
     600,
   );
   console.log({bottomSheetHeight});
@@ -87,6 +101,13 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
           <ScrollView
             contentContainerStyle={styles.scrollViewContentContainerStyle}>
             <View style={styles.fieldHeadingAndItemsContainer}>
+              <Text style={styles.setItemInputField}>Description</Text>
+              <CustomTextInput
+                value={workout?.info || ''}
+                onChangeText={handleDescriptionEdit}
+                containerStyle={styles.setItemInput}
+                inputStyle={styles.setItemInputField}
+              />
               <View style={styles.setItemRow}>
                 <Text style={styles.setItemInputField}>Weight</Text>
                 <Text style={styles.setItemInputField}>Reps</Text>
@@ -106,6 +127,9 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
                       containerStyle={styles.setItemInput}
                       inputStyle={styles.setItemInputField}
                     />
+                    <TouchableOpacity hitSlop={5}>
+                      <Text>X</Text>
+                    </TouchableOpacity>
                   </View>
                 );
               })}
@@ -117,7 +141,7 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
           containerStyle={styles.submitButtonContainer}
           onPress={() =>
             onEditSubmit({
-              info: 'my description',
+              info: workout?.info ?? '',
               records: workout?.records as any,
             })
           }

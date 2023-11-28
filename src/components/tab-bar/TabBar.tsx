@@ -6,14 +6,14 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import Colors from '../../constants/colors';
 import {
-  DumbbellOutline,
+  DumbellOutline,
   CategoriesIcon,
   WorkoutRoutines,
 } from '../../assets/svg';
 
 const TabDetailsMap = {
   HomePage: {
-    icon: <DumbbellOutline width={20} height={20} />,
+    icon: <DumbellOutline width={22} height={22} />,
     label: 'Workout',
   },
   CategoriesStack: {

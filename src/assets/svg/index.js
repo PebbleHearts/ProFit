@@ -1,4 +1,4 @@
-import DumbbellOutline from './dumbbell-outline.svg';
+import DumbellOutline from './dumbell-outline.svg';
 import CategoriesIcon from './categories.svg';
 import AddPlusSquare from './add-plus-square';
 import WorkoutRoutines from './workout-routines';
@@ -7,7 +7,7 @@ import EditPen from './edit-pen.svg';
 import ChevronRight from './chevron-right';
 
 export {
-  DumbbellOutline,
+  DumbellOutline,
   CategoriesIcon,
   AddPlusSquare,
   WorkoutRoutines,

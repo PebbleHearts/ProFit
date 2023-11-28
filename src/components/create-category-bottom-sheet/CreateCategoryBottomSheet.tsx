@@ -7,18 +7,24 @@ import CustomButton from '../custom-button/CustomButton';
 import CustomTextInput from '../custom-text-input/CustomTextInput';
 import colors from '../../constants/colors';
 
-type CreateCategoryBottomSheet = {
+type CategoryBottomSheet = {
   bottomSheetRef: any;
+  selectedCategoryDetails: {name: string; id: string} | null;
   onClose: () => void;
-  handleExerciseCreation: (details: {name: string}) => void;
+  handleCategoryCreation: (details: {name: string}) => void;
+  handleSaveCategory: (details: {name: string}) => void;
 };
 
-const CreateCategoryBottomSheet: FC<CreateCategoryBottomSheet> = ({
+const CategoryBottomSheet: FC<CategoryBottomSheet> = ({
   bottomSheetRef,
+  selectedCategoryDetails,
   onClose,
-  handleExerciseCreation,
+  handleCategoryCreation,
+  handleSaveCategory,
 }) => {
   const [categoryName, setCategoryName] = useState('');
+
+  const isEdit = !!selectedCategoryDetails;
 
   const resetState = () => {
     setCategoryName('');
@@ -27,13 +33,22 @@ const CreateCategoryBottomSheet: FC<CreateCategoryBottomSheet> = ({
     resetState();
     onClose();
   };
+
+  const handleOpen = () => {
+    if (isEdit && !categoryName) {
+      setCategoryName(selectedCategoryDetails.name);
+    }
+  };
   return (
     <CustomBottomSheet
       bottomSheetRef={bottomSheetRef}
       onClose={handleClose}
+      onOpen={handleOpen}
       height={200}>
       <View style={styles.container}>
-        <Text style={styles.headerText}>Enter Category Name</Text>
+        <Text style={styles.headerText}>
+          {isEdit ? 'Edit Category Name' : 'Enter Category Name'}
+        </Text>
         <ScrollView
           contentContainerStyle={styles.scrollViewContentContainerStyle}>
           <CustomTextInput
@@ -43,8 +58,12 @@ const CreateCategoryBottomSheet: FC<CreateCategoryBottomSheet> = ({
           />
         </ScrollView>
         <CustomButton
-          label="Create"
-          onPress={() => handleExerciseCreation({name: categoryName})}
+          label={isEdit ? 'Save' : 'Create'}
+          onPress={
+            isEdit
+              ? () => handleSaveCategory({name: categoryName})
+              : () => handleCategoryCreation({name: categoryName})
+          }
           containerStyle={styles.submitButtonContainer}
           labelStyle={styles.submitButtonText}
         />
@@ -78,4 +97,4 @@ const styles = ScaledSheet.create({
   },
 });
 
-export default CreateCategoryBottomSheet;
+export default CategoryBottomSheet;

@@ -132,6 +132,7 @@ const CalenderStrip = forwardRef<
   const viewabilityConfigCallbackPairs = useRef([
     {viewabilityConfig, onViewableItemsChanged},
   ]);
+
   return (
     <LinearGradient colors={[colors.thirdBlue, colors.fifthBlue, colors.white]}>
       <View style={styles.monthYearLabelContainer}>
@@ -141,6 +142,7 @@ const CalenderStrip = forwardRef<
           <Text style={styles.monthYearLabel}>{range}</Text>
         </TouchableOpacity>
       </View>
+      {/* TODO: make the monthYearLabel update automatically when resetInitialDate function is called */}
       <FlatList
         ref={flatlistRef}
         data={dateList}

@@ -7,20 +7,27 @@ import CustomButton from '../custom-button/CustomButton';
 import CustomTextInput from '../custom-text-input/CustomTextInput';
 import colors from '../../constants/colors';
 
-type CreateExerciseBottomSheet = {
+type ExerciseBottomSheetProps = {
   bottomSheetRef: any;
-  onClose: () => void;
   categoryName: string | undefined;
+  selectedExerciseDetails: {id: string; name: string} | null;
+  onClose: () => void;
   handleExerciseCreation: (details: {name: string}) => void;
+  handleSaveExercise: (details: {name: string}) => void;
 };
 
-const CreateExerciseBottomSheet: FC<CreateExerciseBottomSheet> = ({
+const ExerciseBottomSheet: FC<ExerciseBottomSheetProps> = ({
   bottomSheetRef,
-  onClose,
   categoryName,
+  selectedExerciseDetails,
+  onClose,
   handleExerciseCreation,
+  handleSaveExercise,
 }) => {
   const [exerciseName, setExerciseName] = useState('');
+
+  const isEdit = !!selectedExerciseDetails;
+
   const resetState = () => {
     setExerciseName('');
   };
@@ -28,10 +35,17 @@ const CreateExerciseBottomSheet: FC<CreateExerciseBottomSheet> = ({
     resetState();
     onClose();
   };
+
+  const handleOpen = () => {
+    if (isEdit && selectedExerciseDetails) {
+      setExerciseName(selectedExerciseDetails.name);
+    }
+  };
   return (
     <CustomBottomSheet
       bottomSheetRef={bottomSheetRef}
       onClose={handleClose}
+      onOpen={handleOpen}
       height={200}>
       <View style={styles.container}>
         <Text style={styles.headerText}>Add {categoryName} Workout</Text>
@@ -44,8 +58,12 @@ const CreateExerciseBottomSheet: FC<CreateExerciseBottomSheet> = ({
           />
         </ScrollView>
         <CustomButton
-          label="Create"
-          onPress={() => handleExerciseCreation({name: exerciseName})}
+          label={isEdit ? 'Save' : 'Create'}
+          onPress={
+            isEdit
+              ? () => handleSaveExercise({name: exerciseName})
+              : () => handleExerciseCreation({name: exerciseName})
+          }
           containerStyle={styles.submitButtonContainer}
           labelStyle={styles.submitButtonText}
         />
@@ -79,4 +97,4 @@ const styles = ScaledSheet.create({
   },
 });
 
-export default CreateExerciseBottomSheet;
+export default ExerciseBottomSheet;

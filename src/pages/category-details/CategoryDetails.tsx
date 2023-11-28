@@ -1,11 +1,11 @@
 import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {Q} from '@nozbe/watermelondb';
 
 import PageLayout from '../../Layout/PageLayout';
 import WorkoutItem from '../../components/workout-item/WorkoutItem';
-import CreateExerciseBottomSheet from '../../components/create-exercise-bottom-sheet/CreateExerciseBottomSheet';
+import ExerciseBottomSheet from '../../components/create-exercise-bottom-sheet/CreateExerciseBottomSheet';
 import {database} from '../../database/init';
 
 import styles from './styles';
@@ -17,10 +17,13 @@ const CategoryDetails: FC<CategoryDetailsProps> = ({route}) => {
   const {categoryId, categoryName} = route.params ?? {};
 
   const [exercisesList, setExercisesList] = useState<any>([]);
+  const [selectedExerciseDetails, setSelectedExerciseDetails] = useState<{
+    id: string;
+    name: string;
+  } | null>(null);
   const bottomSheetRef = useRef<RBSheet>(null);
 
-  const handleCreateExerciseBottomSheetClose = () =>
-    bottomSheetRef?.current?.close();
+  const handleExerciseBottomSheetClose = () => bottomSheetRef?.current?.close();
   const handleExerciseCreation = async ({name}: {name: string}) => {
     try {
       const categoryItem = await database.get('categories').find(categoryId);
@@ -34,7 +37,7 @@ const CategoryDetails: FC<CategoryDetailsProps> = ({route}) => {
     } catch (e) {
       console.log(e);
     }
-    handleCreateExerciseBottomSheetClose();
+    handleExerciseBottomSheetClose();
   };
 
   const handleExercisesListFetch = useCallback(async () => {
@@ -48,24 +51,68 @@ const CategoryDetails: FC<CategoryDetailsProps> = ({route}) => {
   useEffect(() => {
     handleExercisesListFetch();
   }, [handleExercisesListFetch]);
+
+  const handleEditClick = async (id: string) => {
+    const exerciseItem = await database
+      .get<ExerciseRecord>('exercises')
+      .find(id);
+    setSelectedExerciseDetails({id: exerciseItem.id, name: exerciseItem.name});
+    bottomSheetRef.current?.open();
+  };
+
+  const handleDeleteClick = async (id: string) => {
+    const exerciseItem = await database
+      .get<ExerciseRecord>('exercises')
+      .find(id);
+    await database.write(async () => {
+      await exerciseItem.markAsDeleted();
+    });
+    handleExercisesListFetch();
+  };
+
+  const handleSaveExercise = async ({name}: {name: string}) => {
+    console.log(name);
+    const categoryItem = await database
+      .get<ExerciseRecord>('exercises')
+      .find(selectedExerciseDetails?.id || '');
+    try {
+      await database.write(async () => {
+        await categoryItem.update((workout: any) => {
+          workout.name = name;
+        });
+      });
+      handleExercisesListFetch();
+    } catch (e) {
+      console.log(e);
+    }
+    handleExerciseBottomSheetClose();
+  };
   return (
     <PageLayout title="ProFit">
       <View style={styles.container}>
         <Text style={styles.title}>{categoryName}</Text>
         <View>
           {exercisesList?.map(({id, name}: {id: string; name: string}) => (
-            <WorkoutItem key={id} name={name} />
+            <WorkoutItem
+              key={id}
+              name={name}
+              onEditClick={() => handleEditClick(id)}
+              onDeleteClick={() => handleDeleteClick(id)}
+              isCTAEnabled={true}
+            />
           ))}
         </View>
         <FloatingButton
           onClick={() => bottomSheetRef?.current?.open()}
           containerStyle={styles.floatingButtonStyle}
         />
-        <CreateExerciseBottomSheet
+        <ExerciseBottomSheet
           bottomSheetRef={bottomSheetRef}
-          onClose={handleCreateExerciseBottomSheetClose}
           categoryName={categoryName}
+          selectedExerciseDetails={selectedExerciseDetails}
+          onClose={handleExerciseBottomSheetClose}
           handleExerciseCreation={handleExerciseCreation}
+          handleSaveExercise={handleSaveExercise}
         />
       </View>
     </PageLayout>

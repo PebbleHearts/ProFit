@@ -129,7 +129,7 @@ const PageLayout = ({children, title}: PageLayoutProps) => {
           <Text style={styles.title}>{title}</Text>
           {isSignedIn ? (
             <TouchableOpacity onPress={googleSignout}>
-              <Text style={{color: 'white'}}>Singout</Text>
+              <Text style={{color: 'white'}}>SignOut</Text>
             </TouchableOpacity>
           ) : (
             <TouchableOpacity onPress={googleLogin}>

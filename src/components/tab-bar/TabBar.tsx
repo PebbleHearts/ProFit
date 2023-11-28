@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Pressable, Text, TouchableOpacity} from 'react-native';
+import {View, Pressable} from 'react-native';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import {ScaledSheet} from 'react-native-size-matters';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';

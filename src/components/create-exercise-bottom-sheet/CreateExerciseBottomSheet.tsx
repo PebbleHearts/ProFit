@@ -81,13 +81,19 @@ const styles = ScaledSheet.create({
     fontWeight: 'bold',
     color: 'black',
     marginBottom: '10@vs',
+    paddingHorizontal: '20@ms',
+    paddingTop: '20@ms',
   },
   scrollViewContentContainerStyle: {
-    paddingRight: 1,
+    padding: '20@ms',
+    paddingTop: '5@ms',
   },
   submitButtonContainer: {
-    marginBottom: '10@ms',
     backgroundColor: colors.primary,
+    margin: '20@ms',
+    paddingTop: '5@ms',
+    marginBottom: '10@ms',
+    height: '40@mvs',
   },
   inputTextStyle: {
     color: colors.buttonText,

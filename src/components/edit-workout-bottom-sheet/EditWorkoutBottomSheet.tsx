@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useState} from 'react';
 import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 
 import CustomBottomSheet from '../bottom-sheet/BottomSheet';
@@ -7,6 +7,8 @@ import CustomButton from '../custom-button/CustomButton';
 import styles from './styles';
 import {WorkoutRecord} from '../../database/model/Workout';
 import CustomTextInput from '../custom-text-input/CustomTextInput';
+import {DeleteBin} from '../../assets/svg';
+import colors from '../../constants/colors';
 
 type EditWorkoutBottomSheetProps = {
   bottomSheetRef: any;
@@ -149,7 +151,11 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
                       hitSlop={5}
                       style={styles.removeSetButton}
                       onPress={handleDeleteSet(index)}>
-                      <Text style={styles.removeSetButtonText}>X</Text>
+                      <DeleteBin
+                        width={18}
+                        height={18}
+                        color={colors.errorRed}
+                      />
                     </TouchableOpacity>
                   </View>
                 );
@@ -160,6 +166,7 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
         <CustomButton
           label="Save"
           containerStyle={styles.submitButtonContainer}
+          labelStyle={styles.submitButtonText}
           onPress={() =>
             onEditSubmit({
               info: workout?.info ?? '',

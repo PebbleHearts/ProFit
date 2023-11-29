@@ -24,8 +24,8 @@ const CategoryItem: FC<CategoryItemProps> = ({
   return (
     <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.7}>
       <Text style={styles.categoryName}>{name}</Text>
-      {isCTAEnabled ? (
-        <View style={styles.rightSide}>
+      <View style={styles.rightSide}>
+        {isCTAEnabled ? (
           <View style={styles.ctaContainer}>
             <TouchableOpacity
               style={styles.cta}
@@ -42,9 +42,9 @@ const CategoryItem: FC<CategoryItemProps> = ({
               <DeleteBin width={18} height={18} color={colors.errorRed} />
             </TouchableOpacity>
           </View>
-          <ChevronRight width={18} height={18} color="#bfbfbf" />
-        </View>
-      ) : null}
+        ) : null}
+        <ChevronRight width={18} height={18} color="#bfbfbf" />
+      </View>
     </TouchableOpacity>
   );
 };

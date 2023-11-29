@@ -8,7 +8,6 @@ const styles = ScaledSheet.create({
     borderRadius: '7@ms',
     overflow: 'hidden',
     elevation: 4,
-    shadowColor: Colors.primary,
     marginBottom: '10@mvs',
   },
   cardHeader: {

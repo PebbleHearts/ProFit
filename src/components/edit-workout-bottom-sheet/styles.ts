@@ -10,6 +10,8 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingBottom: '10@vs',
+    paddingHorizontal: '20@ms',
+    paddingTop: '20@ms',
   },
   headerText: {
     fontSize: '17@ms',
@@ -44,6 +46,8 @@ const styles = ScaledSheet.create({
   },
   fieldHeadingAndItemsContainer: {
     gap: 5,
+    padding: '20@ms',
+    paddingTop: '5@ms',
   },
   addSetText: {
     fontSize: '15@ms',
@@ -62,7 +66,14 @@ const styles = ScaledSheet.create({
     color: colors.gray3,
   },
   submitButtonContainer: {
+    margin: '20@ms',
+    paddingTop: '5@ms',
     marginBottom: '10@ms',
+    height: '40@mvs',
+    backgroundColor: colors.primary,
+  },
+  submitButtonText: {
+    color: colors.white,
   },
 });
 

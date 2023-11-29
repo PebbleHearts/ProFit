@@ -15,7 +15,7 @@ const styles = ScaledSheet.create({
     backgroundColor: colors.white,
   },
   selectedCard: {
-    backgroundColor: Colors.fourthBlue,
+    backgroundColor: '#eee1fa',
   },
   workoutName: {
     fontSize: '17@ms',

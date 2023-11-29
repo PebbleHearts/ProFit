@@ -66,7 +66,6 @@ const stylesFunc = (insets: any) =>
       color: colors.buttonText,
     },
     containerStyle: {
-      padding: '20@ms',
       borderTopRightRadius: '20@ms',
       borderTopLeftRadius: '20@ms',
       overflow: 'visible',

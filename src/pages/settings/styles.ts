@@ -20,7 +20,7 @@ const styles = ScaledSheet.create({
     color: colors.white,
   },
   contentContainer: {
-    paddingHorizontal: 15,
+    paddingHorizontal: '15@ms',
     flex: 1,
   },
   contentInnerContainer: {

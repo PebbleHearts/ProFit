@@ -26,7 +26,7 @@ const WorkoutItem: FC<WorkoutItemProps> = ({
   return (
     <TouchableOpacity
       style={[styles.card, isSelected && styles.selectedCard]}
-      activeOpacity={onPress ? 0.8 : 1}
+      activeOpacity={onPress ? 0.9 : 1}
       onPress={onPress}>
       <Text style={styles.workoutName}>{name}</Text>
       {isCTAEnabled ? (

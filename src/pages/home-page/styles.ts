@@ -10,7 +10,7 @@ const styles = ScaledSheet.create({
   workoutsListContainer: {
     flex: 1,
     paddingTop: '2@mvs',
-    paddingHorizontal: '5@s',
+    paddingHorizontal: '15@ms',
     paddingBottom: '15@ms',
   },
   headerContainer: {

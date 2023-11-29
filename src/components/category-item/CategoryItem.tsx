@@ -22,7 +22,7 @@ const CategoryItem: FC<CategoryItemProps> = ({
   onDeleteClick,
 }) => {
   return (
-    <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.7}>
+    <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.9}>
       <Text style={styles.categoryName}>{name}</Text>
       <View style={styles.rightSide}>
         {isCTAEnabled ? (

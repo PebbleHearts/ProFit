@@ -3,7 +3,7 @@ import colors from '../../constants/colors';
 
 const styles = ScaledSheet.create({
   container: {
-    paddingHorizontal: '5@s',
+    paddingHorizontal: '15@ms',
     paddingTop: '5@s',
     flex: 1,
   },

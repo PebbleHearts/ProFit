@@ -7,11 +7,15 @@ const styles = ScaledSheet.create({
     paddingTop: '5@s',
     flex: 1,
   },
-  title: {
-    fontSize: '19@ms',
-    fontWeight: 'bold',
-    marginBottom: '10@vs',
-    color: colors.buttonText,
+  headerContainer: {
+    height: '175@mvs',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  header: {
+    fontSize: '25@ms',
+    fontWeight: '700',
+    color: colors.gray3,
   },
   addText: {
     color: colors.buttonText,

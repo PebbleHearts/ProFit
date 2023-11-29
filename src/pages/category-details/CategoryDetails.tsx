@@ -89,7 +89,9 @@ const CategoryDetails: FC<CategoryDetailsProps> = ({route}) => {
   return (
     <PageLayout title="ProFit">
       <View style={styles.container}>
-        <Text style={styles.title}>{categoryName}</Text>
+        <View style={styles.headerContainer}>
+          <Text style={styles.header}>{categoryName}</Text>
+        </View>
         <View>
           {exercisesList?.map(({id, name}: {id: string; name: string}) => (
             <WorkoutItem

@@ -175,6 +175,9 @@ const HomePage: FC<HomePageProps> = () => {
         <View style={styles.container}>
           <ScrollView>
             <View style={styles.workoutsListContainer}>
+              <View style={styles.headerContainer}>
+                <Text style={styles.header}>Exercises</Text>
+              </View>
               {workouts?.map((item: any) => (
                 <DayWorkoutItem
                   key={item.id}

@@ -15,7 +15,7 @@ import colors from '../../constants/colors';
 const TabDetailsMap = {
   HomePage: {
     Icon: Dumbell,
-    label: 'Workout',
+    label: 'Workouts',
   },
   CategoriesStack: {
     Icon: CategoriesIcon,

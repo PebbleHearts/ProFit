@@ -94,7 +94,9 @@ const Categories: FC<CategoriesProps> = ({navigation}) => {
   return (
     <PageLayout title="ProFit">
       <View style={styles.container}>
-        <Text style={styles.title}>Categories</Text>
+        <View style={styles.headerContainer}>
+          <Text style={styles.header}>Categories</Text>
+        </View>
         {categoriesList?.map(({id, name}: {id: string; name: string}) => (
           <CategoryItem
             key={id}

@@ -13,6 +13,16 @@ const styles = ScaledSheet.create({
     paddingHorizontal: '5@s',
     paddingBottom: '15@ms',
   },
+  headerContainer: {
+    height: '175@mvs',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  header: {
+    fontSize: '25@ms',
+    fontWeight: '700',
+    color: colors.gray3,
+  },
   dateSelectionContainer: {
     flexDirection: 'row',
     elevation: 10,

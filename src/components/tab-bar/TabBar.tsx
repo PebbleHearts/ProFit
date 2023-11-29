@@ -4,25 +4,30 @@ import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import {ScaledSheet} from 'react-native-size-matters';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import Colors from '../../constants/colors';
 import {
-  DumbellOutline,
   CategoriesIcon,
   WorkoutRoutines,
+  Settings,
+  Dumbell,
 } from '../../assets/svg';
+import colors from '../../constants/colors';
 
 const TabDetailsMap = {
   HomePage: {
-    icon: <DumbellOutline width={22} height={22} />,
+    Icon: Dumbell,
     label: 'Workout',
   },
   CategoriesStack: {
-    icon: <CategoriesIcon width={20} height={20} />,
+    Icon: CategoriesIcon,
     label: 'Categories',
   },
   Routines: {
-    icon: <WorkoutRoutines width={20} height={20} />,
+    Icon: WorkoutRoutines,
     label: 'Routines',
+  },
+  Settings: {
+    Icon: Settings,
+    label: 'Settings',
   },
 };
 
@@ -54,13 +59,18 @@ const TabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
             }
           };
 
+          const Icon = TabDetailsMap[label].Icon;
           return (
             <View key={label} style={styles.mainItemContainer}>
               <Pressable
                 onPress={onPress}
                 style={[styles.item, isFocused && styles.focusedItem]}>
                 <View style={styles.itemIconContainerStyle}>
-                  {TabDetailsMap[label].icon}
+                  <Icon
+                    width={20}
+                    height={20}
+                    color={isFocused ? '#503a65' : 'white'}
+                  />
                 </View>
               </Pressable>
             </View>
@@ -79,7 +89,7 @@ const styles = ScaledSheet.create({
   },
   innerContainer: {
     flexDirection: 'row',
-    backgroundColor: Colors.secondaryBlue,
+    backgroundColor: '#503a65',
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
   },
@@ -96,15 +106,18 @@ const styles = ScaledSheet.create({
     borderTopRightRadius: 20,
     flex: 1,
     height: 45,
-    backgroundColor: Colors.secondaryBlue,
+    backgroundColor: '#503a65',
   },
   focusedItem: {
-    backgroundColor: Colors.thirdBlue,
+    backgroundColor: '#95adbe',
   },
   itemIconContainerStyle: {
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
     padding: 10,
+  },
+  icon: {
+    color: colors.white,
   },
 });

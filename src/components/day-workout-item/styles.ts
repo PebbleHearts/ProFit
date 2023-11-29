@@ -1,6 +1,7 @@
 import {ScaledSheet} from 'react-native-size-matters';
 
 import Colors from '../../constants/colors';
+import colors from '../../constants/colors';
 
 const styles = ScaledSheet.create({
   card: {
@@ -11,7 +12,7 @@ const styles = ScaledSheet.create({
     marginBottom: '10@mvs',
   },
   cardHeader: {
-    backgroundColor: '#516987',
+    backgroundColor: colors.gray1,
     paddingVertical: '10@mvs',
     flexDirection: 'row',
     alignItems: 'center',

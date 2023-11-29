@@ -8,11 +8,16 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     borderRadius: '10@ms',
     paddingVertical: '5@vs',
+    flexDirection: 'row',
+    gap: 10,
   },
   label: {
     color: colors.buttonText,
     fontSize: '17@ms',
     fontWeight: '600',
+  },
+  iconStyle: {
+    color: 'white',
   },
 });
 

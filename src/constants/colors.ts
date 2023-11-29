@@ -6,6 +6,7 @@ export default {
   fifthBlue: '#ebf7f7',
   sixthBlue: '#3498db',
   primaryRed: '#FF6D60',
+  errorRed: '#F20000',
   cardBackground: '#e3e6e4',
   gray1: '#b3b5b4',
   gray2: '#5c5b5b',

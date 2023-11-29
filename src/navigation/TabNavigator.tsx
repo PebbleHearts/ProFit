@@ -4,13 +4,15 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomePage from '../pages/home-page/HomePage';
 import TabBar from '../components/tab-bar/TabBar';
 import CategoriesStackNavigator from './CategoriesStack';
-import {DumbbellOutline, CategoriesIcon} from '../assets/svg';
+import {DumbellOutline, CategoriesIcon} from '../assets/svg';
 import Routines from '../pages/routines/Routines';
+import Settings from '../pages/settings/Settings';
 
 export type BottomTabBarNavigatorParamList = {
   HomePage: undefined;
   CategoriesStack: undefined;
   Routines: undefined;
+  Settings: undefined;
 };
 
 const Tab = createBottomTabNavigator<BottomTabBarNavigatorParamList>();
@@ -26,7 +28,7 @@ const TabNavigator = () => {
       <Tab.Screen
         name="HomePage"
         component={HomePage}
-        options={{tabBarIcon: DumbbellOutline}}
+        options={{tabBarIcon: DumbellOutline}}
       />
       <Tab.Screen
         name="CategoriesStack"
@@ -36,6 +38,11 @@ const TabNavigator = () => {
       <Tab.Screen
         name="Routines"
         component={Routines}
+        options={{tabBarIcon: CategoriesIcon}}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={Settings}
         options={{tabBarIcon: CategoriesIcon}}
       />
     </Tab.Navigator>

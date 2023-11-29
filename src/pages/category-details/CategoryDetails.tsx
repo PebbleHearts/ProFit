@@ -71,7 +71,6 @@ const CategoryDetails: FC<CategoryDetailsProps> = ({route}) => {
   };
 
   const handleSaveExercise = async ({name}: {name: string}) => {
-    console.log(name);
     const categoryItem = await database
       .get<ExerciseRecord>('exercises')
       .find(selectedExerciseDetails?.id || '');

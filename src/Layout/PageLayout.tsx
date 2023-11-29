@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text} from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import axios from 'axios';
@@ -127,15 +127,6 @@ const PageLayout = ({children, title}: PageLayoutProps) => {
       {title && (
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{title}</Text>
-          {isSignedIn ? (
-            <TouchableOpacity onPress={googleSignout}>
-              <Text style={{color: 'white'}}>SignOut</Text>
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity onPress={googleLogin}>
-              <Text style={{color: 'white'}}>Sync</Text>
-            </TouchableOpacity>
-          )}
         </View>
       )}
       {children}

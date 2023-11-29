@@ -4,6 +4,7 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import {DeleteBin, EditPen} from '../../assets/svg';
 
 import styles from './styles';
+import colors from '../../constants/colors';
 
 type WorkoutItemProps = {
   name: string;
@@ -35,14 +36,14 @@ const WorkoutItem: FC<WorkoutItemProps> = ({
             hitSlop={6}
             activeOpacity={0.8}
             onPress={onEditClick}>
-            <EditPen width={18} height={18} />
+            <EditPen width={16} height={16} color={colors.primary} />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.cta}
             hitSlop={6}
             activeOpacity={0.8}
             onPress={onDeleteClick}>
-            <DeleteBin width={20} height={20} />
+            <DeleteBin width={18} height={18} color={colors.errorRed} />
           </TouchableOpacity>
         </View>
       ) : null}

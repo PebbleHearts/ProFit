@@ -87,7 +87,7 @@ const styles = ScaledSheet.create({
   },
   submitButtonContainer: {
     marginBottom: '10@ms',
-    backgroundColor: colors.primaryBlue,
+    backgroundColor: colors.primary,
   },
   inputTextStyle: {
     color: colors.buttonText,

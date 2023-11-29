@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Pressable} from 'react-native';
+import {View, Pressable, Text} from 'react-native';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import {ScaledSheet} from 'react-native-size-matters';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -60,17 +60,23 @@ const TabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
           };
 
           const Icon = TabDetailsMap[label].Icon;
+          const tabLabel = TabDetailsMap[label].label;
           return (
             <View key={label} style={styles.mainItemContainer}>
-              <Pressable
-                onPress={onPress}
-                style={[styles.item, isFocused && styles.focusedItem]}>
+              <Pressable onPress={onPress} style={styles.item}>
                 <View style={styles.itemIconContainerStyle}>
                   <Icon
                     width={20}
                     height={20}
-                    color={isFocused ? '#503a65' : 'white'}
+                    color={isFocused ? '#95adbe' : 'white'}
                   />
+                  <Text
+                    style={[
+                      styles.itemLabel,
+                      isFocused && styles.focusedItemLabel,
+                    ]}>
+                    {tabLabel}
+                  </Text>
                 </View>
               </Pressable>
             </View>
@@ -89,9 +95,10 @@ const styles = ScaledSheet.create({
   },
   innerContainer: {
     flexDirection: 'row',
-    backgroundColor: '#503a65',
+    backgroundColor: colors.primary,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
+    paddingTop: '2@mvs',
   },
   mainItemContainer: {
     flex: 1,
@@ -108,8 +115,13 @@ const styles = ScaledSheet.create({
     height: 45,
     backgroundColor: '#503a65',
   },
-  focusedItem: {
-    backgroundColor: '#95adbe',
+
+  itemLabel: {
+    fontSize: '8@ms',
+    color: colors.white,
+  },
+  focusedItemLabel: {
+    color: '#95adbe',
   },
   itemIconContainerStyle: {
     justifyContent: 'center',

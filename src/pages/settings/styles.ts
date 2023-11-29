@@ -7,7 +7,7 @@ const styles = ScaledSheet.create({
   },
   headerContainer: {
     height: '20%',
-    backgroundColor: colors.primaryBlue,
+    backgroundColor: colors.primary,
     borderBottomRightRadius: 20,
     borderBottomLeftRadius: 20,
     alignItems: 'center',

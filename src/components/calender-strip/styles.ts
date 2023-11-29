@@ -27,21 +27,20 @@ const styles = ScaledSheet.create({
     justifyContent: 'center',
     paddingHorizontal: '15@ms',
     paddingVertical: '7@ms',
-    borderTopRightRadius: '10@ms',
-    borderTopLeftRadius: '10@ms',
+    borderRadius: '100@ms',
   },
-  selectedDateStyle: {
-    backgroundColor: colors.white,
+  selectedDateTextStyle: {
+    color: colors.primary,
   },
   dateItemWeek: {
     fontSize: '11@ms',
     fontWeight: '700',
-    color: colors.buttonText,
+    color: colors.gray1,
   },
   dateItemDay: {
     fontSize: '10@ms',
     fontWeight: '600',
-    color: colors.buttonText,
+    color: colors.gray1,
   },
 });
 

@@ -7,18 +7,9 @@ const styles = ScaledSheet.create({
     flex: 1,
     flexDirection: 'column',
   },
-  titleSection: {
-    flexDirection: 'row',
-    paddingBottom: '10@vs',
-    paddingHorizontal: '10@s',
-  },
-  title: {
-    fontSize: '19@ms',
-    fontWeight: 'bold',
-    color: colors.buttonText,
-  },
   workoutsListContainer: {
     flex: 1,
+    paddingTop: '2@mvs',
     paddingHorizontal: '5@s',
     paddingBottom: '15@ms',
   },

@@ -173,9 +173,6 @@ const HomePage: FC<HomePageProps> = () => {
     <PageLayout title="ProFit">
       <>
         <View style={styles.container}>
-          <View style={styles.titleSection}>
-            <Text style={styles.title}>Workouts</Text>
-          </View>
           <ScrollView>
             <View style={styles.workoutsListContainer}>
               {workouts?.map((item: any) => (

@@ -2,6 +2,8 @@ import React, {FC} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 
 import styles from './styles';
+import {DeleteBin, EditPen} from '../../assets/svg';
+import colors from '../../constants/colors';
 
 type DayWorkoutItemProps = {
   exercise: {
@@ -29,11 +31,19 @@ const DayWorkoutItem: FC<DayWorkoutItemProps> = ({
       <View style={styles.cardHeader}>
         <Text style={styles.cardHeaderText}>{exercise?.name}</Text>
         <View style={styles.ctaContainer}>
-          <TouchableOpacity onPress={onEdit} activeOpacity={0.8} hitSlop={5}>
-            <Text style={styles.ctaText}>Edit</Text>
+          <TouchableOpacity
+            style={styles.cta}
+            onPress={onEdit}
+            activeOpacity={0.8}
+            hitSlop={7}>
+            <EditPen width={16} height={16} color="#503a65" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={onDelete} activeOpacity={0.8} hitSlop={5}>
-            <Text style={styles.ctaText}>Delete</Text>
+          <TouchableOpacity
+            style={styles.cta}
+            onPress={onDelete}
+            activeOpacity={0.8}
+            hitSlop={7}>
+            <DeleteBin width={16} height={16} color={colors.errorRed} />
           </TouchableOpacity>
         </View>
       </View>

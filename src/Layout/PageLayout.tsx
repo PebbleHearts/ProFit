@@ -7,6 +7,7 @@ import RNFS from 'react-native-blob-util';
 
 import Colors from '../constants/colors';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import colors from '../constants/colors';
 
 type PageLayoutProps = {
   children: JSX.Element;
@@ -124,11 +125,9 @@ const PageLayout = ({children, title}: PageLayoutProps) => {
           paddingRight: insets.right,
         },
       ]}>
-      {title && (
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>{title}</Text>
-        </View>
-      )}
+      <View style={styles.titleContainer}>
+        {title && <Text style={styles.title}>{title}</Text>}
+      </View>
       {children}
     </View>
   );
@@ -141,7 +140,8 @@ const styles = ScaledSheet.create({
   },
   titleContainer: {
     height: '45@vs',
-    backgroundColor: Colors.primaryBlue,
+    backgroundColor: colors.primary,
+    elevation: 5,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

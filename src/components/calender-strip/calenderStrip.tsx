@@ -134,7 +134,7 @@ const CalenderStrip = forwardRef<
   ]);
 
   return (
-    <LinearGradient colors={[colors.thirdBlue, colors.fifthBlue, colors.white]}>
+    <View>
       <View style={styles.monthYearLabelContainer}>
         <TouchableOpacity
           style={styles.monthYearLabelCta}
@@ -155,7 +155,7 @@ const CalenderStrip = forwardRef<
         viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
         disableIntervalMomentum
       />
-    </LinearGradient>
+    </View>
   );
 });
 

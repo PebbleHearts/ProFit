@@ -1,35 +1,40 @@
-import {ScaledSheet} from 'react-native-size-matters';
+import {ScaledSheet, ms} from 'react-native-size-matters';
 
 import Colors from '../../constants/colors';
-import colors from '../../constants/colors';
 
 const styles = ScaledSheet.create({
   card: {
     backgroundColor: Colors.white,
     borderRadius: '7@ms',
     overflow: 'hidden',
-    elevation: 2,
+    elevation: 4,
+    shadowColor: Colors.primary,
     marginBottom: '10@mvs',
   },
   cardHeader: {
-    backgroundColor: colors.gray1,
-    paddingVertical: '10@mvs',
+    paddingTop: '10@mvs',
+    paddingBottom: '3@mvs',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: '15@ms',
   },
   cardHeaderText: {
-    color: Colors.white,
+    color: Colors.gray3,
     fontWeight: '500',
     fontSize: '16@ms',
   },
   ctaContainer: {
     flexDirection: 'row',
-    gap: 15,
+    gap: ms(15),
   },
   ctaText: {
-    color: Colors.white,
+    color: Colors.gray3,
+  },
+  cta: {
+    padding: 5,
+    backgroundColor: '#E2E4E3',
+    borderRadius: '50@ms',
   },
   setCard: {
     flexDirection: 'column',

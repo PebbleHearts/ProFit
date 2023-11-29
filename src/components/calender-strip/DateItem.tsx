@@ -16,8 +16,20 @@ const DateItem: FC<DateItemProps> = ({item, onDateSelection, isSelected}) => {
       style={[styles.dateItem, isSelected && styles.selectedDateStyle]}
       onPress={() => onDateSelection(item)}
       activeOpacity={0.8}>
-      <Text style={styles.dateItemWeek}>{moment(item).format('ddd')}</Text>
-      <Text style={styles.dateItemDay}>{moment(item).format('D')}</Text>
+      <Text
+        style={[
+          styles.dateItemWeek,
+          isSelected && styles.selectedDateTextStyle,
+        ]}>
+        {moment(item).format('ddd')}
+      </Text>
+      <Text
+        style={[
+          styles.dateItemDay,
+          isSelected && styles.selectedDateTextStyle,
+        ]}>
+        {moment(item).format('D')}
+      </Text>
     </TouchableOpacity>
   );
 };

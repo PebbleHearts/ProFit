@@ -3,7 +3,11 @@ import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 import PageLayout from '../../Layout/PageLayout';
-import {UploadOutlined, DownloadOutlined, LogoutOutlined} from '../../assets/svg';
+import {
+  UploadOutlined,
+  DownloadOutlined,
+  LogoutOutlined,
+} from '../../assets/svg';
 import CustomButton from '../../components/custom-button/CustomButton';
 
 import {SettingsProps} from './types';
@@ -39,7 +43,7 @@ const Settings: FC<SettingsProps> = () => {
   }, []);
 
   return (
-    <PageLayout title="ProFit">
+    <PageLayout>
       <ScrollView contentContainerStyle={styles.flatListContentContainerStyle}>
         <View style={styles.headerContainer}>
           <Text style={styles.title}>Settings</Text>

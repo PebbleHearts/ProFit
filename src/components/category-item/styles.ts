@@ -11,7 +11,8 @@ const styles = ScaledSheet.create({
     marginBottom: '5@vs',
     padding: '10@ms',
     borderRadius: '7@ms',
-    backgroundColor: Colors.cardBackground,
+    elevation: 4,
+    backgroundColor: colors.white,
   },
   categoryName: {
     fontSize: '17@ms',
@@ -30,7 +31,7 @@ const styles = ScaledSheet.create({
   },
   cta: {
     width: '30@ms',
-    backgroundColor: colors.gray1,
+    backgroundColor: '#E2E4E3',
     aspectRatio: 1,
     borderRadius: '30@ms',
     alignItems: 'center',

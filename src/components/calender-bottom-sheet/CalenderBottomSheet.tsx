@@ -43,8 +43,10 @@ const styles = ScaledSheet.create({
     fontSize: '17@ms',
     fontWeight: 'bold',
     color: 'black',
-    marginBottom: '10@vs',
     textAlign: 'center',
+    marginBottom: '10@vs',
+    paddingHorizontal: '20@ms',
+    paddingTop: '20@ms',
   },
 });
 

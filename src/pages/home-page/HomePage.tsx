@@ -173,21 +173,27 @@ const HomePage: FC<HomePageProps> = () => {
     <PageLayout title="ProFit">
       <>
         <View style={styles.container}>
-          <ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.workoutsListContainer}>
               <View style={styles.headerContainer}>
-                <Text style={styles.header}>Exercises</Text>
+                <Text style={styles.header}>Workouts</Text>
               </View>
-              {workouts?.map((item: any) => (
-                <DayWorkoutItem
-                  key={item.id}
-                  exercise={item.exercise}
-                  records={item.records}
-                  info={item.info}
-                  onEdit={handleEdit(item.id)}
-                  onDelete={handleDelete(item.id)}
-                />
-              ))}
+              {workouts.length === 0 ? (
+                <View style={styles.emptyView}>
+                  <Text style={styles.emptyViewText}>Workout Log Empty</Text>
+                </View>
+              ) : (
+                workouts?.map((item: any) => (
+                  <DayWorkoutItem
+                    key={item.id}
+                    exercise={item.exercise}
+                    records={item.records}
+                    info={item.info}
+                    onEdit={handleEdit(item.id)}
+                    onDelete={handleDelete(item.id)}
+                  />
+                ))
+              )}
             </View>
           </ScrollView>
           <FloatingButton

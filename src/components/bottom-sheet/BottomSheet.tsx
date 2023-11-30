@@ -4,6 +4,7 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import {ScaledSheet} from 'react-native-size-matters';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
+import {CloseOutlined} from '../../assets/svg';
 import colors from '../../constants/colors';
 
 type CustomBottomSheetProps = {
@@ -41,7 +42,8 @@ const CustomBottomSheet: FC<CustomBottomSheetProps> = ({
           style={styles.closeIconView}
           onPress={onClose}
           activeOpacity={0.7}>
-          <Text style={styles.closeIconViewText}>X</Text>
+          {/* <Text style={styles.closeIconViewText}>X</Text> */}
+          <CloseOutlined width={16} height={16} color={colors.gray3} />
         </TouchableOpacity>
         {children}
       </>
@@ -61,9 +63,6 @@ const stylesFunc = (insets: any) =>
       backgroundColor: 'white',
       alignItems: 'center',
       justifyContent: 'center',
-    },
-    closeIconViewText: {
-      color: colors.buttonText,
     },
     containerStyle: {
       borderTopRightRadius: '20@ms',

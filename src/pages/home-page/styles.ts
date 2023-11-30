@@ -23,6 +23,14 @@ const styles = ScaledSheet.create({
     fontWeight: '700',
     color: colors.gray3,
   },
+  emptyView: {
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  emptyViewText: {
+    fontSize: '17@ms',
+    color: colors.gray1,
+  },
   dateSelectionContainer: {
     flexDirection: 'row',
     elevation: 10,

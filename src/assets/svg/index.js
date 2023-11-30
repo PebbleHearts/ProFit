@@ -10,6 +10,8 @@ import UploadOutlined from './upload-outlined.svg';
 import DownloadOutlined from './download-outlined.svg';
 import LogoutOutlined from './logout-outlined.svg';
 import Dumbell from './dumbell.svg';
+import CloseOutlined from './close.svg';
+import PlusOutlined from './plus-outlined';
 
 export {
   DumbellOutline,
@@ -24,4 +26,6 @@ export {
   DownloadOutlined,
   LogoutOutlined,
   Dumbell,
+  CloseOutlined,
+  PlusOutlined,
 };

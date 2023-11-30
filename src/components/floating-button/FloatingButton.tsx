@@ -2,6 +2,7 @@ import React from 'react';
 import {Text, TouchableOpacity} from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
 import colors from '../../constants/colors';
+import {PlusOutlined} from '../../assets/svg';
 
 type FloatingButtonProps = {
   containerStyle: any;
@@ -14,7 +15,7 @@ const FloatingButton = ({containerStyle, onClick}: FloatingButtonProps) => {
       activeOpacity={0.8}
       style={[styles.floatingButtonContainer, containerStyle]}
       onPress={onClick}>
-      <Text style={styles.ctaText}>+</Text>
+      <PlusOutlined width={26} height={26} color="white" />
     </TouchableOpacity>
   );
 };
@@ -31,9 +32,5 @@ const styles = ScaledSheet.create({
     backgroundColor: colors.primary,
     position: 'absolute',
     zIndex: 999,
-  },
-  ctaText: {
-    color: colors.white,
-    fontSize: '20@ms',
   },
 });

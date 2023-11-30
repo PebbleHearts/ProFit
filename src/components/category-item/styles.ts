@@ -17,7 +17,7 @@ const styles = ScaledSheet.create({
   categoryName: {
     fontSize: '17@ms',
     fontWeight: '600',
-    color: Colors.buttonText,
+    color: Colors.gray3,
   },
   rightSide: {
     flexDirection: 'row',

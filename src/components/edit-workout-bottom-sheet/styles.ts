@@ -16,7 +16,7 @@ const styles = ScaledSheet.create({
   headerText: {
     fontSize: '17@ms',
     fontWeight: 'bold',
-    color: 'black',
+    color: colors.gray3,
   },
   setItemRow: {
     flexDirection: 'row',
@@ -31,7 +31,7 @@ const styles = ScaledSheet.create({
     flex: 1,
     fontSize: '15@ms',
     fontWeight: '500',
-    color: colors.gray3,
+    color: colors.gray2,
     borderColor: colors.gray3,
   },
   setItemInputField: {
@@ -54,6 +54,7 @@ const styles = ScaledSheet.create({
     fontWeight: '500',
     color: colors.gray3,
   },
+  dummyRemoveSetButton: {opacity: 0},
   removeSetButton: {
     backgroundColor: colors.fifthBlue,
     width: '25@ms',

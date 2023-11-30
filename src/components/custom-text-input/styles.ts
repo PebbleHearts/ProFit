@@ -5,9 +5,7 @@ const styles = ScaledSheet.create({
   textInputWrapper: {
     padding: '10@ms',
     borderRadius: '5@ms',
-    borderWidth: 1,
-    borderColor: 'black',
-    backgroundColor: colors.white,
+    backgroundColor: '#f7f0fc',
   },
 });
 

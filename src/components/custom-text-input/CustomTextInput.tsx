@@ -2,6 +2,7 @@ import React, {FC} from 'react';
 import {StyleProp, TextInput, TextStyle, View} from 'react-native';
 
 import styles from './styles';
+import colors from '../../constants/colors';
 
 type CustomTextInputProps = {
   value: string;
@@ -24,6 +25,7 @@ const CustomTextInput: FC<CustomTextInputProps> = ({
         onChangeText={onChangeText}
         style={[styles.textInputWrapper, inputStyle]}
         secureTextEntry={secureTextEntry}
+        selectionColor={colors.primary}
       />
     </View>
   );

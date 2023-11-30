@@ -8,7 +8,7 @@ const styles = ScaledSheet.create({
   headerText: {
     fontSize: '17@ms',
     fontWeight: 'bold',
-    color: 'black',
+    color: colors.gray3,
     marginBottom: '10@vs',
     paddingHorizontal: '20@ms',
     paddingTop: '20@ms',

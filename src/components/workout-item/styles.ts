@@ -20,7 +20,7 @@ const styles = ScaledSheet.create({
   workoutName: {
     fontSize: '17@ms',
     fontWeight: '600',
-    color: Colors.buttonText,
+    color: Colors.gray3,
   },
   ctaContainer: {
     flexDirection: 'row',

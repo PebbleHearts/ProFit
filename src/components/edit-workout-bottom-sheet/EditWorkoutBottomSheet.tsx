@@ -131,6 +131,10 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
               <View style={styles.setItemRow}>
                 <Text style={styles.setItemInputFieldHeader}>Weight</Text>
                 <Text style={styles.setItemInputFieldHeader}>Reps</Text>
+                <View
+                  style={[styles.removeSetButton, styles.dummyRemoveSetButton]}>
+                  <DeleteBin width={18} height={18} color={colors.errorRed} />
+                </View>
               </View>
               {workout?.records?.map((recordItem, index) => {
                 return (

@@ -42,8 +42,7 @@ const CustomBottomSheet: FC<CustomBottomSheetProps> = ({
           style={styles.closeIconView}
           onPress={onClose}
           activeOpacity={0.7}>
-          {/* <Text style={styles.closeIconViewText}>X</Text> */}
-          <CloseOutlined width={16} height={16} color={colors.gray3} />
+          <CloseOutlined width={16} height={16} color={colors.gray1} />
         </TouchableOpacity>
         {children}
       </>

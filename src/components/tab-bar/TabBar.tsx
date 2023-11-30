@@ -119,6 +119,7 @@ const styles = ScaledSheet.create({
   itemLabel: {
     fontSize: '8@ms',
     color: colors.white,
+    paddingTop: '2@mvs',
   },
   focusedItemLabel: {
     color: '#95adbe',

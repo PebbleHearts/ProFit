@@ -17,13 +17,19 @@ type EditWorkoutBottomSheetProps = {
   onEditSubmit: (editData: {info: string; records: any[]}) => void;
 };
 
+type WorkoutItem = {
+  id: string;
+  records: any[];
+  info: string;
+};
+
 const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
   bottomSheetRef,
   selectedWorkout,
   onClose,
   onEditSubmit,
 }) => {
-  const [workout, setWorkouts] = useState<WorkoutRecord | null>(null);
+  const [workout, setWorkouts] = useState<WorkoutItem | null>(null);
   const resetState = () => {
     setWorkouts(null);
   };
@@ -34,17 +40,18 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
 
   const handleOpen = () => {
     if (selectedWorkout && !workout) {
-      setWorkouts(selectedWorkout);
+      const currentWorkoutItem: WorkoutItem = {
+        records: (selectedWorkout?.records as unknown as any[]) || [],
+        info: selectedWorkout?.info || '',
+        id: selectedWorkout?.id || '',
+      };
+      setWorkouts(currentWorkoutItem);
     }
   };
 
   const handleDescriptionEdit = (description: string) => {
     setWorkouts(prev => {
-      const prevWorkout: WorkoutRecord = {
-        records: prev?.records || '',
-        info: prev?.info || '',
-        id: prev?.id || '',
-      };
+      const prevWorkout: WorkoutItem = {...prev} as WorkoutItem;
       if (prevWorkout) {
         prevWorkout.info = description;
       }
@@ -54,11 +61,7 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
 
   const handleDeleteSet = (index: number) => () => {
     setWorkouts(prev => {
-      const prevWorkout: WorkoutRecord = {
-        records: prev?.records || '',
-        info: prev?.info || '',
-        id: prev?.id || '',
-      };
+      const prevWorkout: WorkoutItem = {...prev} as WorkoutItem;
       if (prevWorkout) {
         prevWorkout.records.splice(index, 1);
       }
@@ -66,27 +69,20 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
     });
   };
 
-  const handleEditWeight = (fieldType: string, index: number) => val => {
-    setWorkouts(prev => {
-      const prevWorkout: WorkoutRecord = {
-        records: prev?.records || '',
-        info: prev?.info || '',
-        id: prev?.id || '',
-      };
-      if (prevWorkout) {
-        prevWorkout.records[index][fieldType] = val;
-      }
-      return prevWorkout;
-    });
-  };
+  const handleEditWeight =
+    (fieldType: string, index: number) => (val: string) => {
+      setWorkouts(prev => {
+        const prevWorkout: WorkoutItem = {...prev} as WorkoutItem;
+        if (prevWorkout) {
+          prevWorkout.records[index][fieldType] = val;
+        }
+        return prevWorkout;
+      });
+    };
 
   const handleAddNewSet = () => {
     setWorkouts(prev => {
-      const prevWorkout: WorkoutRecord = {
-        records: prev?.records || [],
-        info: prev?.info || '',
-        id: prev?.id || '',
-      };
+      const prevWorkout: WorkoutItem = {...prev} as WorkoutItem;
       if (prevWorkout) {
         const lastSet = prev?.records[prev.records.length - 1 || 0];
         prevWorkout.records.push({

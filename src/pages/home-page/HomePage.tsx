@@ -98,7 +98,6 @@ const HomePage: FC<HomePageProps> = () => {
   }, []);
 
   const handleCalenderBottomSheetDateSelection = (date: DateData) => {
-    console.log('date selected: ', date);
     calenderStripRef.current.resetInitialDate(date.dateString);
     handleCalenderBottomSheetClose();
   };

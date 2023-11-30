@@ -32,7 +32,6 @@ const TabDetailsMap: Record<string, {Icon: any; label: string}> = {
 };
 
 const TabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
-  console.log(typeof CategoriesIcon);
   const insets = useSafeAreaInsets();
   return (
     <View style={[styles.mainContainer, {paddingBottom: insets.bottom}]}>

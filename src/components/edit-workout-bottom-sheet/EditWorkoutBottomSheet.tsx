@@ -103,7 +103,6 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
     Math.max((selectedWorkout?.records.length || 1) * 58 + 260, 300),
     600,
   );
-  console.log({bottomSheetHeight});
   return (
     <CustomBottomSheet
       bottomSheetRef={bottomSheetRef}

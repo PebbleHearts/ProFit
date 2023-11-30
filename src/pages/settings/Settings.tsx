@@ -1,6 +1,5 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC} from 'react';
 import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 import PageLayout from '../../Layout/PageLayout';
 import {
@@ -13,37 +12,13 @@ import CustomButton from '../../components/custom-button/CustomButton';
 import {SettingsProps} from './types';
 import styles from './styles';
 import {Image} from 'react-native';
+import {useUser} from '../../context/ UserContext';
 
 const Settings: FC<SettingsProps> = () => {
-  const [isSignedIn, setIsSignedIn] = useState(false);
-  const [userData, setUserData] = useState<any>({});
-
-  const handleGetAuthStatus = async () => {
-    const isGoogleSignedIn = await GoogleSignin.isSignedIn();
-    setIsSignedIn(isGoogleSignedIn);
-    if (isGoogleSignedIn) {
-      const userInfo = await GoogleSignin.getCurrentUser();
-      setUserData(userInfo);
-    }
-  };
-
-  const googleLogin = async () => {
-    await GoogleSignin.hasPlayServices();
-    await GoogleSignin.signIn();
-    handleGetAuthStatus();
-  };
-
-  const googleSignOut = async () => {
-    await GoogleSignin.signOut();
-    handleGetAuthStatus();
-  };
-
-  useEffect(() => {
-    handleGetAuthStatus();
-  }, []);
+  const {user, isSignedIn, signIn, signOut} = useUser();
 
   return (
-    <PageLayout>
+    <PageLayout hideAccountIcon>
       <ScrollView contentContainerStyle={styles.flatListContentContainerStyle}>
         <View style={styles.headerContainer}>
           <Text style={styles.title}>Settings</Text>
@@ -59,22 +34,19 @@ const Settings: FC<SettingsProps> = () => {
                 <Text style={styles.info}>
                   Sign in to google to sync data to drive
                 </Text>
-                <CustomButton label="SignIn" onPress={googleLogin} />
+                <CustomButton label="SignIn" onPress={signIn} />
               </>
             ) : (
               <View style={styles.loggedInContent}>
                 <View style={styles.imageAndNameContainer}>
                   <View style={styles.imageContainer}>
-                    {userData?.user?.photo && (
-                      <Image
-                        source={{uri: userData?.user?.photo}}
-                        style={styles.image}
-                      />
+                    {user?.photo && (
+                      <Image source={{uri: user?.photo}} style={styles.image} />
                     )}
                   </View>
                   <View>
-                    <Text style={styles.email}>{userData?.user?.email}</Text>
-                    <Text style={styles.userName}>{userData?.user?.name}</Text>
+                    <Text style={styles.email}>{user?.email}</Text>
+                    <Text style={styles.userName}>{user?.name}</Text>
                   </View>
                 </View>
                 <View style={styles.cardsContainer}>
@@ -99,7 +71,7 @@ const Settings: FC<SettingsProps> = () => {
                 </View>
                 <CustomButton
                   label="Log Out"
-                  onPress={googleSignOut}
+                  onPress={signOut}
                   containerStyle={styles.logoutButtonStyle}
                   labelStyle={styles.logoutButtonLabelStyle}
                   Icon={LogoutOutlined}

@@ -1,22 +1,28 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Image} from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import axios from 'axios';
 import RNFS from 'react-native-blob-util';
 
-import Colors from '../constants/colors';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import colors from '../constants/colors';
+import {useUser} from '../context/ UserContext';
 
 type PageLayoutProps = {
   children: JSX.Element;
   title?: string;
+  hideAccountIcon?: boolean;
 };
 
-const PageLayout = ({children, title}: PageLayoutProps) => {
+const PageLayout = ({
+  children,
+  title,
+  hideAccountIcon = false,
+}: PageLayoutProps) => {
   const insets = useSafeAreaInsets();
-  const [isSignedIn, setIsSignedIn] = useState(false);
+
+  const {user, isSignedIn} = useUser();
 
   const googleLogin = async () => {
     await GoogleSignin.hasPlayServices();
@@ -110,7 +116,6 @@ const PageLayout = ({children, title}: PageLayoutProps) => {
 
   const handleGetAuthStatus = async () => {
     const isGoogleSignedIn = await GoogleSignin.isSignedIn();
-    setIsSignedIn(isGoogleSignedIn);
   };
   useEffect(() => {
     handleGetAuthStatus();
@@ -126,7 +131,14 @@ const PageLayout = ({children, title}: PageLayoutProps) => {
         },
       ]}>
       <View style={styles.titleContainer}>
-        {title && <Text style={styles.title}>{title}</Text>}
+        <Text style={styles.title}>{title || ''}</Text>
+        {!hideAccountIcon && isSignedIn && (
+          <View style={styles.imageContainer}>
+            {user?.photo && (
+              <Image source={{uri: user?.photo}} style={styles.image} />
+            )}
+          </View>
+        )}
       </View>
       {children}
     </View>
@@ -151,6 +163,18 @@ const styles = ScaledSheet.create({
     fontSize: '20@ms',
     fontWeight: '900',
     color: '#f7faf8',
+  },
+  imageContainer: {
+    width: '36@ms',
+    height: '36@ms',
+    borderRadius: '50@ms',
+    borderWidth: '1@ms',
+    borderColor: '#976fbd',
+  },
+  image: {
+    width: '34@ms',
+    height: '34@ms',
+    borderRadius: '50@ms',
   },
 });
 

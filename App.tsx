@@ -15,12 +15,15 @@ import './src/database/init';
 import './src/lib/initOAuth';
 
 import StackNavigator from './src/navigation/RootStackNavigator';
+import {UserProvider} from './src/context/ UserContext';
 
 const App = () => {
   return (
     <NavigationContainer>
       <SafeAreaProvider>
-        <StackNavigator />
+        <UserProvider>
+          <StackNavigator />
+        </UserProvider>
       </SafeAreaProvider>
     </NavigationContainer>
   );

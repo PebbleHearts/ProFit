@@ -12,7 +12,7 @@ import {
 } from '../../assets/svg';
 import colors from '../../constants/colors';
 
-const TabDetailsMap = {
+const TabDetailsMap: Record<string, {Icon: any; label: string}> = {
   HomePage: {
     Icon: Dumbell,
     label: 'Workouts',
@@ -32,6 +32,7 @@ const TabDetailsMap = {
 };
 
 const TabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
+  console.log(typeof CategoriesIcon);
   const insets = useSafeAreaInsets();
   return (
     <View style={[styles.mainContainer, {paddingBottom: insets.bottom}]}>

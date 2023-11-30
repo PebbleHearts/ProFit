@@ -64,7 +64,7 @@ const styles = ScaledSheet.create({
     height: '56@ms',
     borderRadius: '50@ms',
     borderWidth: '3@ms',
-    borderColor: colors.gray2,
+    borderColor: '#976fbd',
   },
   image: {
     width: '50@ms',

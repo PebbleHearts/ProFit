@@ -72,7 +72,6 @@ const Categories: FC<CategoriesProps> = ({navigation}) => {
   };
 
   const handleSaveCategory = async ({name}: {name: string}) => {
-    console.log(name);
     const categoryItem = await database
       .get<CategoryRecord>('categories')
       .find(selectedCategoryDetails?.id || '');

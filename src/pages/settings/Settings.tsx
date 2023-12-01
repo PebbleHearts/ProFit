@@ -13,9 +13,11 @@ import {SettingsProps} from './types';
 import styles from './styles';
 import {Image} from 'react-native';
 import {useUser} from '../../context/ UserContext';
+import useSyncManager from '../../hooks/useSyncManager';
 
 const Settings: FC<SettingsProps> = () => {
   const {user, isSignedIn, signIn, signOut} = useUser();
+  const {exportData, importData} = useSyncManager();
 
   return (
     <PageLayout hideAccountIcon>
@@ -50,7 +52,10 @@ const Settings: FC<SettingsProps> = () => {
                   </View>
                 </View>
                 <View style={styles.cardsContainer}>
-                  <TouchableOpacity style={styles.card} activeOpacity={0.8}>
+                  <TouchableOpacity
+                    style={styles.card}
+                    activeOpacity={0.8}
+                    onPress={exportData}>
                     <UploadOutlined width={20} height={20} />
                     <View>
                       <Text style={styles.cardText}>Export</Text>
@@ -59,7 +64,10 @@ const Settings: FC<SettingsProps> = () => {
                       </Text>
                     </View>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.card} activeOpacity={0.8}>
+                  <TouchableOpacity
+                    style={styles.card}
+                    activeOpacity={0.8}
+                    onPress={importData}>
                     <DownloadOutlined width={20} height={20} />
                     <View>
                       <Text style={styles.cardText}>Import</Text>

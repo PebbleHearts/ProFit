@@ -4,15 +4,19 @@ import {Text, View} from 'react-native';
 import CustomBottomSheet from '../bottom-sheet/BottomSheet';
 import {ScaledSheet} from 'react-native-size-matters';
 import {Calendar, DateData} from 'react-native-calendars';
+import {getDateStringFromDateObject} from '../../utils/calender';
+import colors from '../../constants/colors';
 
 type CalenderBottomSheetProps = {
   bottomSheetRef: any;
+  selectedDate: any;
   onClose: () => void;
   onDateSelection: (date: DateData) => void;
 };
 
 const CalenderBottomSheet: FC<CalenderBottomSheetProps> = ({
   bottomSheetRef,
+  selectedDate,
   onClose,
   onDateSelection,
 }) => {
@@ -29,7 +33,26 @@ const CalenderBottomSheet: FC<CalenderBottomSheetProps> = ({
       height={400}>
       <View style={styles.container}>
         <Text style={styles.headerText}>Select Date</Text>
-        <Calendar onDayPress={onDateSelection} />
+        <Calendar
+          onDayPress={onDateSelection}
+          current={
+            selectedDate ? getDateStringFromDateObject(selectedDate) : ''
+          }
+          initialDate={
+            selectedDate ? getDateStringFromDateObject(selectedDate) : ''
+          }
+          markedDates={
+            selectedDate
+              ? {
+                  [getDateStringFromDateObject(selectedDate)]: {
+                    selected: true,
+                    disableTouchEvent: true,
+                    selectedColor: colors.primary,
+                  },
+                }
+              : undefined
+          }
+        />
       </View>
     </CustomBottomSheet>
   );

@@ -222,6 +222,7 @@ const HomePage: FC<HomePageProps> = () => {
           bottomSheetRef={calenderBottomSheetRef}
           onClose={handleCalenderBottomSheetClose}
           onDateSelection={handleCalenderBottomSheetDateSelection}
+          selectedDate={selectedDate}
         />
         {selectedWorkout && (
           <EditWorkoutBottomSheet

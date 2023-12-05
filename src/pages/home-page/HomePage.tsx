@@ -8,7 +8,7 @@ import PageLayout from '../../Layout/PageLayout';
 import {HomePageProps} from './types';
 import {database} from '../../database/init';
 
-import CalenderStrip from '../../components/calender-strip/calenderStrip';
+import CalenderStrip from '../../components/calender-strip/CDalenderStrip';
 import FloatingButton from '../../components/floating-button/FloatingButton';
 
 import DayWorkoutItem from '../../components/day-workout-item/DayWorkoutItem';

@@ -13,7 +13,7 @@ type DateItemProps = {
 const DateItem: FC<DateItemProps> = ({item, onDateSelection, isSelected}) => {
   return (
     <TouchableOpacity
-      style={[styles.dateItem, isSelected && styles.selectedDateStyle]}
+      style={[styles.dateItem]}
       onPress={() => onDateSelection(item)}
       activeOpacity={0.8}>
       <Text

@@ -15,7 +15,7 @@ import colors from '../../constants/colors';
 const TabDetailsMap: Record<string, {Icon: any; label: string}> = {
   HomePage: {
     Icon: Dumbell,
-    label: 'Workouts',
+    label: 'History',
   },
   CategoriesStack: {
     Icon: CategoriesIcon,
@@ -68,7 +68,7 @@ const TabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
                   <Icon
                     width={20}
                     height={20}
-                    color={isFocused ? '#95adbe' : 'white'}
+                    color={isFocused ? 'white' : '#95adbe'}
                   />
                   <Text
                     style={[
@@ -118,11 +118,11 @@ const styles = ScaledSheet.create({
 
   itemLabel: {
     fontSize: '8@ms',
-    color: colors.white,
+    color: '#95adbe',
     paddingTop: '2@mvs',
   },
   focusedItemLabel: {
-    color: '#95adbe',
+    color: colors.white,
   },
   itemIconContainerStyle: {
     justifyContent: 'center',

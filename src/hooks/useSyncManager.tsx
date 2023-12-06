@@ -7,6 +7,7 @@ import {CategoryRecord} from '../database/model/Category';
 import {sanitizedRaw} from '@nozbe/watermelondb/RawRecord';
 import {ExerciseRecord} from '../database/model/Exercise';
 import {WorkoutRecord} from '../database/model/Workout';
+import {EventsList, emitter} from '../constants/emitter';
 
 const useSyncManager = () => {
   const [isExportLoading, setIsExportLoading] = useState(false);
@@ -307,6 +308,9 @@ const useSyncManager = () => {
       console.error('Error downloading file:', error.message);
     } finally {
       setIsImportLoading(false);
+      setTimeout(() => {
+        emitter.emit(EventsList.IMPORT_COMPLETE);
+      }, 2000);
     }
   };
 

@@ -12,6 +12,7 @@ import styles from './styles';
 import {CategoryDetailsProps} from './types';
 import {ExerciseRecord} from '../../database/model/Exercise';
 import FloatingButton from '../../components/floating-button/FloatingButton';
+import {EventsList, emitter} from '../../constants/emitter';
 
 const CategoryDetails: FC<CategoryDetailsProps> = ({route}) => {
   const {categoryId, categoryName} = route.params ?? {};
@@ -86,6 +87,15 @@ const CategoryDetails: FC<CategoryDetailsProps> = ({route}) => {
     }
     handleExerciseBottomSheetClose();
   };
+
+  useEffect(() => {
+    emitter.addListener(EventsList.IMPORT_COMPLETE, () => {
+      handleExercisesListFetch();
+    });
+    return () => {
+      emitter.removeListener(EventsList.IMPORT_COMPLETE);
+    };
+  }, [handleExercisesListFetch]);
   return (
     <PageLayout title="ProFit">
       <View style={styles.container}>

@@ -21,6 +21,7 @@ import {ExerciseRecord} from '../../database/model/Exercise';
 import {getDateStringFromDateObject} from '../../utils/calender';
 import EditWorkoutBottomSheet from '../../components/edit-workout-bottom-sheet/EditWorkoutBottomSheet';
 import CalenderBottomSheet from '../../components/calender-bottom-sheet/CalenderBottomSheet';
+import {emitter, EventsList} from '../../constants/emitter';
 
 const HomePage: FC<HomePageProps> = () => {
   const [categoriesList, setCategoriesList] = useState<any>([]);
@@ -168,6 +169,15 @@ const HomePage: FC<HomePageProps> = () => {
     handleWorkoutFetch();
   };
 
+  useEffect(() => {
+    emitter.addListener(EventsList.IMPORT_COMPLETE, () => {
+      handleWorkoutFetch();
+    });
+    return () => {
+      emitter.removeListener(EventsList.IMPORT_COMPLETE);
+    };
+  }, [handleWorkoutFetch]);
+
   return (
     <PageLayout title="ProFit">
       <>
@@ -175,7 +185,7 @@ const HomePage: FC<HomePageProps> = () => {
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.workoutsListContainer}>
               <View style={styles.headerContainer}>
-                <Text style={styles.header}>Workouts</Text>
+                <Text style={styles.header}>History</Text>
               </View>
               {workouts.length === 0 ? (
                 <View style={styles.emptyView}>

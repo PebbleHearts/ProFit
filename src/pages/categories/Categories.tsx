@@ -11,6 +11,7 @@ import styles from './styles';
 import CategoryBottomSheet from '../../components/create-category-bottom-sheet/CreateCategoryBottomSheet';
 import FloatingButton from '../../components/floating-button/FloatingButton';
 import {CategoryRecord} from '../../database/model/Category';
+import {EventsList, emitter} from '../../constants/emitter';
 
 const Categories: FC<CategoriesProps> = ({navigation}) => {
   const bottomSheetRef = useRef<RBSheet>(null);
@@ -88,7 +89,14 @@ const Categories: FC<CategoriesProps> = ({navigation}) => {
     handleCategoryBottomSheetClose();
   };
 
-  // TODO: show an alert while deleting saying, deleting the category will delete the exercises related to it.
+  useEffect(() => {
+    emitter.addListener(EventsList.IMPORT_COMPLETE, () => {
+      handleCategoriesFetch();
+    });
+    return () => {
+      emitter.removeListener(EventsList.IMPORT_COMPLETE);
+    };
+  }, [handleCategoriesFetch]);
 
   return (
     <PageLayout title="ProFit">

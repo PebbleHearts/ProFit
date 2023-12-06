@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import axios from 'axios';
 import RNFS from 'react-native-blob-util';
@@ -8,6 +9,9 @@ import {ExerciseRecord} from '../database/model/Exercise';
 import {WorkoutRecord} from '../database/model/Workout';
 
 const useSyncManager = () => {
+  const [isExportLoading, setIsExportLoading] = useState(false);
+  const [isImportLoading, setIsImportLoading] = useState(false);
+
   const createJSONBackupData = async () => {
     const jsonData: any = {};
 
@@ -160,12 +164,7 @@ const useSyncManager = () => {
   const patchExistingFile = async (fileId: string) => {
     const data = await createJSONBackupData();
     const accessToken = (await GoogleSignin.getTokens()).accessToken;
-    // const localFilePath = RNFS.fs.dirs.MainBundleDir + '/profit.db';
-    // const fileContent = await RNFS.fs.readFile(localFilePath, 'base64');
-    // Convert SVG string to Base64.
     const base64Data = RNFS.base64.encode(data);
-
-    //Use RNFetchBlob to write the Base64 data to a temporary file.
     const tmpFilePath = `${RNFS.fs.dirs.CacheDir}/profit.json`;
     await RNFS.fs.writeFile(tmpFilePath, base64Data, 'base64');
     const patchRes = await axios.patch(
@@ -218,6 +217,7 @@ const useSyncManager = () => {
   };
 
   const exportData = async () => {
+    setIsExportLoading(true);
     const apiUrl = 'https://www.googleapis.com/drive/v3/files';
     const accessToken = (await GoogleSignin.getTokens()).accessToken;
     const folderName = 'profit-backup';
@@ -235,9 +235,11 @@ const useSyncManager = () => {
       ? folderData.data.files[0].id
       : folderCreationData?.data.id;
     await uploadBackupFile(apiUrl, folderId);
+    setIsExportLoading(false);
   };
 
   const importData = async () => {
+    setIsImportLoading(true);
     const accessToken = (await GoogleSignin.getTokens()).accessToken;
     const folderName = 'profit-backup';
     const fileName = 'profit.json';
@@ -303,10 +305,12 @@ const useSyncManager = () => {
       console.log(`File '${fileName}' downloaded successfully.`);
     } catch (error: any) {
       console.error('Error downloading file:', error.message);
+    } finally {
+      setIsImportLoading(false);
     }
   };
 
-  return {exportData, importData};
+  return {isExportLoading, exportData, isImportLoading, importData};
 };
 
 export default useSyncManager;

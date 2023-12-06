@@ -1,5 +1,11 @@
 import React, {FC} from 'react';
-import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 
 import PageLayout from '../../Layout/PageLayout';
 import {
@@ -14,10 +20,12 @@ import styles from './styles';
 import {Image} from 'react-native';
 import {useUser} from '../../context/ UserContext';
 import useSyncManager from '../../hooks/useSyncManager';
+import colors from '../../constants/colors';
 
 const Settings: FC<SettingsProps> = () => {
   const {user, isSignedIn, signIn, signOut} = useUser();
-  const {exportData, importData} = useSyncManager();
+  const {isExportLoading, isImportLoading, exportData, importData} =
+    useSyncManager();
 
   return (
     <PageLayout hideAccountIcon>
@@ -63,6 +71,9 @@ const Settings: FC<SettingsProps> = () => {
                         Save the local data to google drive
                       </Text>
                     </View>
+                    {isExportLoading && (
+                      <ActivityIndicator color={colors.primary} size="large" />
+                    )}
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.card}
@@ -75,6 +86,9 @@ const Settings: FC<SettingsProps> = () => {
                         Save the local data to google drive
                       </Text>
                     </View>
+                    {isImportLoading && (
+                      <ActivityIndicator color={colors.primary} size="large" />
+                    )}
                   </TouchableOpacity>
                 </View>
                 <CustomButton

@@ -84,8 +84,11 @@ const CalenderStrip = forwardRef<
       const nextList = getPreviousDays({
         startDate: dateObject,
         offset: 60,
+        includeStartDay: true,
       });
       setDateList(nextList);
+      flatListRef.current?.scrollToIndex({index: 0, animated: false});
+      onDateSelection(new Date(dateString));
     },
   }));
 
@@ -143,7 +146,7 @@ const CalenderStrip = forwardRef<
     });
     setRange(labelString);
   };
-  const debounceOonViewableItemsChanged = debounce(onViewableItemsChanged, 500);
+  const debounceOonViewableItemsChanged = debounce(onViewableItemsChanged, 300);
 
   const viewabilityConfig = {
     waitForInteraction: true,

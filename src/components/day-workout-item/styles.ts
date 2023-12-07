@@ -20,7 +20,7 @@ const styles = ScaledSheet.create({
   },
   cardHeaderText: {
     color: Colors.gray3,
-    fontWeight: '500',
+    fontWeight: '700',
     fontSize: '16@ms',
   },
   ctaContainer: {

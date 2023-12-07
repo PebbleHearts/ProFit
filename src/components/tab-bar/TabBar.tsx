@@ -91,7 +91,7 @@ export default TabBar;
 
 const styles = ScaledSheet.create({
   mainContainer: {
-    backgroundColor: 'white',
+    backgroundColor: '#fbf7ff',
   },
   innerContainer: {
     flexDirection: 'row',

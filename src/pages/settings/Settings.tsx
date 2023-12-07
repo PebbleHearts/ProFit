@@ -12,6 +12,7 @@ import {
   UploadOutlined,
   DownloadOutlined,
   LogoutOutlined,
+  GoogleIcon,
 } from '../../assets/svg';
 import CustomButton from '../../components/custom-button/CustomButton';
 
@@ -44,7 +45,12 @@ const Settings: FC<SettingsProps> = () => {
                 <Text style={styles.info}>
                   Sign in to google to sync data to drive
                 </Text>
-                <CustomButton label="SignIn" onPress={signIn} />
+                <CustomButton
+                  label="Sign in with Google"
+                  onPress={signIn}
+                  containerStyle={styles.signInButtonContainerStyle}
+                  Icon={GoogleIcon}
+                />
               </>
             ) : (
               <View style={styles.loggedInContent}>

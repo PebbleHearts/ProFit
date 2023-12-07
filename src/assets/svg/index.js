@@ -12,6 +12,7 @@ import LogoutOutlined from './logout-outlined.svg';
 import Dumbell from './dumbell.svg';
 import CloseOutlined from './close.svg';
 import PlusOutlined from './plus-outlined';
+import GoogleIcon from './google.svg';
 
 export {
   DumbellOutline,
@@ -28,4 +29,5 @@ export {
   Dumbell,
   CloseOutlined,
   PlusOutlined,
+  GoogleIcon,
 };

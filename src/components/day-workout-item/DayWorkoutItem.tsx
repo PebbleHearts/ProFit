@@ -57,16 +57,20 @@ const DayWorkoutItem: FC<DayWorkoutItemProps> = ({
                 !info && isLastCard && styles.lastSetCard,
               ]}
               key={`${index}`}>
-              <Text style={styles.setHeader}>Set {index + 1}</Text>
               <View style={styles.setDetail}>
-                <Text style={styles.setDetailText}>
-                  Weight:{' '}
-                  <Text style={styles.setDetailTextBold}>{item.weight}Kg</Text>
-                </Text>
-                <Text style={styles.setDetailText}>
-                  Reps:{' '}
-                  <Text style={styles.setDetailTextBold}>{item.reps}</Text>
-                </Text>
+                <Text style={styles.setHeader}>Set {index + 1}</Text>
+                <View style={styles.weightAndRepsContainer}>
+                  <Text style={styles.setDetailText}>
+                    Weight:{' '}
+                    <Text style={styles.setDetailTextBold}>
+                      {item.weight}Kg
+                    </Text>
+                  </Text>
+                  <Text style={styles.setDetailText}>
+                    Reps:{' '}
+                    <Text style={styles.setDetailTextBold}>{item.reps}</Text>
+                  </Text>
+                </View>
               </View>
             </View>
           );

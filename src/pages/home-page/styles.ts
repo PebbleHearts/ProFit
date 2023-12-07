@@ -6,6 +6,7 @@ const styles = ScaledSheet.create({
     paddingTop: '5@s',
     flex: 1,
     flexDirection: 'column',
+    backgroundColor: '#fbf7ff',
   },
   workoutsListContainer: {
     flex: 1,
@@ -34,7 +35,7 @@ const styles = ScaledSheet.create({
   dateSelectionContainer: {
     flexDirection: 'row',
     elevation: 10,
-    backgroundColor: 'white',
+    backgroundColor: '#fbf7ff',
     overflow: 'hidden',
   },
   addText: {

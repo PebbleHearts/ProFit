@@ -7,7 +7,7 @@ const styles = ScaledSheet.create({
     backgroundColor: Colors.white,
     borderRadius: '7@ms',
     overflow: 'hidden',
-    elevation: 2,
+    elevation: 1,
     marginBottom: '10@mvs',
   },
   cardHeader: {
@@ -46,12 +46,18 @@ const styles = ScaledSheet.create({
     borderBottomWidth: 0,
   },
   setHeader: {
-    fontSize: '15@mvs',
-    fontWeight: '900',
+    fontSize: '14@mvs',
+    fontWeight: '700',
     color: Colors.gray2,
+    flex: 1,
   },
   setDetail: {
     flexDirection: 'row',
+    alignItems: 'center',
+  },
+  weightAndRepsContainer: {
+    flexDirection: 'row',
+    flex: 3,
     justifyContent: 'space-between',
   },
   setDetailText: {
@@ -64,8 +70,8 @@ const styles = ScaledSheet.create({
   infoText: {
     paddingHorizontal: '15@ms',
     fontSize: '11@ms',
-    paddingTop: '10@mvs',
-    paddingBottom: '10@mvs',
+    paddingTop: '5@mvs',
+    paddingBottom: '5@mvs',
     color: Colors.gray1,
   },
 });

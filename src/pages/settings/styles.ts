@@ -35,6 +35,11 @@ const styles = ScaledSheet.create({
   loggedInContentInnerContainer: {
     flex: 1,
   },
+  signInButtonContainerStyle: {
+    height: '40@mvs',
+    backgroundColor: '#e8ebe9',
+    marginTop: '8@mvs',
+  },
   info: {
     color: colors.gray2,
     textAlign: 'center',

@@ -6,6 +6,7 @@ const styles = ScaledSheet.create({
     paddingHorizontal: '5@s',
     paddingTop: '5@s',
     flex: 1,
+    backgroundColor: '#fbf7ff',
   },
   title: {
     fontSize: '19@ms',

@@ -6,6 +6,7 @@ const styles = ScaledSheet.create({
     paddingHorizontal: '15@ms',
     paddingTop: '5@s',
     flex: 1,
+    backgroundColor: '#fbf7ff',
   },
   headerContainer: {
     height: '175@mvs',

@@ -11,7 +11,7 @@ const styles = ScaledSheet.create({
     marginBottom: '5@vs',
     padding: '10@ms',
     borderRadius: '7@ms',
-    elevation: 2,
+    elevation: 1,
     backgroundColor: colors.white,
   },
   categoryName: {

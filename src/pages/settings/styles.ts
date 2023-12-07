@@ -4,6 +4,7 @@ import colors from '../../constants/colors';
 const styles = ScaledSheet.create({
   flatListContentContainerStyle: {
     flex: 1,
+    backgroundColor: '#fbf7ff',
   },
   headerContainer: {
     height: '20%',
@@ -25,8 +26,8 @@ const styles = ScaledSheet.create({
   },
   contentInnerContainer: {
     top: -30,
-    elevation: 5,
-    backgroundColor: colors.white,
+    elevation: 2,
+    backgroundColor: '#fbf7ff',
     borderRadius: 20,
     padding: '20@ms',
     paddingTop: '30@ms',
@@ -61,7 +62,7 @@ const styles = ScaledSheet.create({
     alignItems: 'flex-end',
     padding: '10@ms',
     borderRadius: '5@ms',
-    elevation: 2,
+    elevation: 1,
     backgroundColor: colors.white,
   },
   imageContainer: {
@@ -92,7 +93,7 @@ const styles = ScaledSheet.create({
     gap: 10,
   },
   card: {
-    elevation: 2,
+    elevation: 1,
     backgroundColor: colors.white,
     borderRadius: '5@ms',
     padding: '12@ms',

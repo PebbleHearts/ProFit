@@ -69,6 +69,7 @@ const Settings: FC<SettingsProps> = () => {
                   <TouchableOpacity
                     style={styles.card}
                     activeOpacity={0.8}
+                    disabled={isExportLoading}
                     onPress={exportData}>
                     <UploadOutlined width={20} height={20} />
                     <View>
@@ -84,6 +85,7 @@ const Settings: FC<SettingsProps> = () => {
                   <TouchableOpacity
                     style={styles.card}
                     activeOpacity={0.8}
+                    disabled={isImportLoading}
                     onPress={importData}>
                     <DownloadOutlined width={20} height={20} />
                     <View>

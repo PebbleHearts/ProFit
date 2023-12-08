@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import {ScrollView, Text, View} from 'react-native';
+import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 
 import CustomBottomSheet from '../bottom-sheet/BottomSheet';
 import CategoryItem from '../category-item/CategoryItem';
@@ -7,6 +7,8 @@ import WorkoutItem from '../workout-item/WorkoutItem';
 import CustomButton from '../custom-button/CustomButton';
 
 import styles from './styles';
+import {BackArrow} from '../../assets/svg';
+import colors from '../../constants/colors';
 
 type DailyExerciseSelectionBottomSheetProps = {
   bottomSheetRef: any;
@@ -52,9 +54,19 @@ const DailyExerciseSelectionBottomSheet: FC<
       onClose={handleClose}
       height={400}>
       <View style={styles.container}>
-        <Text style={styles.headerText}>
-          {showWorkouts ? 'Select Workouts' : 'Select Category'}
-        </Text>
+        <View style={styles.header}>
+          <TouchableOpacity
+            onPress={() => {
+              setShowWorkouts(false);
+            }}>
+            {showWorkouts && (
+              <BackArrow width={25} height={25} color={colors.gray3} />
+            )}
+          </TouchableOpacity>
+          <Text style={styles.headerText}>
+            {showWorkouts ? 'Select Workouts' : 'Select Category'}
+          </Text>
+        </View>
         {showWorkouts ? (
           <ScrollView
             contentContainerStyle={styles.scrollViewContentContainerStyle}>

@@ -14,6 +14,7 @@ import CloseOutlined from './close.svg';
 import PlusOutlined from './plus-outlined';
 import GoogleIcon from './google.svg';
 import History from './history.svg';
+import BackArrow from './back-arrow.svg';
 
 export {
   DumbellOutline,
@@ -32,4 +33,5 @@ export {
   PlusOutlined,
   GoogleIcon,
   History,
+  BackArrow,
 };

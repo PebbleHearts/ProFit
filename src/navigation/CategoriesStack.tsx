@@ -24,10 +24,15 @@ const CategoriesStackNavigator = () => {
       initialRouteName="Categories"
       screenOptions={{
         headerShown: false,
-        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}>
       <Stack.Screen name="Categories" component={Categories} />
-      <Stack.Screen name="CategoryDetails" component={CategoryDetails} />
+      <Stack.Screen
+        name="CategoryDetails"
+        component={CategoryDetails}
+        options={{
+          cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
+        }}
+      />
     </Stack.Navigator>
   );
 };

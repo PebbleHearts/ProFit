@@ -97,7 +97,7 @@ const CategoryDetails: FC<CategoryDetailsProps> = ({route}) => {
     };
   }, [handleExercisesListFetch]);
   return (
-    <PageLayout title="ProFit">
+    <PageLayout showBackButton>
       <View style={styles.container}>
         <View style={styles.headerContainer}>
           <Text style={styles.header}>{categoryName}</Text>

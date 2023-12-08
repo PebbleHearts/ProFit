@@ -8,13 +8,13 @@ import {
   CategoriesIcon,
   WorkoutRoutines,
   Settings,
-  Dumbell,
+  History,
 } from '../../assets/svg';
 import colors from '../../constants/colors';
 
 const TabDetailsMap: Record<string, {Icon: any; label: string}> = {
   HomePage: {
-    Icon: Dumbell,
+    Icon: History,
     label: 'History',
   },
   CategoriesStack: {

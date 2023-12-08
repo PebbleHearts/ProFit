@@ -1,15 +1,15 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import HomePage from '../pages/home-page/HomePage';
 import TabBar from '../components/tab-bar/TabBar';
 import CategoriesStackNavigator from './CategoriesStack';
+import HistoryStackNavigator from './HistoryStack';
 import {DumbellOutline, CategoriesIcon} from '../assets/svg';
 import Routines from '../pages/routines/Routines';
 import Settings from '../pages/settings/Settings';
 
 export type BottomTabBarNavigatorParamList = {
-  HomePage: undefined;
+  HistoryStack: undefined;
   CategoriesStack: undefined;
   Routines: undefined;
   Settings: undefined;
@@ -26,8 +26,8 @@ const TabNavigator = () => {
       }}
       tabBar={props => <TabBar {...props} />}>
       <Tab.Screen
-        name="HomePage"
-        component={HomePage}
+        name="HistoryStack"
+        component={HistoryStackNavigator}
         options={{tabBarIcon: DumbellOutline}}
       />
       <Tab.Screen

@@ -1,8 +1,8 @@
 import {StackScreenProps} from '@react-navigation/stack';
 import {HistoryStackParamList} from '../../navigation/HistoryStack';
 
-export type HomePageProps = StackScreenProps<
+export type SelectDailyWorkoutsProps = StackScreenProps<
   HistoryStackParamList,
-  'HomePage',
-  'rootStack'
+  'SelectDailyWorkouts',
+  'historyStack'
 >;

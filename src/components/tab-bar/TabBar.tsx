@@ -13,7 +13,7 @@ import {
 import colors from '../../constants/colors';
 
 const TabDetailsMap: Record<string, {Icon: any; label: string}> = {
-  HomePage: {
+  HistoryStack: {
     Icon: History,
     label: 'History',
   },

@@ -1,99 +1,98 @@
 import React, {FC, useState} from 'react';
-import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {ScrollView, Text, View} from 'react-native';
 
 import CustomBottomSheet from '../bottom-sheet/BottomSheet';
-import CategoryItem from '../category-item/CategoryItem';
 import WorkoutItem from '../workout-item/WorkoutItem';
 import CustomButton from '../custom-button/CustomButton';
 
 import styles from './styles';
-import {BackArrow} from '../../assets/svg';
-import colors from '../../constants/colors';
 
 type DailyExerciseSelectionBottomSheetProps = {
   bottomSheetRef: any;
   onClose: () => void;
-  categoriesList: any[];
-  onCategorySelection: (categoryId: string) => void;
   exercisesList: any[];
-  handleDailyExerciseAddition: (exerciseIds: string[]) => void;
+  selectedExercisesItems: {id: string; name: string; categoryId: string}[];
+  currentSelectedCategoryId: string;
+  handleDailyExerciseAddition: (
+    exercises: {id: string; name: string; categoryId: string}[],
+  ) => void;
 };
 
 const DailyExerciseSelectionBottomSheet: FC<
   DailyExerciseSelectionBottomSheetProps
 > = ({
   bottomSheetRef,
-  categoriesList,
   exercisesList,
-  onCategorySelection,
+  selectedExercisesItems,
+  currentSelectedCategoryId,
   onClose,
   handleDailyExerciseAddition,
 }) => {
-  const [showWorkouts, setShowWorkouts] = useState(false);
-  const [selectedExercises, setSelectedExercises] = useState<string[]>([]);
+  const [selectedExercises, setSelectedExercises] = useState<
+    {id: string; name: string; categoryId: string}[]
+  >([]);
   const resetState = () => {
-    setShowWorkouts(false);
     setSelectedExercises([]);
   };
   const handleClose = () => {
     resetState();
     onClose();
   };
+
+  const handleOpen = () => {
+    setSelectedExercises(
+      selectedExercisesItems.filter(
+        item => item.categoryId === currentSelectedCategoryId,
+      ),
+    );
+  };
   const handleExerciseSelection = (exerciseId: string) => {
     setSelectedExercises(prevState => {
-      const index = prevState.findIndex(item => item === exerciseId);
+      const index = prevState.findIndex(item => item.id === exerciseId);
 
-      return index !== -1
-        ? prevState.filter(item => item !== exerciseId)
-        : [...prevState, exerciseId];
+      if (index !== -1) {
+        return prevState.filter(item => item.id !== exerciseId);
+      }
+      const selectedExerciseItem = exercisesList.find(
+        item => item.id === exerciseId,
+      );
+      return [
+        ...prevState,
+        {
+          id: selectedExerciseItem.id,
+          name: selectedExerciseItem.name,
+          categoryId: currentSelectedCategoryId,
+        },
+      ];
     });
   };
   return (
     <CustomBottomSheet
       bottomSheetRef={bottomSheetRef}
       onClose={handleClose}
+      onOpen={handleOpen}
       height={400}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <TouchableOpacity
-            onPress={() => {
-              setShowWorkouts(false);
-            }}>
-            {showWorkouts && (
-              <BackArrow width={25} height={25} color={colors.gray3} />
-            )}
-          </TouchableOpacity>
-          <Text style={styles.headerText}>
-            {showWorkouts ? 'Select Workouts' : 'Select Category'}
-          </Text>
+          <Text style={styles.headerText}>Select Exercise</Text>
         </View>
-        {showWorkouts ? (
-          <ScrollView
-            contentContainerStyle={styles.scrollViewContentContainerStyle}>
-            {exercisesList.map(item => (
+
+        <ScrollView
+          contentContainerStyle={styles.scrollViewContentContainerStyle}>
+          {exercisesList.map(item => {
+            const isSelected = selectedExercises.findIndex(
+              selectedItem => selectedItem.id === item.id,
+            );
+            return (
               <WorkoutItem
                 key={item.name}
                 name={item.name}
-                isSelected={selectedExercises.includes(item.id)}
+                isSelected={isSelected !== -1}
                 onPress={() => handleExerciseSelection(item.id)}
               />
-            ))}
-          </ScrollView>
-        ) : (
-          <ScrollView
-            contentContainerStyle={styles.scrollViewContentContainerStyle}>
-            {categoriesList.map(item => (
-              <CategoryItem
-                key={item.name}
-                name={item.name}
-                onPress={() => {
-                  setShowWorkouts(true);
-                  onCategorySelection(item.id);
-                }}
-              />
-            ))}
-          </ScrollView>
-        )}
+            );
+          })}
+        </ScrollView>
         <CustomButton
           label="Add"
           onPress={() => {

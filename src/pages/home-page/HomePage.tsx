@@ -12,7 +12,6 @@ import CalenderStrip from '../../components/calender-strip/CalenderStrip';
 import FloatingButton from '../../components/floating-button/FloatingButton';
 
 import DayWorkoutItem from '../../components/day-workout-item/DayWorkoutItem';
-import DailyExerciseSelectionBottomSheet from '../../components/daily-exercise-selection-bottom-sheet/DailyExerciseSelectionBottomSheet';
 
 import styles from './styles';
 import {WorkoutRecord} from '../../database/model/Workout';
@@ -23,7 +22,7 @@ import EditWorkoutBottomSheet from '../../components/edit-workout-bottom-sheet/E
 import CalenderBottomSheet from '../../components/calender-bottom-sheet/CalenderBottomSheet';
 import {emitter, EventsList} from '../../constants/emitter';
 
-const HomePage: FC<HomePageProps> = () => {
+const HomePage: FC<HomePageProps> = ({navigation}: HomePageProps) => {
   const [categoriesList, setCategoriesList] = useState<any>([]);
   const [workouts, setWorkouts] = useState<any>([]);
   const [exercisesList, setExercisesList] = useState<any>([]);
@@ -173,8 +172,12 @@ const HomePage: FC<HomePageProps> = () => {
     emitter.addListener(EventsList.IMPORT_COMPLETE, () => {
       handleWorkoutFetch();
     });
+    emitter.addListener(EventsList.HISTORY_ADDED, () => {
+      handleWorkoutFetch();
+    });
     return () => {
       emitter.removeListener(EventsList.IMPORT_COMPLETE);
+      emitter.removeListener(EventsList.HISTORY_ADDED);
     };
   }, [handleWorkoutFetch]);
 
@@ -206,7 +209,11 @@ const HomePage: FC<HomePageProps> = () => {
             </View>
           </ScrollView>
           <FloatingButton
-            onClick={() => bottomSheetRef?.current?.open()}
+            onClick={() =>
+              navigation.navigate('SelectDailyWorkouts', {
+                selectedDate: selectedDate.toISOString(),
+              })
+            }
             containerStyle={styles.floatingButtonStyle}
           />
           <View style={styles.dateSelectionContainer}>
@@ -220,14 +227,6 @@ const HomePage: FC<HomePageProps> = () => {
             />
           </View>
         </View>
-        <DailyExerciseSelectionBottomSheet
-          bottomSheetRef={bottomSheetRef}
-          onClose={handleCreateExerciseBottomSheetClose}
-          categoriesList={categoriesList}
-          onCategorySelection={handleCategorySelection}
-          exercisesList={exercisesList}
-          handleDailyExerciseAddition={onDailyExerciseAddition}
-        />
         <CalenderBottomSheet
           bottomSheetRef={calenderBottomSheetRef}
           onClose={handleCalenderBottomSheetClose}

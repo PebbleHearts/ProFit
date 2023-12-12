@@ -1,4 +1,4 @@
-import {ScaledSheet} from 'react-native-size-matters';
+import {ScaledSheet, mvs} from 'react-native-size-matters';
 import colors from '../../constants/colors';
 
 const styles = ScaledSheet.create({
@@ -22,6 +22,21 @@ const styles = ScaledSheet.create({
   },
   addText: {
     color: colors.buttonText,
+  },
+  selectedWorkoutsContainer: {
+    backgroundColor: '#f1e6fc',
+    padding: 10,
+    borderRadius: '10@mvs',
+    marginTop: '10@mvs',
+    marginBottom: '5@mvs',
+    gap: mvs(7),
+  },
+  selectedWorkoutItemHeading: {
+    fontSize: '18@ms',
+    color: colors.gray3,
+    textAlign: 'center',
+    marginTop: '12@mvs',
+    fontWeight: '600',
   },
   floatingButtonStyle: {
     right: '10@ms',

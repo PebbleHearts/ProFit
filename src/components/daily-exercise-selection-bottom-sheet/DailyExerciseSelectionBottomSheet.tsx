@@ -14,6 +14,7 @@ type DailyExerciseSelectionBottomSheetProps = {
   selectedExercisesItems: {id: string; name: string; categoryId: string}[];
   currentSelectedCategoryId: string;
   handleDailyExerciseAddition: (
+    categoryId: string,
     exercises: {id: string; name: string; categoryId: string}[],
   ) => void;
 };
@@ -99,7 +100,10 @@ const DailyExerciseSelectionBottomSheet: FC<
             setTimeout(() => {
               resetState();
             }, 1000);
-            handleDailyExerciseAddition(selectedExercises);
+            handleDailyExerciseAddition(
+              currentSelectedCategoryId,
+              selectedExercises,
+            );
           }}
           containerStyle={styles.submitButtonContainer}
           labelStyle={styles.submitButtonText}

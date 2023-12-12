@@ -17,7 +17,6 @@ import {Q} from '@nozbe/watermelondb';
 import CustomButton from '../../components/custom-button/CustomButton';
 import {getDateStringFromDateObject} from '../../utils/calender';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SelectDailyWorkouts: FC<SelectDailyWorkoutsProps> = ({
   navigation,
   route,
@@ -76,10 +75,31 @@ const SelectDailyWorkouts: FC<SelectDailyWorkoutsProps> = ({
   };
 
   const onDailyExerciseAddition = (
+    categoryId: string,
     exercises: {id: string; name: string; categoryId: string}[],
   ) => {
-    console.log(exercises);
-    setSelectedExercises(prev => [...prev, ...exercises]);
+    let newExercisesList = [...exercises];
+    setSelectedExercises(prev => {
+      let updatedExercisesList = [...prev];
+      updatedExercisesList = updatedExercisesList.filter(item => {
+        if (item.categoryId !== categoryId) {
+          return true;
+        } else {
+          const hasItem = newExercisesList.findIndex(
+            exercise => exercise.id === item.id,
+          );
+
+          if (hasItem !== -1) {
+            newExercisesList = newExercisesList.filter(
+              exItem => exItem.id !== item.id,
+            );
+            return true;
+          }
+        }
+      });
+      updatedExercisesList = [...updatedExercisesList, ...newExercisesList];
+      return updatedExercisesList;
+    });
     handleCreateExerciseBottomSheetClose();
   };
 
@@ -130,20 +150,26 @@ const SelectDailyWorkouts: FC<SelectDailyWorkoutsProps> = ({
               />
             ))}
 
-            <View>
-              <Text>Selected Workouts</Text>
-              <View>
-                {selectedExercises.map(selectedExerciseItem => (
-                  <SelectedWorkoutItem
-                    key={selectedExerciseItem.id}
-                    name={selectedExerciseItem.name}
-                    onRemoveClick={() =>
-                      handleRemoveSelectedExerciseItem(selectedExerciseItem.id)
-                    }
-                  />
-                ))}
-              </View>
-            </View>
+            {selectedExercises.length ? (
+              <>
+                <Text style={styles.selectedWorkoutItemHeading}>
+                  Selected Workouts
+                </Text>
+                <View style={styles.selectedWorkoutsContainer}>
+                  {selectedExercises.map(selectedExerciseItem => (
+                    <SelectedWorkoutItem
+                      key={selectedExerciseItem.id}
+                      name={selectedExerciseItem.name}
+                      onRemoveClick={() =>
+                        handleRemoveSelectedExerciseItem(
+                          selectedExerciseItem.id,
+                        )
+                      }
+                    />
+                  ))}
+                </View>
+              </>
+            ) : null}
           </ScrollView>
         </View>
         <View style={styles.ctaContainer}>

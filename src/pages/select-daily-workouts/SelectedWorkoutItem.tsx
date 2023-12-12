@@ -17,7 +17,7 @@ const SelectedWorkoutItem = ({
   return (
     <View style={styles.card}>
       <Text style={styles.workoutName}>{name}</Text>
-      <TouchableOpacity onPress={onRemoveClick}>
+      <TouchableOpacity onPress={onRemoveClick} activeOpacity={0.8}>
         <CloseOutlined width={20} height={20} color={colors.gray1} />
       </TouchableOpacity>
     </View>
@@ -29,15 +29,15 @@ const styles = ScaledSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: '5@vs',
     padding: '10@ms',
-    borderRadius: '7@ms',
+    paddingHorizontal: '15@ms',
+    borderRadius: '100@ms',
     elevation: 1,
     backgroundColor: colors.white,
   },
   workoutName: {
-    fontSize: '17@ms',
-    fontWeight: '600',
+    fontSize: '15@ms',
+    fontWeight: '400',
     color: colors.gray3,
   },
   rightSide: {

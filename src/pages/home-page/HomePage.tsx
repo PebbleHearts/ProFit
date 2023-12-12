@@ -15,31 +15,20 @@ import DayWorkoutItem from '../../components/day-workout-item/DayWorkoutItem';
 
 import styles from './styles';
 import {WorkoutRecord} from '../../database/model/Workout';
-import {CategoryRecord} from '../../database/model/Category';
-import {ExerciseRecord} from '../../database/model/Exercise';
 import {getDateStringFromDateObject} from '../../utils/calender';
 import EditWorkoutBottomSheet from '../../components/edit-workout-bottom-sheet/EditWorkoutBottomSheet';
 import CalenderBottomSheet from '../../components/calender-bottom-sheet/CalenderBottomSheet';
 import {emitter, EventsList} from '../../constants/emitter';
 
 const HomePage: FC<HomePageProps> = ({navigation}: HomePageProps) => {
-  const [categoriesList, setCategoriesList] = useState<any>([]);
   const [workouts, setWorkouts] = useState<any>([]);
-  const [exercisesList, setExercisesList] = useState<any>([]);
   const calenderStripRef = useRef<any>(null);
-  const bottomSheetRef = useRef<RBSheet>(null);
   const editBottomSheetRef = useRef<RBSheet>(null);
   const calenderBottomSheetRef = useRef<RBSheet>(null);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedWorkout, setSelectedWorkout] = useState<WorkoutRecord | null>(
     null,
   );
-
-  const handleCategoriesFetch = useCallback(async () => {
-    const exerciseCollection = database.get<CategoryRecord>('categories');
-    const categories = await exerciseCollection.query().fetch();
-    setCategoriesList(categories);
-  }, []);
 
   const handleWorkoutFetch = useCallback(async () => {
     const date = getDateStringFromDateObject(selectedDate);
@@ -67,27 +56,8 @@ const HomePage: FC<HomePageProps> = ({navigation}: HomePageProps) => {
   }, [selectedDate]);
 
   useEffect(() => {
-    handleCategoriesFetch();
-  }, [handleCategoriesFetch]);
-
-  useEffect(() => {
     handleWorkoutFetch();
   }, [handleWorkoutFetch]);
-
-  const handleCategorySelection = async (categoryId: string) => {
-    if (categoryId) {
-      const exerciseCollection = database.get<ExerciseRecord>('exercises');
-      const exercises = await exerciseCollection
-        .query(Q.where('category_id', categoryId))
-        .fetch();
-      setExercisesList(exercises);
-    }
-  };
-
-  const handleCreateExerciseBottomSheetClose = () => {
-    setExercisesList([]);
-    bottomSheetRef?.current?.close();
-  };
 
   const handleCalenderBottomSheetClose = () => {
     calenderBottomSheetRef?.current?.close();
@@ -100,28 +70,6 @@ const HomePage: FC<HomePageProps> = ({navigation}: HomePageProps) => {
   const handleCalenderBottomSheetDateSelection = (date: DateData) => {
     calenderStripRef.current.resetInitialDate(date.dateString);
     handleCalenderBottomSheetClose();
-  };
-
-  const onDailyExerciseAddition = async (exerciseIds: string[]) => {
-    const date = getDateStringFromDateObject(selectedDate);
-    try {
-      for (let i = 0; i < exerciseIds.length; i++) {
-        const exerciseId = exerciseIds[i];
-        const exerciseItem = await database.get('exercises').find(exerciseId);
-        await database.write(async () => {
-          database.get('workouts').create((workout: any) => {
-            workout.date = date;
-            workout.exercise.set(exerciseItem);
-            workout.records = [{weight: '0', reps: '0'}];
-            workout.info = '';
-          });
-        });
-      }
-      handleWorkoutFetch();
-    } catch (e) {
-      console.log(e);
-    }
-    bottomSheetRef.current?.close();
   };
 
   const handleDelete = (workoutId: string) => async () => {
@@ -143,7 +91,6 @@ const HomePage: FC<HomePageProps> = ({navigation}: HomePageProps) => {
   };
 
   const handleEditExerciseBottomSheetClose = () => {
-    setExercisesList([]);
     editBottomSheetRef?.current?.close();
   };
 

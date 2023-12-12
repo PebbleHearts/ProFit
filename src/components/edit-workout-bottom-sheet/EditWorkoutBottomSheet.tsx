@@ -124,6 +124,7 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
                 inputStyle={styles.setItemInputField}
               />
               <View style={styles.setItemRow}>
+                <Text style={styles.hiddenSetItemInputFieldHeader}>Set 1</Text>
                 <Text style={styles.setItemInputFieldHeader}>Weight</Text>
                 <Text style={styles.setItemInputFieldHeader}>Reps</Text>
                 <View
@@ -134,6 +135,9 @@ const EditWorkoutBottomSheet: FC<EditWorkoutBottomSheetProps> = ({
               {workout?.records?.map((recordItem, index) => {
                 return (
                   <View style={styles.setItemRow} key={`${index}`}>
+                    <Text style={styles.setItemRowIndicatorText}>
+                      Set {index + 1}
+                    </Text>
                     <CustomTextInput
                       value={recordItem.weight}
                       onChangeText={handleEditWeight('weight', index)}

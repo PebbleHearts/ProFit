@@ -23,6 +23,12 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     gap: 10,
   },
+  setItemRowIndicatorText: {
+    fontSize: '13@ms',
+    fontWeight: '500',
+    color: colors.gray2,
+    borderColor: colors.gray3,
+  },
   setItemInput: {
     flex: 1,
     color: colors.gray3,
@@ -32,6 +38,12 @@ const styles = ScaledSheet.create({
     fontSize: '15@ms',
     fontWeight: '500',
     color: colors.gray2,
+    borderColor: colors.gray3,
+  },
+  hiddenSetItemInputFieldHeader: {
+    fontSize: '13@ms',
+    fontWeight: '500',
+    color: 'transparent',
     borderColor: colors.gray3,
   },
   setItemInputField: {

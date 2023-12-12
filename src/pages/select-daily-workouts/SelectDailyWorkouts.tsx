@@ -16,6 +16,7 @@ import {ExerciseRecord} from '../../database/model/Exercise';
 import {Q} from '@nozbe/watermelondb';
 import CustomButton from '../../components/custom-button/CustomButton';
 import {getDateStringFromDateObject} from '../../utils/calender';
+import {WorkoutRecord} from '../../database/model/Workout';
 
 const SelectDailyWorkouts: FC<SelectDailyWorkoutsProps> = ({
   navigation,
@@ -113,12 +114,20 @@ const SelectDailyWorkouts: FC<SelectDailyWorkoutsProps> = ({
       for (let i = 0; i < selectedExercises.length; i++) {
         const exerciseId = selectedExercises[i].id;
         const exerciseItem = await database.get('exercises').find(exerciseId);
+        const lastWorkoutItem = await database
+          .get<WorkoutRecord>('workouts')
+          .query(Q.sortBy('date', Q.desc), Q.take(1))
+          .fetch();
         await database.write(async () => {
           database.get('workouts').create((workout: any) => {
             workout.date = date;
             workout.exercise.set(exerciseItem);
-            workout.records = [{weight: '0', reps: '0'}];
-            workout.info = '';
+            workout.records = lastWorkoutItem.length
+              ? lastWorkoutItem[0].records
+              : [{weight: '0', reps: '0'}];
+            workout.info = lastWorkoutItem.length
+              ? lastWorkoutItem[0].info
+              : '';
           });
         });
       }

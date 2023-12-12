@@ -53,12 +53,9 @@ const SelectDailyWorkouts: FC<SelectDailyWorkoutsProps> = ({
     handleCategoriesFetch();
   }, [handleCategoriesFetch]);
 
-  const handleCategoryClick =
-    (categoryId: string, categoryName: string) => () => {
-      // navigation.navigate('CategoryDetails', {categoryId, categoryName});
-      console.log('category clicked', categoryId, categoryName);
-      handleCategorySelection(categoryId);
-    };
+  const handleCategoryClick = (categoryId: string) => () => {
+    handleCategorySelection(categoryId);
+  };
 
   useEffect(() => {
     emitter.addListener(EventsList.IMPORT_COMPLETE, () => {
@@ -146,7 +143,7 @@ const SelectDailyWorkouts: FC<SelectDailyWorkoutsProps> = ({
               <CategoryItem
                 key={id}
                 name={name}
-                onPress={handleCategoryClick(id, name)}
+                onPress={handleCategoryClick(id)}
               />
             ))}
 

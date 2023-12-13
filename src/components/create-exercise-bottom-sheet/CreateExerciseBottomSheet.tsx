@@ -61,8 +61,14 @@ const ExerciseBottomSheet: FC<ExerciseBottomSheetProps> = ({
           label={isEdit ? 'Save' : 'Create'}
           onPress={
             isEdit
-              ? () => handleSaveExercise({name: exerciseName})
-              : () => handleExerciseCreation({name: exerciseName})
+              ? () => {
+                  resetState();
+                  handleSaveExercise({name: exerciseName});
+                }
+              : () => {
+                  resetState();
+                  handleExerciseCreation({name: exerciseName});
+                }
           }
           containerStyle={styles.submitButtonContainer}
           labelStyle={styles.submitButtonText}

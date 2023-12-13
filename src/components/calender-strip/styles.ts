@@ -14,7 +14,7 @@ const styles = ScaledSheet.create({
   monthYearLabel: {
     fontSize: '13@ms',
     fontWeight: '700',
-    color: colors.buttonText,
+    color: colors.gray2,
     padding: '2@ms',
   },
   itemSeparatorComponentStyle: {

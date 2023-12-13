@@ -24,7 +24,10 @@ const CategoryDetails: FC<CategoryDetailsProps> = ({route}) => {
   } | null>(null);
   const bottomSheetRef = useRef<RBSheet>(null);
 
-  const handleExerciseBottomSheetClose = () => bottomSheetRef?.current?.close();
+  const handleExerciseBottomSheetClose = () => {
+    bottomSheetRef?.current?.close();
+    setSelectedExerciseDetails(null);
+  };
   const handleExerciseCreation = async ({name}: {name: string}) => {
     try {
       const categoryItem = await database.get('categories').find(categoryId);
@@ -86,6 +89,7 @@ const CategoryDetails: FC<CategoryDetailsProps> = ({route}) => {
       console.log(e);
     }
     handleExerciseBottomSheetClose();
+    setSelectedExerciseDetails(null);
   };
 
   useEffect(() => {

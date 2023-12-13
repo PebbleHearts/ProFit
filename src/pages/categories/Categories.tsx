@@ -22,7 +22,10 @@ const Categories: FC<CategoriesProps> = ({navigation}) => {
     id: string;
   } | null>(null);
 
-  const handleCategoryBottomSheetClose = () => bottomSheetRef?.current?.close();
+  const handleCategoryBottomSheetClose = () => {
+    bottomSheetRef?.current?.close();
+    setSelectedCategoryDetails(null);
+  };
 
   const handleCategoriesFetch = useCallback(async () => {
     const categoriesCollection = database.get<CategoryRecord>('categories');

@@ -116,7 +116,11 @@ const SelectDailyWorkouts: FC<SelectDailyWorkoutsProps> = ({
         const exerciseItem = await database.get('exercises').find(exerciseId);
         const lastWorkoutItem = await database
           .get<WorkoutRecord>('workouts')
-          .query(Q.sortBy('date', Q.desc), Q.take(1))
+          .query(
+            Q.where('exercise_id', exerciseId),
+            Q.sortBy('date', Q.desc),
+            Q.take(1),
+          )
           .fetch();
         await database.write(async () => {
           database.get('workouts').create((workout: any) => {

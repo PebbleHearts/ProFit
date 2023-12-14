@@ -21,6 +21,7 @@ export default appSchema({
         {name: 'exercise_id', type: 'string'},
         {name: 'records', type: 'string'},
         {name: 'info', type: 'string', isOptional: true},
+        {name: 'order', type: 'number'},
       ],
     }),
   ],

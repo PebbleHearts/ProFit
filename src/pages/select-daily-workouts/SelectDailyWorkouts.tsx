@@ -110,12 +110,19 @@ const SelectDailyWorkouts: FC<SelectDailyWorkoutsProps> = ({
   const onSave = async () => {
     const selectedDateObj = new Date(selectedDate);
     const date = getDateStringFromDateObject(selectedDateObj);
+    const historyCollection = database.get<WorkoutRecord>('workouts');
+    const lastWorkoutItemOfSpecificDay = await historyCollection
+      .query(Q.where('date', date), Q.sortBy('order', Q.desc), Q.take(1))
+      .fetch();
+    const orderingOffset = lastWorkoutItemOfSpecificDay.length
+      ? lastWorkoutItemOfSpecificDay[0].order + 1
+      : 1;
     try {
       for (let i = 0; i < selectedExercises.length; i++) {
         const exerciseId = selectedExercises[i].id;
         const exerciseItem = await database.get('exercises').find(exerciseId);
-        const lastWorkoutItem = await database
-          .get<WorkoutRecord>('workouts')
+
+        const lastWorkoutItem = await historyCollection
           .query(
             Q.where('exercise_id', exerciseId),
             Q.sortBy('date', Q.desc),
@@ -124,6 +131,7 @@ const SelectDailyWorkouts: FC<SelectDailyWorkoutsProps> = ({
           .fetch();
         await database.write(async () => {
           database.get('workouts').create((workout: any) => {
+            workout.order = orderingOffset + i;
             workout.date = date;
             workout.exercise.set(exerciseItem);
             workout.records = lastWorkoutItem.length

@@ -1,5 +1,5 @@
 import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {DateData} from 'react-native-calendars';
 
@@ -7,6 +7,13 @@ import {Q} from '@nozbe/watermelondb';
 import PageLayout from '../../Layout/PageLayout';
 import {HomePageProps} from './types';
 import {database} from '../../database/init';
+import {
+  NestableScrollContainer,
+  NestableDraggableFlatList,
+  RenderItemParams,
+  ScaleDecorator,
+  DragEndParams,
+} from 'react-native-draggable-flatlist';
 
 import CalenderStrip from '../../components/calender-strip/CalenderStrip';
 import FloatingButton from '../../components/floating-button/FloatingButton';
@@ -34,7 +41,7 @@ const HomePage: FC<HomePageProps> = ({navigation}: HomePageProps) => {
     const date = getDateStringFromDateObject(selectedDate);
     const exerciseCollection = database.get<WorkoutRecord>('workouts');
     const workoutsList = await exerciseCollection
-      .query(Q.where('date', date))
+      .query(Q.where('date', date), Q.sortBy('order', Q.asc))
       .fetch();
 
     const formattedCurrentWorkout = [];
@@ -128,11 +135,45 @@ const HomePage: FC<HomePageProps> = ({navigation}: HomePageProps) => {
     };
   }, [handleWorkoutFetch]);
 
+  const renderItem = ({item, drag, isActive}: RenderItemParams<any>) => {
+    return (
+      <ScaleDecorator activeScale={0.9}>
+        <TouchableOpacity onLongPress={drag} disabled={isActive}>
+          <DayWorkoutItem
+            key={item.id}
+            exercise={item.exercise}
+            records={item.records}
+            info={item.info}
+            onEdit={handleEdit(item.id)}
+            onDelete={handleDelete(item.id)}
+          />
+        </TouchableOpacity>
+      </ScaleDecorator>
+    );
+  };
+
+  const handleDragEnd = async (params: DragEndParams<any>) => {
+    const reOrderedItems = params.data;
+    console.log(reOrderedItems);
+    const workoutCollection = database.get<WorkoutRecord>('workouts');
+    await database.write(async () => {
+      for (let i = 0; i < params.data.length; i++) {
+        const workoutItem = await workoutCollection.find(
+          reOrderedItems[i]?.id || '',
+        );
+        workoutItem.update((workout: any) => {
+          workout.order = i + 1;
+        });
+      }
+    });
+    handleWorkoutFetch();
+  };
+
   return (
     <PageLayout title="ProFit">
       <>
         <View style={styles.container}>
-          <ScrollView showsVerticalScrollIndicator={false}>
+          <NestableScrollContainer showsVerticalScrollIndicator={false}>
             <View style={styles.workoutsListContainer}>
               <View style={styles.headerContainer}>
                 <Text style={styles.header}>History</Text>
@@ -142,19 +183,15 @@ const HomePage: FC<HomePageProps> = ({navigation}: HomePageProps) => {
                   <Text style={styles.emptyViewText}>Workout Log Empty</Text>
                 </View>
               ) : (
-                workouts?.map((item: any) => (
-                  <DayWorkoutItem
-                    key={item.id}
-                    exercise={item.exercise}
-                    records={item.records}
-                    info={item.info}
-                    onEdit={handleEdit(item.id)}
-                    onDelete={handleDelete(item.id)}
-                  />
-                ))
+                <NestableDraggableFlatList
+                  data={workouts}
+                  keyExtractor={item => item.id}
+                  renderItem={renderItem}
+                  onDragEnd={handleDragEnd}
+                />
               )}
             </View>
-          </ScrollView>
+          </NestableScrollContainer>
           <FloatingButton
             onClick={() =>
               navigation.navigate('SelectDailyWorkouts', {

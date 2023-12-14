@@ -1,5 +1,5 @@
 import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, Pressable} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {DateData} from 'react-native-calendars';
 
@@ -138,7 +138,7 @@ const HomePage: FC<HomePageProps> = ({navigation}: HomePageProps) => {
   const renderItem = ({item, drag, isActive}: RenderItemParams<any>) => {
     return (
       <ScaleDecorator activeScale={0.9}>
-        <TouchableOpacity onLongPress={drag} disabled={isActive}>
+        <Pressable onLongPress={drag} disabled={isActive}>
           <DayWorkoutItem
             key={item.id}
             exercise={item.exercise}
@@ -147,7 +147,7 @@ const HomePage: FC<HomePageProps> = ({navigation}: HomePageProps) => {
             onEdit={handleEdit(item.id)}
             onDelete={handleDelete(item.id)}
           />
-        </TouchableOpacity>
+        </Pressable>
       </ScaleDecorator>
     );
   };

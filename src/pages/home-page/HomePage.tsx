@@ -1,5 +1,5 @@
 import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
-import {View, Text, Pressable} from 'react-native';
+import {View, Text} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {DateData} from 'react-native-calendars';
 
@@ -11,7 +11,6 @@ import {
   NestableScrollContainer,
   NestableDraggableFlatList,
   RenderItemParams,
-  ScaleDecorator,
   DragEndParams,
 } from 'react-native-draggable-flatlist';
 
@@ -79,23 +78,29 @@ const HomePage: FC<HomePageProps> = ({navigation}: HomePageProps) => {
     handleCalenderBottomSheetClose();
   };
 
-  const handleDelete = (workoutId: string) => async () => {
-    const workoutItem = await database
-      .get<WorkoutRecord>('workouts')
-      .find(workoutId);
-    await database.write(async () => {
-      await workoutItem.destroyPermanently();
-    });
-    handleWorkoutFetch();
-  };
+  const handleDelete = useCallback(
+    (workoutId: string) => async () => {
+      const workoutItem = await database
+        .get<WorkoutRecord>('workouts')
+        .find(workoutId);
+      await database.write(async () => {
+        await workoutItem.destroyPermanently();
+      });
+      handleWorkoutFetch();
+    },
+    [handleWorkoutFetch],
+  );
 
-  const handleEdit = (workoutId: string) => async () => {
-    const workoutItem = await database
-      .get<WorkoutRecord>('workouts')
-      .find(workoutId);
-    setSelectedWorkout(workoutItem);
-    editBottomSheetRef?.current?.open();
-  };
+  const handleEdit = useCallback(
+    (workoutId: string) => async () => {
+      const workoutItem = await database
+        .get<WorkoutRecord>('workouts')
+        .find(workoutId);
+      setSelectedWorkout(workoutItem);
+      editBottomSheetRef?.current?.open();
+    },
+    [],
+  );
 
   const handleEditExerciseBottomSheetClose = () => {
     editBottomSheetRef?.current?.close();
@@ -135,22 +140,23 @@ const HomePage: FC<HomePageProps> = ({navigation}: HomePageProps) => {
     };
   }, [handleWorkoutFetch]);
 
-  const renderItem = ({item, drag, isActive}: RenderItemParams<any>) => {
-    return (
-      <ScaleDecorator activeScale={0.9}>
-        <Pressable onLongPress={drag} disabled={isActive}>
-          <DayWorkoutItem
-            key={item.id}
-            exercise={item.exercise}
-            records={item.records}
-            info={item.info}
-            onEdit={handleEdit(item.id)}
-            onDelete={handleDelete(item.id)}
-          />
-        </Pressable>
-      </ScaleDecorator>
-    );
-  };
+  const renderItem = useCallback(
+    ({item, drag, isActive}: RenderItemParams<any>) => {
+      return (
+        <DayWorkoutItem
+          key={item.id}
+          exercise={item.exercise}
+          records={item.records}
+          info={item.info}
+          onEdit={handleEdit(item.id)}
+          onDelete={handleDelete(item.id)}
+          disabled={isActive}
+          onLongPress={drag}
+        />
+      );
+    },
+    [handleDelete, handleEdit],
+  );
 
   const handleDragEnd = async (params: DragEndParams<any>) => {
     const reOrderedItems = params.data;

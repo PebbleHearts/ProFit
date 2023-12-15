@@ -154,7 +154,7 @@ const HomePage: FC<HomePageProps> = ({navigation}: HomePageProps) => {
 
   const handleDragEnd = async (params: DragEndParams<any>) => {
     const reOrderedItems = params.data;
-    console.log(reOrderedItems);
+    setWorkouts(reOrderedItems);
     const workoutCollection = database.get<WorkoutRecord>('workouts');
     await database.write(async () => {
       for (let i = 0; i < params.data.length; i++) {
